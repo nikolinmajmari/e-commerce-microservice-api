@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@incremental-project/app-event-emitter": [
+        "packages/app-event-emitter/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
