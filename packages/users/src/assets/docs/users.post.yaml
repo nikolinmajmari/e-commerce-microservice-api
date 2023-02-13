@@ -1,0 +1,47 @@
+paths:
+  /api/users:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Create new user 
+      produces: 
+        - application/json
+      requestBody:
+        content:
+          application/json:
+            name: sign up 
+            description: Creates a new user with a post request to /users
+            required: true 
+            schema: 
+              $ref: '#/definitions/signUp'
+      responses:
+        201:
+          description: The id of the created user
+        409:
+          description: Conflict, user email already exists
+
+definitions:
+  signUp:
+    type: object
+    properties:
+      firstName: 
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ["male","female"]
+      email: 
+        type: string
+      phone: 
+        type: string
+      username: 
+        type: string
+      password:
+        type: string
+      birthDate: 
+        type: string
+      avatar: 
+        type: string

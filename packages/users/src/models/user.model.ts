@@ -47,13 +47,15 @@ const userSchema = new Schema({
             ret.id = ret._id;
             delete ret._id;
             delete ret.password;
-            delete ret._v;
+            delete ret.__v;
         }
     }
 });
 userSchema.statics.build = (dto:ICreateUserDTO)=>{
     return new User(dto);
 };
+
+userSchema.index({email:1},{unique:true});
 
 userSchema.pre("save",async function (done){
     if(this.isModified("password")){

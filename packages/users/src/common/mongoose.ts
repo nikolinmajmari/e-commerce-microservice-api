@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import * as debug from 'debug';
+import debug from 'debug';
 
 const log = debug('app:mongoose');
 const mongooseURL = process.env.MONGODB_URL || 'mongodb://localhost/users-repository';
