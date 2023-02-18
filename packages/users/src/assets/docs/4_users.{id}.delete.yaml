@@ -1,0 +1,23 @@
+paths:
+  /api/users/{id}:
+    delete:
+      security:
+        - Bearer: [ ]
+      tags: # Tag property
+        - User            # Value of the tag
+      summary: deletes user by id
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user ID
+      responses: # server responses
+        204:
+          description: The user was deleted
+        404:
+          description: User id not found

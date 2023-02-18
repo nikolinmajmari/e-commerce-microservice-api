@@ -1,0 +1,47 @@
+paths:
+  /api/users/{id}:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Update existing user 
+      produces: 
+        - application/json
+      requestBody:
+        content:
+          application/json:
+            name: sign up 
+            description: Update am user with a patch request to /users
+            required: true 
+            schema: 
+              $ref: '#/definitions/patch'
+      responses:
+        201:
+          description: The updated user object
+        409:
+          description: Conflict, user email already exists
+
+definitions:
+  patch:
+    type: object
+    properties:
+      firstName: 
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ["male","female"]
+      email: 
+        type: string
+      phone: 
+        type: string
+      username: 
+        type: string
+      password:
+        type: string
+      birthDate: 
+        type: string
+      avatar: 
+        type: string

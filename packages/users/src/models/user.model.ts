@@ -6,6 +6,7 @@ export type IPermissionLevel = "Admin"|"User";
 
 export interface IUser extends Document{
     id: string,
+    user_id:string,
     permissionLevel:IPermissionLevel;
     firstName:string,
     lastName:string,
@@ -23,7 +24,7 @@ export interface IUser extends Document{
 }
 
 interface IUserModel extends Model<IUser>{
-    build(dto:ICreateUserDTO);
+    build(dto:ICreateUserDTO):IUser;
 }
 
 const userSchema = new Schema({
