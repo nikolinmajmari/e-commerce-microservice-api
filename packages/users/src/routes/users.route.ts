@@ -20,7 +20,16 @@ export default class UsersRoute{
 
         this.app.route("/api/users/:id")
         .all(userById)
+        .get(usersController.getUserById)
         .patch(usersController.updateUserById)
         .delete(usersController.deleteUserById);
+
+        this.app.route("/api/users/:id/resetPassword")
+        .all(userById)
+        .get(usersController.sentPasswordResetEmail);
+
+        this.app.route("/api/users/:id/verifyEmail")
+        .all(userById)
+        .get(usersController.sentVerificationEmail);
     }
 }

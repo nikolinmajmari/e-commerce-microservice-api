@@ -8,6 +8,14 @@ paths:
       summary: Update existing user 
       produces: 
         - application/json
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user ID
       requestBody:
         content:
           application/json:

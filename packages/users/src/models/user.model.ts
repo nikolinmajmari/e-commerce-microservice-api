@@ -28,7 +28,10 @@ interface IUserModel extends Model<IUser>{
 }
 
 const userSchema = new Schema({
-    permissionLevel : String,
+    permissionLevel : {
+        type: String,
+        enum: [ "Admin","User"]
+    },
     firstName : String,
     lastName : String,
     gender : {
@@ -37,6 +40,10 @@ const userSchema = new Schema({
     },
     email : String,
     phone : String,
+    user_id: {
+        type:String,
+        immutable: true
+    },
     username: String,
     password: String,
     birthDate: String,

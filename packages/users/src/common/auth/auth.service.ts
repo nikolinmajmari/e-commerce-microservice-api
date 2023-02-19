@@ -1,12 +1,13 @@
-import {AppMetadata, ManagementClient, ManagementClientOptions, PasswordChangeTicketResponse, User, UserMetadata} from 'auth0';
+import {AppMetadata, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, PasswordChangeTicketResponse, User, UserMetadata} from 'auth0';
 import debug from 'debug';
 import axios from 'axios';
-import { IUser } from '../../models/user.model';
+import { IPermissionLevel, IUser } from '../../models/user.model';
 import ICreateUserDTO from '../../dto/create_user.dto';
 import Conflict from '../errors/http/conflict_error';
 import BadRequest from '../errors/http/bad_request_error';
 import ICreateOauthUserDTO from '../../dto/create_oauth_user.dto';
 import NotFound from '../errors/http/not_found.error.';
+import IUpdateOauthUserDTO from '../../dto/update_oauth_user.dto';
 
 const log = debug('app:common:auth:service');
 export class Auth0Service{
@@ -28,36 +29,69 @@ export class Auth0Service{
         }
     }
 
-    async changePassword(auth0UserId:string,newPassword:string):Promise<User<AppMetadata,UserMetadata>>{
-        log("changing user password");
-        return await this.management.updateUser({id: auth0UserId},{password: newPassword});
+    async updateUser(auth0UserId:string,update:IUpdateOauthUserDTO,role?:IPermissionLevel):Promise<User<AppMetadata,UserMetadata>>{
+        log("updating user data with role",role);
+        const oauthUser =  await this.management.updateUser({id: auth0UserId},
+            {
+                ...update
+            }
+        );
+        if(role){
+            return this.assignRoleToUser(oauthUser,role);
+        }
+        return oauthUser;
     }
 
-    async createUser(user:ICreateOauthUserDTO){
+    async createUser(user:ICreateOauthUserDTO,role:IPermissionLevel){
         try{
             log("creating oauth0 user");
-            return await this.management.createUser({
+            const oauthUser =  await this.management.createUser({
                 connection: 'Username-Password-Authentication',
                 ...user,
                 email_verified: false,
-                verify_email: false,
+                verify_email: true,
             });
+            return this.assignRoleToUser(oauthUser,role);
         }catch(e){
             this.handleError(e);
         }
     }
 
-    async sendPasswordResetEmailTo({email}:{email:string}):Promise<PasswordChangeTicketResponse>{
+    async assignRoleToUser(user:User<AppMetadata, UserMetadata>,userRole:string){
+        log("assigning role to user");
+        const roles = await this.management.getRoles();
+
+        const role = roles.find((role)=>{
+            return role.name===userRole;
+        })
+        if(role){
+            await this.management.assignRolestoUser({id:user.user_id},{roles:[role.id]});
+        }
+        return user;
+    }
+
+    async sendPasswordResetEmailTo({user_id}:{user_id:string}):Promise<PasswordChangeTicketResponse>{
        try{
         log("changing oauth0 user password")
         return this.management.createPasswordChangeTicket({
-            connection_id:'Username-Password-Authentication',
-            ttl_sec:1000,
-            email: email,
+            user_id,
+            ttl_sec:600
         })
        }catch(err){
         this.handleError(err);
        }
+    }
+
+    async sentEmailVerification({user_id}:{user_id:string}):Promise<EmailVerificationTicketOptions>{
+        try{
+            log("creating email verification ticket");
+            return this.management.createEmailVerificationTicket({
+                user_id,
+                ttl_sec:86400
+            })
+        }catch(err){
+            this.handleError(err);
+        }
     }
 
     async findAndRemoveUserByEmail(email:string){

@@ -27,11 +27,22 @@ class UsersController{
             next(e);
         }
     }
+
+    async getUserById(req:Request,res:Response,next:NextFunction):Promise<void>{
+      try{
+        log("before get");
+        const user = await usersService.getAllUserDataById(req.params.id);
+        res.send(user);
+      }catch(e){
+        log(e);
+        next(e);
+      }
+    }
     
     async updateUserById(req:Request,res:Response,next:NextFunction):Promise<void>{
       try{
         const user = await usersService.getUserById(req.params.id);
-        await usersService.updateUserProfile(user);
+        await usersService.updateUser(user,req.body);
         res.send(user);
       }catch(e){
         next(e);
@@ -46,6 +57,29 @@ class UsersController{
        }catch(e){
         next(e);
        }
+    }
+
+
+    async sentPasswordResetEmail(req:Request,res:Response,next:NextFunction){
+      try{
+        log("invoked send password reset email tiket");
+        const user = await usersService.getUserById(req.params.id);
+        const data = await usersService.sendPasswordResetEmail(user);
+        res.status(200).send(data);
+      }catch(e){
+        next(e);
+      }
+    }
+
+    async sentVerificationEmail(req:Request,res:Response,next:NextFunction){
+      try{
+        log("invoked send verification email tiket");
+        const user = await usersService.getUserById(req.params.id);
+        const data = await usersService.sentVerificationEmail(user);
+        res.status(200).send(data);
+      }catch(e){
+        next(e);
+      }
     }
 }
 

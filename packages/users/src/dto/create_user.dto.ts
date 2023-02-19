@@ -1,10 +1,11 @@
 import { IAddress } from "../models/adress.schema";
+import { IPermissionLevel } from "../models/user.model";
 
 export default interface ICreateUserDTO{
     firstName:string,
     lastName:string,
     gender:"male"|"female",
-    permittionLevel:"admin"|"user",
+    permissionLevel:IPermissionLevel,
     email: string,
     phone: string,
     username:string,
@@ -12,7 +13,5 @@ export default interface ICreateUserDTO{
     birdhDate:string,
     avatar:string,
     addresses:IAddress[],
-    status:"active"|"closed",
-    createdAt:number,
-    modifiedAt:number,
+    status:"active"|"closed"
 }
