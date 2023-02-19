@@ -70,11 +70,13 @@ export class Auth0Service{
         return user;
     }
 
-    async sendPasswordResetEmailTo({user_id}:{user_id:string}):Promise<PasswordChangeTicketResponse>{
+    async sendPasswordResetEmailTo({user_id,connection_id,email}:{user_id?:string,connection_id?:string,email:string}):Promise<PasswordChangeTicketResponse>{
        try{
-        log("changing oauth0 user password")
+        log("changing oauth0 user password",user_id,connection_id,email);
         return this.management.createPasswordChangeTicket({
             user_id,
+            connection_id,
+            email,
             ttl_sec:600
         })
        }catch(err){
@@ -109,5 +111,5 @@ export class Auth0Service{
 export default new Auth0Service({
     clientId:process.env.AUTH_CLIENT_ID,
     clientSecret:process.env.AUTH_CLIENT_SECRET,
-    domain:process.env.AUTH_DOMAIN
+    domain:process.env.AUTH_DOMAIN,
 });
