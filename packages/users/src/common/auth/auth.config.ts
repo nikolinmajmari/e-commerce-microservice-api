@@ -5,7 +5,7 @@ import {auth as authJwt} from 'express-oauth2-jwt-bearer'
 export const checkJwt = authJwt({
     audience: process.env.AUTH_AUDIENCE,
     issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
-    tokenSigningAlg: 'HS256'
+    secret:null,
 });  
 
 export class AuthConfigService{
@@ -19,10 +19,17 @@ export class AuthConfigService{
             clientID: process.env.AUTH_CLIENT_ID,
             clientSecret:process.env.AUTH_CLIENT_SECRET,
             issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
-            routes:{
-                login: false
-            }
+            // routes:{
+            //     login: false,
+            //     callback:"/profile"
+            // },
+            authorizationParams: {
+                response_type: 'code', // This requires you to provide a client secret
+                audience: process.env.AUTH_AUDIENCE,
+                scope: "openid email profile name",
+            },        
         };
+        
         this.app.use(auth(config));
     }
 }

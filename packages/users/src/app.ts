@@ -6,9 +6,9 @@ import helmet from 'helmet';
 import { SwaggerConfig } from './swagger.config';
 import AuthRoutes from './common/auth/auth.routes';
 import { AuthConfigService } from './common/auth/auth.config';
+import AppErrorHandler from './common/errors/errors.service';
 
 const log = debug("app:main");
-log(process.env);
 
 export const PORT = +process.env.PORT || 3333;
 export const HOST = process.env.HOST || 'localhost';
@@ -26,9 +26,8 @@ new SwaggerConfig(app, HOST, PORT);
 /// inject users route 
 new UsersRoute(app);
 
-app.get('/api', (req, res) => {
-    res.send({message: 'Welcome to users!'});
-});
+/// configure error handler 
+new AppErrorHandler(app);
 
 log(`Routes configured and Swagger served at http://${HOST}:${PORT}/docs`)
 

@@ -9,6 +9,11 @@ class AuthController{
         res.oidc.login({returnTo:"/profile"});
     }
 
+    logout(req:Request,res:Response){
+        log("user logged out");
+        res.oidc.logout({returnTo:"/"});
+    }
+
     async profile(req:Request,res:Response){
         log("profile endpoint for "+req.oidc.user.sub);
         res.send({

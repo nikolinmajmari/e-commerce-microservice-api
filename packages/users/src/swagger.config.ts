@@ -26,7 +26,7 @@ export class SwaggerConfig {
     };
     const options = {
       swaggerDefinition,
-      apis: [__dirname + '/**/docs/*.yaml'],
+      apis: [__dirname + '/**/docs/**/*.yaml'],
     };
     const swaggerSpec = swaggerJSDoc(options);
     app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

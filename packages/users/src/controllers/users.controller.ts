@@ -1,35 +1,41 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user.model";
 import debug from "debug";
-import authService from "../common/auth/auth.service";
-import usersService, { UserService } from "../services/users.service";
+import usersService from "../services/users.service";
 const log = debug("app:controller:user");
 class UsersController{
     
-    getUsers(req:Request,res:Response,next:NextFunction):void{
-        User.find({},{},null,function(err,users){
-            if(err){
-                return next(err);
-            }
-            return res.json(users);
-        })
+    async getUsers(req:Request,res:Response,next:NextFunction){
+      try{
+        const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 100;
+        const offset = req.query.offset ? parseInt(req.query.offset.toString()): 0;
+        log(limit,offset);
+        const users = await usersService.getUsers({limit:limit>100?100:limit,offset: offset});
+        res.send(users);  
+      }catch(e){
+        next(e);
+      }
     }
     
-    createUser(req:Request,res:Response,next:NextFunction):void{
-        const user = User.build(req.body);
-        log(JSON.stringify(req.body));
-        user.save();
-        res.statusCode = 201;
-        res.send(user);
+    async createUser(req:Request,res:Response,next:NextFunction){
+        try{
+            log("creating new user");
+            const created =  await usersService.createUser(req.body);
+            return res.status(201)
+                      .json(created);
+        }catch(e){
+            next(e);
+        }
     }
     
     async updateUserById(req:Request,res:Response,next:NextFunction):Promise<void>{
-        const userId = req.params.id;
-        const user = await User.findById(userId);
-        await user.update(req.body);
-        /// update user data in 
-        await user.save();
+      try{
+        const user = await usersService.getUserById(req.params.id);
+        await usersService.updateUserProfile(user);
         res.send(user);
+      }catch(e){
+        next(e);
+      }
     }
 
     async deleteUserById(req:Request,res:Response,next:NextFunction):Promise<void>{

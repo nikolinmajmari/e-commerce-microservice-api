@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/user.model";
 import debug from "debug";
-import authService from "../common/auth/auth.service";
 const log = debug("app:controller:user");
 class UserController{
 

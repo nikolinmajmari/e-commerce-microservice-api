@@ -1,4 +1,5 @@
 import { Application } from "express"
+import createUserDtoValidation from "../middleware/validation/create_user_dto.validation";
 import usersController from "../controllers/users.controller"
 import userById from "../middleware/users/userById";
 
@@ -10,7 +11,12 @@ export default class UsersRoute{
     configureRoutes(){
         this.app.route("/api/users")
         .get(usersController.getUsers)
-        .post(usersController.createUser);
+        
+        /// configure post users 
+        .post(
+            ...createUserDtoValidation(),
+            usersController.createUser
+        );
 
         this.app.route("/api/users/:id")
         .all(userById)

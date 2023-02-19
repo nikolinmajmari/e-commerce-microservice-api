@@ -4,6 +4,7 @@ export default interface ICreateUserDTO{
     firstName:string,
     lastName:string,
     gender:"male"|"female",
+    permittionLevel:"admin"|"user",
     email: string,
     phone: string,
     username:string,

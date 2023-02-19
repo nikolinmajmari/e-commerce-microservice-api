@@ -1,6 +1,6 @@
 paths:
   /api/users/{id}:
-    patch:
+    get:
       security:
         - Bearer: []
       tags:
@@ -15,15 +15,15 @@ paths:
             description: Update am user with a patch request to /users
             required: true 
             schema: 
-              $ref: '#/definitions/patch'
+              $ref: '#/definitions/user'
       responses:
         201:
-          description: The updated user object
-        409:
-          description: Conflict, user email already exists
+          description: The  user object
+        404:
+          description: User not found
 
 definitions:
-  patch:
+  user:
     type: object
     properties:
       firstName: 
