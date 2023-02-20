@@ -4,7 +4,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User
+        - Users
       summary: Create new user 
       produces: 
         - application/json
@@ -35,6 +35,9 @@ definitions:
         enum: ["male","female"]
       email: 
         type: string
+      permissionLevel:
+        type: string
+        enum: ["Admin","User"]
       phone: 
         type: string
       username: 

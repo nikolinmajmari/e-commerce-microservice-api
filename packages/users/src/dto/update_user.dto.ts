@@ -1,5 +1,5 @@
 import { IAddress } from "../models/adress.schema";
-import { IPermissionLevel } from "../models/user.model";
+import { IAccountStatus, IPermissionLevel } from "../models/user.model";
 
 export interface IUpdateUserDto{
     permissionLevel?:IPermissionLevel;
@@ -13,5 +13,5 @@ export interface IUpdateUserDto{
     birthDate?:string,
     avatar?:string,
     addresses?:IAddress[],
-    status?:"active"|"closed",
+    status?:IAccountStatus,
 }

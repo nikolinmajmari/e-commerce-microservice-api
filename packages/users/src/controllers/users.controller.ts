@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/user.model";
 import debug from "debug";
-import usersService from "../services/users.service";
-const log = debug("app:controller:user");
+import usersService, { UserService } from "../services/users.service";
+const log = debug("app:controller:users");
 class UsersController{
     
     async getUsers(req:Request,res:Response,next:NextFunction){
@@ -59,7 +58,6 @@ class UsersController{
        }
     }
 
-
     async sentPasswordResetEmail(req:Request,res:Response,next:NextFunction){
       try{
         log("invoked send password reset email tiket");
@@ -77,6 +75,60 @@ class UsersController{
         const user = await usersService.getUserById(req.params.id);
         const data = await usersService.sentVerificationEmail(user);
         res.status(200).send(data);
+      }catch(e){
+        next(e);
+      }
+    }
+
+
+    async getUserAddresses(req:Request,res:Response,next:NextFunction){
+      try{
+        const user = await usersService.getUserById(req.params.id);
+        res.json((user).addresses);
+      }catch(e){
+        next(e);
+      }
+    }
+
+    async getUserAddress(req:Request,res:Response,next:NextFunction){
+      try{
+        const user = await usersService.getUserById(req.params.id);
+        const address = await usersService.getUserAddress(user,req.params.address);
+        return res.status(200).json(address);
+      }catch(e){
+        next(e);
+      }
+    }
+
+    async addUserAddress(req:Request,res:Response,next:NextFunction){
+      try{
+        const user = await usersService.getUserById(req.params.id);
+        const newAddress = await usersService.addUserAddress(user,req.body);
+        return res.status(201).json(newAddress);
+      }catch(e){
+        next(e);
+      }
+    }
+
+    async patchUserAddress(req:Request,res:Response,next:NextFunction){
+      try{
+        const user = await usersService.getUserById(req.params.id);
+        const address = await usersService.getUserAddress(user,req.params.address);
+        const patchedAddress = await usersService.patchUserAddress(
+          user,address,req.body
+        );
+        return res.status(200).json(patchedAddress);
+      }catch(e){
+        next(e);
+      }
+    }
+
+    async deleteUserAddress(req:Request,res:Response,next:NextFunction){
+      try{
+        const user = await usersService.getUserById(req.params.id);
+        const address = await usersService.getUserAddress(user,req.params.address);
+        await usersService.deleteUserAddress(user,address);
+        return res.status(204).json("0k");
       }catch(e){
         next(e);
       }

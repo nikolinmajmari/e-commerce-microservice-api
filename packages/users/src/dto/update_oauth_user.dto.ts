@@ -1,3 +1,4 @@
+import { IAccountStatus } from "../models/user.model";
 import { IUpdateUserDto } from "./update_user.dto";
 
 export default interface IUpdateOauthUserDTO{
@@ -5,6 +6,7 @@ export default interface IUpdateOauthUserDTO{
     password?:string,
     name?: string,
     picture?: string,
+    status?: IAccountStatus,
 }
 
 
@@ -15,6 +17,7 @@ export function fromUpdateUserDTO(
         email: dto?.email??undefined,
         name: `${dto?.firstName} ${dto?.lastName}`,
         password: dto?.password??undefined,
+        status: dto.status
        // picture: dto?.avatar??undefined,
     }
 }

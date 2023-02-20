@@ -1,0 +1,44 @@
+ 
+paths:
+  /api/user/changeEmailAddress:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Create change email ticket
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Ticket
+        401:
+          description: Forbidden
+  /api/user/changeUserPassword:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Create Change User password ticket
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: The profile of the user
+        401:
+          description: Forbidden
+  /api/user/closeAccount:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Close User Account
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: The profile of the user
+        401:
+          description: Forbidden

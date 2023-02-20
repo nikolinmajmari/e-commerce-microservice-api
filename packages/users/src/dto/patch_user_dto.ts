@@ -1,5 +1,5 @@
 import { IAddress } from "../models/adress.schema";
-import { IPermissionLevel } from "../models/user.model";
+import { IAccountStatus, IPermissionLevel } from "../models/user.model";
 
 export default interface IPatchUserDTO{
     firstName?:string;
@@ -12,5 +12,6 @@ export default interface IPatchUserDTO{
     password?:string;
     birthDate?:string;
     avatar?:string;
+    status?:IAccountStatus,
     addresses?:IAddress[]
 }

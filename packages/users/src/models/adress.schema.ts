@@ -17,4 +17,12 @@ export default new Schema({
     state: String,
     primary: Boolean,
     label: String,
+},{
+    toJSON:{
+        transform(doc,ret){
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.__v;
+        }
+    }
 })

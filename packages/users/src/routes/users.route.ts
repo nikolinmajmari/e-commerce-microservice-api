@@ -1,7 +1,9 @@
 import { Application } from "express"
-import createUserDtoValidation from "../middleware/validation/create_user_dto.validation";
+import createUserDtoValidation from "../middleware/validation/new_user.validation.";
 import usersController from "../controllers/users.controller"
 import userById from "../middleware/users/userById";
+import userAddressById from "../middleware/users/userAddressById";
+import patchUserValidator from "../middleware/validation/patch_user.validation";
 
 export default class UsersRoute{
     constructor(private app:Application){
@@ -18,18 +20,38 @@ export default class UsersRoute{
             usersController.createUser
         );
 
+        /// handlers for /id
         this.app.route("/api/users/:id")
         .all(userById)
         .get(usersController.getUserById)
-        .patch(usersController.updateUserById)
+        .patch([
+            ...patchUserValidator(),
+            usersController.updateUserById,
+        ])
         .delete(usersController.deleteUserById);
 
+        /// password reseter
         this.app.route("/api/users/:id/resetPassword")
         .all(userById)
-        .get(usersController.sentPasswordResetEmail);
+        .post(usersController.sentPasswordResetEmail);
 
+        /// verify emailer
         this.app.route("/api/users/:id/verifyEmail")
         .all(userById)
-        .get(usersController.sentVerificationEmail);
+        .post(usersController.sentVerificationEmail);
+
+
+        //// user addresses routes 
+        this.app.route("/api/users/:id/addresses")
+        .all(userById)
+        .get(usersController.getUserAddresses)
+        .post(
+            usersController.addUserAddress
+        );
+
+        this.app.route("/api/users/:id/addresses/:address")
+        .all(userAddressById)
+        .patch(usersController.patchUserAddress)
+        .delete(usersController.deleteUserAddress);
     }
 }

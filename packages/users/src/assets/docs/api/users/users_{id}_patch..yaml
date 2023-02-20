@@ -1,10 +1,10 @@
 paths:
   /api/users/{id}:
-    get:
+    patch:
       security:
         - Bearer: []
       tags:
-        - User
+        - Users
       summary: Update existing user 
       produces: 
         - application/json
@@ -23,15 +23,17 @@ paths:
             description: Update am user with a patch request to /users
             required: true 
             schema: 
-              $ref: '#/definitions/user'
+              $ref: '#/definitions/patch'
       responses:
         201:
-          description: The  user object
+          description: The updated user object
         404:
           description: User not found
+        409:
+          description: Conflict, user email already exists
 
 definitions:
-  user:
+  patch:
     type: object
     properties:
       firstName: 
@@ -43,6 +45,9 @@ definitions:
         enum: ["male","female"]
       email: 
         type: string
+      permissionLevel:
+        type: string
+        enum: ["Admin","User"]
       phone: 
         type: string
       username: 
@@ -53,3 +58,6 @@ definitions:
         type: string
       avatar: 
         type: string
+      status:
+        type: string
+        enum: ["active","closed"]

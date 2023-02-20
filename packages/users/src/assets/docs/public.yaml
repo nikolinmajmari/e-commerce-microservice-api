@@ -1,0 +1,13 @@
+paths:
+  /forgotPassword:
+    post:
+      tags:
+        - Public
+      summary: Create change email ticket
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Ticket
+        401:
+          description: Forbidden

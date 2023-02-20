@@ -1,0 +1,24 @@
+paths:
+  /api/users/{id}/resetPassword:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users
+      summary: Create a password reset ticket for user
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user ID
+
+      responses:
+        201:
+          description: The updated user object
+        404:
+          description: User not found

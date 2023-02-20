@@ -7,9 +7,15 @@ import mongooseService from "../common/mongoose";
 import { fromCreateUserDTO } from "../dto/create_oauth_user.dto";
 import IPatchUserDTO from "../dto/patch_user_dto";
 import { fromUpdateUserDTO } from "../dto/update_oauth_user.dto";
+import { IAuth0Service } from "../common/auth/auth.types";
+import { IAddress } from "../models/adress.schema";
+import INewAddressDTO from "../dto/new_address.dto";
+import IPatchAddressDTO from "../dto/patch_address.dto";
 const log = debug("app:services:UserService");
 
 export class UserService{
+
+    constructor(private auth:IAuth0Service){}
 
     private startMongooseSession() {
         return mongooseService.getMongoose().startSession();
@@ -30,13 +36,48 @@ export class UserService{
      * @returns user instance of mongoose
      */
     async getUserById(id:string){
-        return await User.findById(id);
+        const user =  await User.findById(id);
+        return user;
     }
 
+    async getUserAddress(user:IUser,address:string):Promise<IAddress>{
+        return user.addresses.find((addr)=>addr._id == address);
+    }
+
+    async addUserAddress(user:IUser,address:INewAddressDTO){
+        if(address.primary){
+            this.setAllAddressesAsNonPrimary(user);
+        }
+        const index = user.addresses.push({...address});
+        await user.save();
+        return user.addresses[index];
+    }
+
+    async patchUserAddress(user:IUser,address:IAddress,patch:IPatchAddressDTO){
+        if(patch.primary===true && address.primary===false){
+            this.setAllAddressesAsNonPrimary(user);
+        }
+        address.set(patch);
+        await user.save();
+        return address;
+    }
+    
+    private async setAllAddressesAsNonPrimary(user:IUser){
+        for(const subdoc of user.addresses){
+            subdoc.set({primary:false});
+        }
+        user.save();
+    }
+
+    async deleteUserAddress(user:IUser,address:IAddress){
+        user.addresses.pull(address);
+        await user.save();
+    }
 
     async getAllUserDataById(id:string){
         const userDoc = await this.getUserById(id);
-        const [oauthUser]  = await authService.management.getUsersByEmail(userDoc.email);
+        log(userDoc);
+        const oauthUser  = await this.auth.findUserByEmail(userDoc.email);
         return {
             ...userDoc.toJSON(),
             email_verified:oauthUser.email_verified,
@@ -55,7 +96,7 @@ export class UserService{
             log("started transaction");
             session.startTransaction();
             const user = User.build(createUserDto);
-            const oauthUser = await authService.createUser(
+            const oauthUser = await this.auth.createUser(
                 fromCreateUserDTO(createUserDto),
                 createUserDto.permissionLevel
             );
@@ -87,13 +128,13 @@ export class UserService{
         log("started transaction");
         session.startTransaction();
         log("updating user on oauth servers")
-        await authService.updateUser(
+        await this.auth.updateUser(
             user.user_id,
             fromUpdateUserDTO(update),
             update.permissionLevel
         );
         log("updating user data in mongoose");
-        await user.overwrite({...update});
+        await user.set({...update});
         await user.save();
         log("commiting transaction");
         await session.commitTransaction();
@@ -111,12 +152,12 @@ export class UserService{
 
     async sendPasswordResetEmail(user:IUser) {
         log("invoked sent password reset email");
-        return await authService.sendPasswordResetEmailTo(user);
+        return await this.auth.sendPasswordResetEmailTo(user);
     }
 
     async sentVerificationEmail(user:IUser) {
         log("invoked sent verification reset email");
-        return await authService.sentEmailVerification(user);
+        return await this.auth.sentEmailVerification(user);
     }
 
     async deleteUserAccount(user:IUser){
@@ -126,7 +167,7 @@ export class UserService{
             log("started transaction");
             session.startTransaction();
             log("deleting oauth0 user from oauth0db");
-            await authService.findAndRemoveUserByEmail(user.email);
+            await this.auth.findAndRemoveUserByEmail(user.email);
             log("deleting user from mongoose db");
             await user.delete();
             log("commiting transaction");
@@ -148,4 +189,4 @@ export class UserService{
 
 }
 
-export default new UserService();
+export default new UserService(authService);

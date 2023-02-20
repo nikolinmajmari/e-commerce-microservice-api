@@ -5,16 +5,12 @@ import debug from "debug";
 const log = debug("app:middleware:validation:create_user");
 export default function (){
     return [
-        body("firstName").isString(),
-        body("lastName").isString(),
-        body("gender").isIn(["male","female"]),
-        body("email").isEmail(),
-        body("phone").isMobilePhone("any"),
-        body("username").isString(),
-        body("password").isString(),
-        body("birthDate").isDate(),
-        body("avatar").isString(),
-        body("addresses").isArray(),
+        body("address").isString().optional(),
+        body("city").isString().optional(),
+        body("postalCode").isNumeric().optional(),
+        body("state").isString().optional(),
+        body("primary").isBoolean().optional(),
+        body("label").isString().optional(),
         (req:Request,res:Response,next:NextFunction)=>{
             const errors = validationResult(req);
             if(!errors.isEmpty()){

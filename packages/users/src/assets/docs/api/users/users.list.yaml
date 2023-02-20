@@ -4,7 +4,7 @@ paths:
       security:
         - Bearer: [ ]
       tags:               # Tag property
-        - User            # Value of the tag
+        - Users            # Value of the tag
       summary: list users
       produces:
         - application/json

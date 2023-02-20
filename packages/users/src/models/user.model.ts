@@ -1,8 +1,9 @@
-import mongoose, { Schema,Document,Model } from "mongoose";
+import mongoose, { Schema,Document,Model, Types } from "mongoose";
 import ICreateUserDTO from "../dto/create_user.dto";
 import schema, { IAddress } from "./adress.schema";
 
 export type IPermissionLevel = "Admin"|"User";
+export type IAccountStatus = "active"|"closed";
 
 export interface IUser extends Document{
     id: string,
@@ -17,8 +18,8 @@ export interface IUser extends Document{
     password:string,
     birthDate:string,
     avatar:string,
-    addresses:IAddress[],
-    status:"active"|"closed",
+    addresses:Types.DocumentArray<IAddress>,
+    status:IAccountStatus,
     createdAt:number,
     modifiedAt:number,
 }
@@ -48,6 +49,12 @@ const userSchema = new Schema({
     password: String,
     birthDate: String,
     avatar: String,
+    status:{
+        type: String,
+        enum: ["active","closed"],
+        require: true,
+        default: "active",
+    },
     addresses: [schema]
 },{
     toJSON:{
