@@ -8,7 +8,7 @@ export class SwaggerConfig {
       openapi: '3.0.3',
       info: {
         title: 'USERS API', 
-        version: '1.0.0',
+        version: 'v1',
         description: 'The Users REST API', 
       },
       host: `${HOST}:${PORT}`, 

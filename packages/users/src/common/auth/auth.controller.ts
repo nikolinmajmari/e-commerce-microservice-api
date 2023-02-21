@@ -27,7 +27,7 @@ class AuthController{
     async resetPassword(req:Request,res:Response,next:NextFunction){
         log("requesting chengin password");
         try{
-            const ticket = await authService.sendPasswordResetEmailTo({
+            const ticket = await authService.createPassowrdResetTicket({
                 email:req.query.email.toString(),
                 connection_id:process.env.AUTH_CONNECTION_ID,
             });

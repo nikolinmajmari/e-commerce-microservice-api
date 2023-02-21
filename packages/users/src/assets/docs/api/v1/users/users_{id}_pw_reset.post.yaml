@@ -1,5 +1,5 @@
 paths:
-  /api/users/{id}/resetPassword:
+  /api/v1/users/{id}/resetPassword:
     post:
       security:
         - Bearer: []

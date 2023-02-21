@@ -14,6 +14,7 @@ export default class AuthRoutes{
     configureRoutes(){
         this.app.get("/login",authController.login);
         this.app.get("/profile",requiresAuth(),authController.profile);
+        this.app.get("/callback",requiresAuth(),authController.profile);
         this.app.get("/logout",requiresAuth(),authController.logout);
         this.app.get("/resetPassword",authController.resetPassword);
     }

@@ -1,13 +1,13 @@
 import express from 'express';
 import * as path from 'path';
-import UsersRoute from './routes/users.route';
 import debug from "debug";
 import helmet from 'helmet';
 import { SwaggerConfig } from './swagger.config';
 import AuthRoutes from './common/auth/auth.routes';
 import { AuthConfigService } from './common/auth/auth.config';
 import AppErrorHandler from './common/errors/errors.service';
-
+import ApiUserRoute from './routes/api.user.route';
+import ApiUsersRoute from './routes/api.users.route';
 const log = debug("app:main");
 
 export const PORT = +process.env.PORT || 3333;
@@ -23,8 +23,10 @@ new AuthRoutes(app);
 
 /// configure swagger 
 new SwaggerConfig(app, HOST, PORT);
-/// inject users route 
-new UsersRoute(app);
+/// inject users route
+
+new ApiUserRoute(app); 
+new ApiUsersRoute(app);
 
 /// configure error handler 
 new AppErrorHandler(app);

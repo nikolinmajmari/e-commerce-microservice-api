@@ -1,5 +1,5 @@
 paths:
-  /api/user/profile:
+  /api/v1/user/profile:
     get:
       security:
         - Bearer: []
@@ -13,7 +13,7 @@ paths:
           description: The profile of the user
         401:
           description: Forbidden
-    post:
+    patch:
       security:
         - Bearer: []
       tags:

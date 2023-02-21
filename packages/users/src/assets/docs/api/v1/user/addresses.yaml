@@ -1,5 +1,5 @@
 paths:
-  /api/users/{id}/addresses:
+  /api/v1/user/addresses:
     get:
       security:
         - Bearer: []
@@ -8,15 +8,6 @@ paths:
       summary: Get User Addresses
       produces: 
         - application/json
-      parameters:
-        - in: path
-          name: id   # Note the name is the same as in the path
-          required: true
-          schema:
-            type: string
-            minimum: 1
-          description: The user ID
-
       responses:
         201:
           description: The updated user object
@@ -30,14 +21,6 @@ paths:
       summary: Add new user address
       produces: 
         - application/json
-      parameters:
-        - in: path
-          name: id   # Note the name is the same as in the path
-          required: true
-          schema:
-            type: string
-            minimum: 1
-          description: The user ID
       requestBody:
         content:
           application/json:
@@ -52,7 +35,7 @@ paths:
           description: The updated user object
         404:
           description: User not found
-  /api/users/{id}/addresses/{address}:
+  /api/v1/user/addresses/{address}:
     patch:
       security:
         - Bearer: []
@@ -62,13 +45,6 @@ paths:
       produces: 
         - application/json
       parameters:
-        - in: path
-          name: id   # Note the name is the same as in the path
-          required: true
-          schema:
-            type: string
-            minimum: 1
-          description: The user ID
         - in: path
           name: address   # Note the name is the same as in the path
           required: true
@@ -98,13 +74,6 @@ paths:
       produces: 
         - application/json
       parameters:
-        - in: path
-          name: id   # Note the name is the same as in the path
-          required: true
-          schema:
-            type: string
-            minimum: 1
-          description: The user ID
         - in: path
           name: address   # Note the name is the same as in the path
           required: true
@@ -136,10 +105,6 @@ definitions:
         type: boolean
       label: 
         type: string
-
-
-
-
 
 
 

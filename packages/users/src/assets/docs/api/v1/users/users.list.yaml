@@ -1,5 +1,5 @@
 paths:
-  /api/users:                # path of the user from your endpoint
+  /api/v1/users:                # path of the user from your endpoint
     get:
       security:
         - Bearer: [ ]

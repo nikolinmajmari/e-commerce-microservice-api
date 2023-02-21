@@ -1,7 +1,7 @@
 import authService from "../common/auth/auth.service";
 import ICreateUserDTO from "../dto/create_user.dto";
 import { ListUsersInput } from "../dto/list_user.input";
-import User, { IUser } from "../models/user.model";
+import User, { IPermissionLevel, IUser } from "../models/user.model";
 import debug from "debug";
 import mongooseService from "../common/mongoose";
 import { fromCreateUserDTO } from "../dto/create_oauth_user.dto";
@@ -11,6 +11,7 @@ import { IAuth0Service } from "../common/auth/auth.types";
 import { IAddress } from "../models/adress.schema";
 import INewAddressDTO from "../dto/new_address.dto";
 import IPatchAddressDTO from "../dto/patch_address.dto";
+import { User as AuthUser } from "auth0";
 const log = debug("app:services:UserService");
 
 export class UserService{
@@ -35,9 +36,13 @@ export class UserService{
      * @param id user id
      * @returns user instance of mongoose
      */
-    async getUserById(id:string){
+    async getUser(id:string){
         const user =  await User.findById(id);
         return user;
+    }
+
+    async getUserByUserId(id:string){
+        return await User.findOne({user_id:id});
     }
 
     async getUserAddress(user:IUser,address:string):Promise<IAddress>{
@@ -75,13 +80,35 @@ export class UserService{
     }
 
     async getAllUserDataById(id:string){
-        const userDoc = await this.getUserById(id);
+        const userDoc = await this.getUser(id);
         log(userDoc);
         const oauthUser  = await this.auth.findUserByEmail(userDoc.email);
         return {
             ...userDoc.toJSON(),
             email_verified:oauthUser.email_verified,
         }
+    }
+
+
+    async createUserFromOauthUser(oauthUser:AuthUser,permission:IPermissionLevel){
+        const [firstName,lastName] = oauthUser.name.split(" ");
+        const newUser = User.build({
+            firstName,
+            lastName,
+            avatar: "",
+            birdhDate: "",
+            addresses: [],
+            email: oauthUser.email,
+            username: oauthUser.username,
+            gender: "male",
+            permissionLevel: permission,
+            phone: '',
+            password: '',
+            status: 'active'
+        });
+        newUser.user_id = oauthUser.user_id;
+        await newUser.save();
+        return newUser;
     }
 
     /**
@@ -152,12 +179,12 @@ export class UserService{
 
     async sendPasswordResetEmail(user:IUser) {
         log("invoked sent password reset email");
-        return await this.auth.sendPasswordResetEmailTo(user);
+        return await this.auth.createPassowrdResetTicket(user);
     }
 
     async sentVerificationEmail(user:IUser) {
         log("invoked sent verification reset email");
-        return await this.auth.sentEmailVerification(user);
+        return await this.auth.createEmailVerificationTicket(user);
     }
 
     async deleteUserAccount(user:IUser){

@@ -1,7 +1,9 @@
 import {User,AppMetadata,UserMetadata, EmailVerificationTicketOptions, PasswordChangeTicketResponse} from "auth0";
+import { Request } from "express";
 import ICreateOauthUserDTO from "../../dto/create_oauth_user.dto";
 import IUpdateOauthUserDTO from "../../dto/update_oauth_user.dto";
-import {IPermissionLevel} from "../../models/user.model";
+import {IPermissionLevel, IUser} from "../../models/user.model";
+
 export interface IAuth0Service{
     findUserByEmail(
         email:string
@@ -22,10 +24,10 @@ export interface IAuth0Service{
         userRole:string
     ):Promise<User<AppMetadata, UserMetadata>>;
 
-    sendPasswordResetEmailTo(
+    createPassowrdResetTicket(
         {user_id,connection_id,email}:{user_id?:string,connection_id?:string,email:string}
     ):Promise<PasswordChangeTicketResponse>;
-    sentEmailVerification(
+    createEmailVerificationTicket(
         {user_id}:{user_id:string}
     ):Promise<EmailVerificationTicketOptions>;
     findAndRemoveUserByEmail(email:string);

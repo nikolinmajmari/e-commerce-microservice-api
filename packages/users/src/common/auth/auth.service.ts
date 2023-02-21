@@ -27,7 +27,6 @@ export class Auth0Service implements IAuth0Service{
                 throw e;
         }
     }
-
     async updateUser(auth0UserId:string,update:IUpdateOauthUserDTO,role?:IPermissionLevel):Promise<User<AppMetadata,UserMetadata>>{
         log("updating user data with role",role);
         const {status,email,name,password,picture} = update;
@@ -69,7 +68,7 @@ export class Auth0Service implements IAuth0Service{
         return user;
     }
 
-    async sendPasswordResetEmailTo({user_id,connection_id,email}:{user_id?:string,connection_id?:string,email:string}):Promise<PasswordChangeTicketResponse>{
+    async createPassowrdResetTicket({user_id,connection_id,email}:{user_id?:string,connection_id?:string,email:string}):Promise<PasswordChangeTicketResponse>{
        try{
         log("changing oauth0 user password",user_id,connection_id,email);
         const data = user_id 
@@ -84,7 +83,7 @@ export class Auth0Service implements IAuth0Service{
        }
     }
 
-    async sentEmailVerification({user_id}:{user_id:string}):Promise<EmailVerificationTicketOptions>{
+    async createEmailVerificationTicket({user_id}:{user_id:string}):Promise<EmailVerificationTicketOptions>{
         try{
             log("creating email verification ticket");
             return this.management.createEmailVerificationTicket({

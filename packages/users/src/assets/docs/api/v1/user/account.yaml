@@ -1,6 +1,6 @@
  
 paths:
-  /api/user/changeEmailAddress:
+  /api/v1/user/changeEmailAddress:
     post:
       security:
         - Bearer: []
@@ -9,12 +9,23 @@ paths:
       summary: Create change email ticket
       produces: 
         - application/json
+      requestBody:
+        content:
+          application/json:
+            name: Change email
+            description: Creates a new user with a post request to /users
+            required: true 
+            schema: 
+              type: object
+              properties:
+                email: string
+              
       responses:
         200:
           description: Ticket
         401:
           description: Forbidden
-  /api/user/changeUserPassword:
+  /api/v1/user/changeUserPassword:
     post:
       security:
         - Bearer: []
@@ -23,18 +34,28 @@ paths:
       summary: Create Change User password ticket
       produces: 
         - application/json
+      requestBody:
+        content:
+          application/json:
+            name: Change password
+            description: Creates a change password ticket, sents also an email to user email
+            required: true 
+            schema: 
+              type: object
+              properties:
+                password: string
       responses:
         200:
           description: The profile of the user
         401:
           description: Forbidden
-  /api/user/closeAccount:
+  /api/v1/user/closeAccount:
     post:
       security:
         - Bearer: []
       tags:
         - User
-      summary: Close User Account
+      summary: Closes User Account
       produces: 
         - application/json
       responses:

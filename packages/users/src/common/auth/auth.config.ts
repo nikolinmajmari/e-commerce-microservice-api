@@ -7,6 +7,7 @@ export const checkJwt = authJwt({
     issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
     secret:null,
 });  
+  
 
 export class AuthConfigService{
     constructor(private app:Application){}

@@ -26,7 +26,7 @@ export default function(err,req:Request,res:Response,next:NextFunction){
         res.status(400).json(err);
     }
     else{
-        log("An unhandled error occured",JSON.stringify(err));
+        log("An unhandled error occured",err);
         res.status(500).json({
             status:500,
             message: "An error occured",

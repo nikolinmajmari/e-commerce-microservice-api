@@ -3,7 +3,7 @@ import NotFound from "../../common/errors/http/not_found.error.";
 import usersService from "../../services/users.service";
 
 export default async function(req:Request,res:Response,next:NextFunction){
-    const user = await usersService.getUserById(
+    const user = await usersService.getUser(
         req.params.id
     );
     if(user==null){

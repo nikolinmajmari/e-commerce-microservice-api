@@ -1,37 +1,29 @@
 paths:
-  /api/users/{id}:
-    get:
+  /api/v1/users:
+    post:
       security:
         - Bearer: []
       tags:
         - Users
-      summary: Update existing user 
+      summary: Create new user 
       produces: 
         - application/json
-      parameters:
-        - in: path
-          name: id   # Note the name is the same as in the path
-          required: true
-          schema:
-            type: string
-            minimum: 1
-          description: The user ID
       requestBody:
         content:
           application/json:
             name: sign up 
-            description: Update am user with a patch request to /users
+            description: Creates a new user with a post request to /users
             required: true 
             schema: 
-              $ref: '#/definitions/user'
+              $ref: '#/definitions/signUp'
       responses:
         201:
-          description: The  user object
-        404:
-          description: User not found
+          description: The id of the created user
+        409:
+          description: Conflict, user email already exists
 
 definitions:
-  user:
+  signUp:
     type: object
     properties:
       firstName: 
@@ -43,6 +35,9 @@ definitions:
         enum: ["male","female"]
       email: 
         type: string
+      permissionLevel:
+        type: string
+        enum: ["Admin","User"]
       phone: 
         type: string
       username: 

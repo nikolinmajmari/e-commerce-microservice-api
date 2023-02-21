@@ -1,0 +1,145 @@
+paths:
+  /api/v1/users/{id}/addresses:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Users Addresses
+      summary: Get User Addresses
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user ID
+
+      responses:
+        201:
+          description: The updated user object
+        404:
+          description: User not found
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Users Addresses
+      summary: Add new user address
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user ID
+      requestBody:
+        content:
+          application/json:
+            name: new address
+            description: adds a new user address with a post request to /users
+            required: true 
+            schema: 
+              $ref: '#/definitions/address'
+
+      responses:
+        201:
+          description: The updated user object
+        404:
+          description: User not found
+  /api/v1/users/{id}/addresses/{address}:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Users Addresses
+      summary: Add new User Address
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user ID
+        - in: path
+          name: address   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: Address ID
+      requestBody:
+        content:
+          application/json:
+            name: sign up 
+            description: Updates an existing user address with a patch reques
+            required: true 
+            schema: 
+              $ref: '#/definitions/address'
+      responses:
+        201:
+          description: The updated user address object
+        404:
+          description: User not found
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Users Addresses
+      summary: Deletes an user address
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The user ID
+        - in: path
+          name: address   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: Address ID
+
+      responses:
+        204:
+          description: Address was removed successfully
+        404:
+          description: Address was not found 
+
+# definitions 
+definitions:
+  address:
+    type: object
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      postalCode:
+        type: string
+      state: 
+        type: string
+      primary:
+        type: boolean
+      label: 
+        type: string
+
+
+
+
+
+
+
