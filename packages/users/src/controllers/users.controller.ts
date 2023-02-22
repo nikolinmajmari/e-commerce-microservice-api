@@ -1,25 +1,45 @@
 import { NextFunction, Request, Response } from "express";
 import debug from "debug";
-import usersService, { UserService } from "../services/users.service";
+import userService from "../services/user.service";
+import userAddressService from "../services/user.address.service";
 const log = debug("app:controller:users");
+
+/**
+ * Users Controller 
+ * Handles all requests that are used to manage users by admin
+ */
 class UsersController{
     
+  /**
+   * Get the list of users 
+   * @param req 
+   * @param res 
+   * @param next 
+   */
     async getUsers(req:Request,res:Response,next:NextFunction){
       try{
         const limit = req.query.limit ? parseInt(req.query.limit.toString()) : 100;
         const offset = req.query.offset ? parseInt(req.query.offset.toString()): 0;
         log(limit,offset);
-        const users = await usersService.getUsers({limit:limit>100?100:limit,offset: offset});
+        const users = await userService.getUsers({limit:limit>100?100:limit,offset: offset});
         res.send(users);  
       }catch(e){
         next(e);
       }
     }
     
+
+    /**
+     * Create new user
+     * @param req 
+     * @param res 
+     * @param next 
+     * @returns 
+     */
     async createUser(req:Request,res:Response,next:NextFunction){
         try{
             log("creating new user");
-            const created =  await usersService.createUser(req.body);
+            const created =  await userService.createUser(req.body);
             return res.status(201)
                       .json(created);
         }catch(e){
@@ -27,10 +47,17 @@ class UsersController{
         }
     }
 
+
+    /**
+     * Get an user using mongoose id
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     async getUserById(req:Request,res:Response,next:NextFunction):Promise<void>{
       try{
         log("before get");
-        const user = await usersService.getAllUserDataById(req.params.id);
+        const user = await userService.getAllUserDataById(req.params.id);
         res.send(user);
       }catch(e){
         log(e);
@@ -38,83 +65,134 @@ class UsersController{
       }
     }
     
+
+    /**
+     * Update user info using mongoose id
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     async updateUserById(req:Request,res:Response,next:NextFunction):Promise<void>{
       try{
-        const user = await usersService.getUser(req.params.id);
-        await usersService.updateUser(user,req.body);
+        const user = await userService.getUser(req.params.id);
+        await userService.updateUser(user,req.body);
         res.send(user);
       }catch(e){
         next(e);
       }
     }
 
+    /**
+     * Delete user by mongoose id
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     async deleteUserById(req:Request,res:Response,next:NextFunction):Promise<void>{
        try{
-        const user = await usersService.getUser(req.params.id);
-        await usersService.deleteUserAccount(user);
+        const user = await userService.getUser(req.params.id);
+        await userService.deleteUserAccount(user);
         res.sendStatus(204).end();
        }catch(e){
         next(e);
        }
     }
 
+    /**
+     * Create an user password reset ticket and send ticket url via email
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     async sentPasswordResetEmail(req:Request,res:Response,next:NextFunction){
       try{
         log("invoked send password reset email tiket");
-        const user = await usersService.getUser(req.params.id);
-        const data = await usersService.sendPasswordResetEmail(user);
+        const user = await userService.getUser(req.params.id);
+        const data = await userService.sendPasswordResetEmail(user);
         res.status(200).send(data);
       }catch(e){
         next(e);
       }
     }
 
+    /**
+     * Create an email verification ticket and sent link via email
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     async sentVerificationEmail(req:Request,res:Response,next:NextFunction){
       try{
         log("invoked send verification email tiket");
-        const user = await usersService.getUser(req.params.id);
-        const data = await usersService.sentVerificationEmail(user);
+        const user = await userService.getUser(req.params.id);
+        const data = await userService.sentVerificationEmail(user);
         res.status(200).send(data);
       }catch(e){
         next(e);
       }
     }
 
-
+    /**
+     * Get an user addresses
+     * @param req 
+     * @param res 
+     * @param next 
+     */
     async getUserAddresses(req:Request,res:Response,next:NextFunction){
       try{
-        const user = await usersService.getUser(req.params.id);
+        const user = await userService.getUser(req.params.id);
         res.json((user).addresses);
       }catch(e){
         next(e);
       }
     }
 
+    /**
+     * Get a specific user address
+     * @param req 
+     * @param res 
+     * @param next 
+     * @returns 
+     */
     async getUserAddress(req:Request,res:Response,next:NextFunction){
       try{
-        const user = await usersService.getUser(req.params.id);
-        const address = await usersService.getUserAddress(user,req.params.address);
+        const user = await userService.getUser(req.params.id);
+        const address = await userAddressService.getUserAddress(user,req.params.address);
         return res.status(200).json(address);
       }catch(e){
         next(e);
       }
     }
 
+    /**
+     * Add an user address
+     * @param req 
+     * @param res 
+     * @param next 
+     * @returns 
+     */
     async addUserAddress(req:Request,res:Response,next:NextFunction){
       try{
-        const user = await usersService.getUser(req.params.id);
-        const newAddress = await usersService.addUserAddress(user,req.body);
+        const user = await userService.getUser(req.params.id);
+        const newAddress = await userAddressService.addUserAddress(user,req.body);
         return res.status(201).json(newAddress);
       }catch(e){
         next(e);
       }
     }
 
+    /**
+     * Update user address
+     * @param req 
+     * @param res 
+     * @param next 
+     * @returns 
+     */
     async patchUserAddress(req:Request,res:Response,next:NextFunction){
       try{
-        const user = await usersService.getUser(req.params.id);
-        const address = await usersService.getUserAddress(user,req.params.address);
-        const patchedAddress = await usersService.patchUserAddress(
+        const user = await userService.getUser(req.params.id);
+        const address = await userAddressService.getUserAddress(user,req.params.address);
+        const patchedAddress = await userAddressService.patchUserAddress(
           user,address,req.body
         );
         return res.status(200).json(patchedAddress);
@@ -123,11 +201,18 @@ class UsersController{
       }
     }
 
+    /**
+     * Delete an user address
+     * @param req 
+     * @param res 
+     * @param next 
+     * @returns 
+     */
     async deleteUserAddress(req:Request,res:Response,next:NextFunction){
       try{
-        const user = await usersService.getUser(req.params.id);
-        const address = await usersService.getUserAddress(user,req.params.address);
-        await usersService.deleteUserAddress(user,address);
+        const user = await userService.getUser(req.params.id);
+        const address = await userAddressService.getUserAddress(user,req.params.address);
+        await userAddressService.deleteUserAddress(user,address);
         return res.status(204).json("0k");
       }catch(e){
         next(e);

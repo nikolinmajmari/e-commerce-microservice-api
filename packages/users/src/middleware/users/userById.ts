@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import usersService from "../../services/users.service";
+import usersService from "../../services/user.service";
 
 export default async function(req:Request,res:Response,next:NextFunction){
     const user = await usersService.getUser(

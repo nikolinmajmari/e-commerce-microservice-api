@@ -3,6 +3,7 @@ import { requiresAuth } from "express-openid-connect";
 import { body } from "express-validator";
 import { extractUserMiddleware, isAdmin, isUser } from "../common/auth/middleware/auth.middleware";
 import userController from "../controllers/user.controller";
+import usersController from "../controllers/users.controller";
 import validate from "../middleware/validate.middleware";
 import newAddressValidationRules from "../middleware/validation_rules/new.address.rules";
 import patchAddressValidationRules from "../middleware/validation_rules/patch.address.rules";
@@ -21,7 +22,9 @@ export default class ApiUserRoute{
         this.app.use([
                 `/api/v1/user`,
                 `/api/user`
-            ],extractUserMiddleware, isAdmin());
+            ],extractUserMiddleware, isUser());
+        this.app.route('/api/v1/user')
+        .get(userController.getUser);
 
         //// access and update profile
         this.app.route([

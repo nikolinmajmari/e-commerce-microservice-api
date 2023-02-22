@@ -1,5 +1,58 @@
  
 paths:
+  /api/v1/user:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Gets User Account
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema: 
+                $ref: "#/definitions/user"
+        401:
+          description: Forbidden
+  /api/v1/user/profile:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Gets User Profile
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: The profile of the user
+        401:
+          description: Forbidden
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Patches User Profile
+      produces: 
+        - application/json
+      requestBody:
+        content:
+          application/json:
+            name: new address
+            description: adds a new user address with a post request to /users
+            required: true 
+            schema: 
+              $ref: '#/definitions/profile'
+      responses:
+        200:
+          description: The profile of the user
+        401:
+          description: Forbidden, please authenticate 
   /api/v1/user/changeEmailAddress:
     post:
       security:
@@ -12,13 +65,11 @@ paths:
       requestBody:
         content:
           application/json:
-            name: Change email
-            description: Creates a new user with a post request to /users
+            name: new address
+            description: adds a new user address with a post request to /users
             required: true 
             schema: 
-              type: object
-              properties:
-                email: string
+              $ref: '#/definitions/email'
               
       responses:
         200:
@@ -37,13 +88,11 @@ paths:
       requestBody:
         content:
           application/json:
-            name: Change password
-            description: Creates a change password ticket, sents also an email to user email
+            name: new address
+            description: adds a new user address with a post request to /users
             required: true 
             schema: 
-              type: object
-              properties:
-                password: string
+              $ref: '#/definitions/password'
       responses:
         200:
           description: The profile of the user
@@ -63,3 +112,67 @@ paths:
           description: The profile of the user
         401:
           description: Forbidden
+
+
+# definitions 
+definitions:
+  password:
+    type: object
+    properties:
+      password:
+        type: string
+  email:
+    type: object
+    properties:
+      email:
+        type: string
+  profile:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+      phone: 
+        type: string
+      birthDate:
+        type: boolean
+      avatar: 
+        type: string
+  user:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ["male","female"]
+      email:
+        type: string
+      phone: 
+        type: string
+      avatar:
+        type: string
+      status:
+        type: string
+        enum: ['active',"closed"]
+      user_id:
+        type: string
+      id: 
+        type: string
+    example:
+      firstName: "Shaddy"
+      lastName: "Smith"
+      gender: "male"
+      email: "shady@example.com"
+      phone: "+33304847845"
+      avatar: "no://avatar.com"
+      status: "active"
+      user_id: "oauth-0|43949290u439242u4234"
+      id: "fjei244jn32424234j324324324"
+
+

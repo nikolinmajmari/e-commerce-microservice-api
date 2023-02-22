@@ -12,6 +12,5 @@ export interface IUpdateUserDto{
     password?:string,
     birthDate?:string,
     avatar?:string,
-    addresses?:IAddress[],
     status?:IAccountStatus,
 }

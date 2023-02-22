@@ -2,6 +2,9 @@
 export default {
   displayName: 'users',
   preset: '../../jest.preset.js',
+  setupFilesAfterEnv: [
+    "./src/tests/setup.ts"
+  ],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',

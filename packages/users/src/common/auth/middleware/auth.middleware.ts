@@ -5,13 +5,13 @@ import { NextFunction, Response } from 'express';
 import AccessDenied from '../../errors/http/access_denied_error';
 import { IRequest } from '../../types';
 import authService from '../auth.service';
-import usersService from '../../../services/users.service';
+import usersService from '../../../services/user.service';
 import { IPermissionLevel } from '../../../models/user.model';
 
 const log = debug('app:auth:middleware');
 const AUTHORIZATION_HEADER = 'authorization';
 const BEARER = 'Bearer';
-export const ROLES_KEY = `${process.env.AUTH_AUDIENCE}/roles`;
+export const ROLES_KEY = `${process.env.AUTH_CLAIM}/roles`;
 
 export const ROLES = {
     ADMIN: 'Admin',
@@ -20,6 +20,7 @@ export const ROLES = {
 
 
 function isGranted(required:string,challange:string):boolean{
+    log("is granted ",required,challange);
     if(challange===required){
         return true;
     }
@@ -33,6 +34,7 @@ function isGranted(required:string,challange:string):boolean{
 export function minimumPermissionRequired(permission:string){
     log("minimum permission required",permission);
     return (req,res:Response,next:NextFunction)=>{
+        log(req.token);
         if(req.token && req.token[ROLES_KEY] && req.token[ROLES_KEY].find(role=>isGranted(permission,role))){
             log("user can perform action to",req.originalUrl);
             next();
@@ -79,7 +81,7 @@ async function loadOrSignUpUser(id:string){
     const oauthUser = await authService.management.getUser({id});
     const roles = await authService.management.getUserRoles({id});
     const permissionLevel = roles.reduce((acc:any,next:any)=>{
-        if(acc===null||(acc.length>1 && acc[1]!=="Admin")){
+        if(acc===null||(acc.length>1 && acc[1]!==ROLES.ADMIN)){
             return [next,next.name];
         }
         return acc;

@@ -1,14 +1,15 @@
-import {AppMetadata, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, PasswordChangeTicketResponse, User, UserMetadata} from 'auth0';
+import {AppMetadata, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, ObjectWithId, PasswordChangeTicketResponse, User, UserMetadata} from 'auth0';
 import debug from 'debug';
 import { IPermissionLevel, IUser } from '../../models/user.model';
 import Conflict from '../errors/http/conflict_error';
 import BadRequest from '../errors/http/bad_request_error';
-import ICreateOauthUserDTO from '../../dto/create_oauth_user.dto';
 import NotFound from '../errors/http/not_found.error.';
-import IUpdateOauthUserDTO from '../../dto/update_oauth_user.dto';
-import { IAuth0Service } from './auth.types';
+import { IAuth0Service, IAuth0UserType } from './auth.types';
 
 const log = debug('app:common:auth:service');
+/**
+ * This class defines the instance used to manage users from auth0 database
+ */
 export class Auth0Service implements IAuth0Service{
     management: ManagementClient;
     constructor(options: ManagementClientOptions){
@@ -17,6 +18,10 @@ export class Auth0Service implements IAuth0Service{
         );
     }
 
+    /**
+     * This method handles all errors thrown from Auth0Service and wraps them with app error classes
+     * @param e 
+     */
     private handleError (e) {
         switch(e.statusCode){
             case 400:
@@ -27,35 +32,63 @@ export class Auth0Service implements IAuth0Service{
                 throw e;
         }
     }
-    async updateUser(auth0UserId:string,update:IUpdateOauthUserDTO,role?:IPermissionLevel):Promise<User<AppMetadata,UserMetadata>>{
-        log("updating user data with role",role);
-        const {status,email,name,password,picture} = update;
-        const oauthUser =  await this.management.updateUser(
-            {id: auth0UserId},
-            { email, name, password, app_metadata:{ status } },
-        );
-        if(role){
-            return this.assignRoleToUser(oauthUser,role);
+
+    /**
+     * This method updates an existing user in database, if user does not exist an Not found should be exploieded
+     * Also updates work only for status,email,name and password properties 
+     * @param auth0UserId 
+     * @param update 
+     * @param role 
+     * @returns 
+     */
+    async updateUser(auth0UserId:string,update:IAuth0UserType,role?:IPermissionLevel):Promise<void>{
+        log("updating user ",auth0UserId," data");
+        const {status,email,name,password} = update;
+        if(status||name||password||status){
+            await this.management.updateUser(
+                {id: auth0UserId},
+                { email, name, password, app_metadata:{ status } },
+            );
         }
-        return oauthUser;
+        if(role){
+            this.assignRoleToUser(auth0UserId,role);
+        }
     }
 
-    async createUser(user:ICreateOauthUserDTO,role:IPermissionLevel){
+
+    /**
+     * Creates an new user i n auth0 database using Username-Password-Authentication as connection type
+     * @param user 
+     * @returns 
+     */
+    async createUser(user:IAuth0UserType){
         try{
             log("creating oauth0 user");
+            const {email,name,password,role} = user;
             const oauthUser =  await this.management.createUser({
                 connection: 'Username-Password-Authentication',
-                ...user,
+                ...{
+                    email,
+                    name,
+                    password,
+                },
                 email_verified: false,
                 verify_email: true,
+                app_metadata:{ status:"active" } 
             });
-            return this.assignRoleToUser(oauthUser,role);
+            this.assignRoleToUser(oauthUser.user_id,role);
+            return oauthUser;
         }catch(e){
             this.handleError(e);
         }
     }
-
-    async assignRoleToUser(user:User<AppMetadata, UserMetadata>,userRole:string){
+    
+    /**
+     * This function assigns a certain role to user in management api
+     * @param auth0UserId 
+     * @param userRole 
+     */
+    async assignRoleToUser(auth0UserId:string,userRole:string){
         log("assigning role to user");
         const roles = await this.management.getRoles();
 
@@ -63,11 +96,15 @@ export class Auth0Service implements IAuth0Service{
             return role.name===userRole;
         })
         if(role){
-            await this.management.assignRolestoUser({id:user.user_id},{roles:[role.id]});
+            await this.management.assignRolestoUser({id:auth0UserId},{roles:[role.id]});
         }
-        return user;
     }
 
+    /**
+     * This function creates a password reset ticket which can be used to reset password if sended via a link
+     * @param param0 
+     * @returns 
+     */
     async createPassowrdResetTicket({user_id,connection_id,email}:{user_id?:string,connection_id?:string,email:string}):Promise<PasswordChangeTicketResponse>{
        try{
         log("changing oauth0 user password",user_id,connection_id,email);
@@ -83,6 +120,11 @@ export class Auth0Service implements IAuth0Service{
        }
     }
 
+    /**
+     * This function creates an email verification ticket, a link that can be used to verify emails
+     * @param param0 
+     * @returns 
+     */
     async createEmailVerificationTicket({user_id}:{user_id:string}):Promise<EmailVerificationTicketOptions>{
         try{
             log("creating email verification ticket");
@@ -95,6 +137,11 @@ export class Auth0Service implements IAuth0Service{
         }
     }
 
+    /**
+     * Fids oauth0 user by email address
+     * @param email 
+     * @returns 
+     */
     async findUserByEmail(email:string){
         const user = await this.management.getUsersByEmail(email);
         if(user && user[0] && user[0].user_id){
@@ -103,6 +150,10 @@ export class Auth0Service implements IAuth0Service{
         throw new NotFound("User was not found on oauth0 db"); 
     }
 
+    /**
+     * Removes auth0 user
+     * @param email 
+     */
     async findAndRemoveUserByEmail(email:string){
         const user = await this.findUserByEmail(email);
         await this.management.deleteUser({

@@ -1,8 +1,7 @@
 import {User,AppMetadata,UserMetadata, EmailVerificationTicketOptions, PasswordChangeTicketResponse} from "auth0";
-import { Request } from "express";
 import ICreateOauthUserDTO from "../../dto/create_oauth_user.dto";
-import IUpdateOauthUserDTO from "../../dto/update_oauth_user.dto";
-import {IPermissionLevel, IUser} from "../../models/user.model";
+import { IUpdateUserDto } from "../../dto/update_user.dto";
+import {IAccountStatus, IPermissionLevel} from "../../models/user.model";
 
 export interface IAuth0Service{
     findUserByEmail(
@@ -10,19 +9,18 @@ export interface IAuth0Service{
     ):Promise<User<AppMetadata,UserMetadata>>;
     updateUser(
         auth0UserId:string,
-        update:IUpdateOauthUserDTO,
+        update:IAuth0UserType,
         role?:IPermissionLevel
-    ):Promise<User<AppMetadata,UserMetadata>>;
+    );
     
     createUser(
-        user:ICreateOauthUserDTO,
-        role:IPermissionLevel
+        user:IAuth0UserType,
     ):Promise<User<AppMetadata, UserMetadata>>;
 
     assignRoleToUser(
-        user:User<AppMetadata, UserMetadata>,
+        auth0UserId:string,
         userRole:string
-    ):Promise<User<AppMetadata, UserMetadata>>;
+    );
 
     createPassowrdResetTicket(
         {user_id,connection_id,email}:{user_id?:string,connection_id?:string,email:string}
@@ -31,4 +29,37 @@ export interface IAuth0Service{
         {user_id}:{user_id:string}
     ):Promise<EmailVerificationTicketOptions>;
     findAndRemoveUserByEmail(email:string);
+}
+
+
+export interface IAuth0UserType{
+    email?:string,
+    password?:string,
+    name?: string,
+    picture?: string,
+    status?: IAccountStatus,
+    role?:IPermissionLevel
+}
+
+/**
+ * 
+ * @param dto 
+ * @returns 
+ */
+export function fromUserDto( dto:IUpdateUserDto ):IAuth0UserType{
+    const res:IAuth0UserType = {};
+    const {email,password,firstName,lastName,status} = dto;
+    if(firstName&&lastName){
+        res.name = `${firstName} ${lastName}`;
+    }
+    if(email){
+        res.email = email;
+    }
+    if(password){
+        res.password = password;
+    }
+    if(status){
+        res.status = status;
+    }
+    return res;
 }

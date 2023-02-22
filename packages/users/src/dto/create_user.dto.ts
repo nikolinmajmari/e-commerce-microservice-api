@@ -1,5 +1,6 @@
 import { IAddress } from "../models/adress.schema";
 import { IPermissionLevel } from "../models/user.model";
+import INewAddressDTO from "./new_address.dto";
 
 export default interface ICreateUserDTO{
     firstName:string,
@@ -12,6 +13,6 @@ export default interface ICreateUserDTO{
     password:string,
     birdhDate:string,
     avatar:string,
-    addresses:IAddress[],
+    addresses:INewAddressDTO[],
     status:"active"|"closed"
 }

@@ -4,13 +4,8 @@ import { ListUsersInput } from "../dto/list_user.input";
 import User, { IPermissionLevel, IUser } from "../models/user.model";
 import debug from "debug";
 import mongooseService from "../common/mongoose";
-import { fromCreateUserDTO } from "../dto/create_oauth_user.dto";
 import IPatchUserDTO from "../dto/patch_user_dto";
-import { fromUpdateUserDTO } from "../dto/update_oauth_user.dto";
-import { IAuth0Service } from "../common/auth/auth.types";
-import { IAddress } from "../models/adress.schema";
-import INewAddressDTO from "../dto/new_address.dto";
-import IPatchAddressDTO from "../dto/patch_address.dto";
+import { fromUserDto, IAuth0Service } from "../common/auth/auth.types";
 import { User as AuthUser } from "auth0";
 const log = debug("app:services:UserService");
 
@@ -45,40 +40,6 @@ export class UserService{
         return await User.findOne({user_id:id});
     }
 
-    async getUserAddress(user:IUser,address:string):Promise<IAddress>{
-        return user.addresses.find((addr)=>addr._id == address);
-    }
-
-    async addUserAddress(user:IUser,address:INewAddressDTO){
-        if(address.primary){
-            this.setAllAddressesAsNonPrimary(user);
-        }
-        const index = user.addresses.push({...address});
-        await user.save();
-        return user.addresses[index];
-    }
-
-    async patchUserAddress(user:IUser,address:IAddress,patch:IPatchAddressDTO){
-        if(patch.primary===true && address.primary===false){
-            this.setAllAddressesAsNonPrimary(user);
-        }
-        address.set(patch);
-        await user.save();
-        return address;
-    }
-    
-    private async setAllAddressesAsNonPrimary(user:IUser){
-        for(const subdoc of user.addresses){
-            subdoc.set({primary:false});
-        }
-        user.save();
-    }
-
-    async deleteUserAddress(user:IUser,address:IAddress){
-        user.addresses.pull(address);
-        await user.save();
-    }
-
     async getAllUserDataById(id:string){
         const userDoc = await this.getUser(id);
         log(userDoc);
@@ -95,15 +56,15 @@ export class UserService{
         const newUser = User.build({
             firstName,
             lastName,
-            avatar: "",
+            avatar: oauthUser.picture,
             birdhDate: "",
             addresses: [],
             email: oauthUser.email,
             username: oauthUser.username,
             gender: "male",
             permissionLevel: permission,
-            phone: '',
-            password: '',
+            phone: oauthUser.phone_number,
+            password: "",
             status: 'active'
         });
         newUser.user_id = oauthUser.user_id;
@@ -124,8 +85,7 @@ export class UserService{
             session.startTransaction();
             const user = User.build(createUserDto);
             const oauthUser = await this.auth.createUser(
-                fromCreateUserDTO(createUserDto),
-                createUserDto.permissionLevel
+                fromUserDto(createUserDto)
             );
             user.user_id = oauthUser.user_id;
             await user.save();
@@ -133,7 +93,7 @@ export class UserService{
             await session.commitTransaction();
             log("ending session");
             session.endSession();
-            return {id: user.id};
+            return user;
         }catch(err){
             log(err);
             log("abborting transaction");
@@ -157,7 +117,7 @@ export class UserService{
         log("updating user on oauth servers")
         await this.auth.updateUser(
             user.user_id,
-            fromUpdateUserDTO(update),
+            fromUserDto(update),
             update.permissionLevel
         );
         log("updating user data in mongoose");
@@ -167,6 +127,7 @@ export class UserService{
         await session.commitTransaction();
         log("ending session");
         session.endSession();
+        return user;
        }catch(err){
         log(err);
         log("abording transaction");
@@ -207,11 +168,6 @@ export class UserService{
             session.endSession();
             throw err;
         }
-        await user.delete();
-    }
-
-    async updateUserProfile(user:IUser){
-        //
     }
 
 }

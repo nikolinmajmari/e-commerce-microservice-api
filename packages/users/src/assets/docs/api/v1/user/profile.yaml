@@ -5,7 +5,7 @@ paths:
         - Bearer: []
       tags:
         - User
-      summary: Get User Profile 
+      summary: Closes User Account
       produces: 
         - application/json
       responses:
@@ -21,6 +21,7 @@ paths:
       summary: Get User Profile 
       produces: 
         - application/json
+
       responses:
         200:
           description: The profile of the user
