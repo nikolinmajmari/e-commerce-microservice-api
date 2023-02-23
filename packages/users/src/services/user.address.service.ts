@@ -17,7 +17,7 @@ export class UserAddressService{
         }
         const index = user.addresses.push({...address});
         await user.save();
-        return user.addresses[index];
+        return user.addresses[index-1];
     }
 
     async patchUserAddress(user:IUser,address:IAddress,patch:IPatchAddressDTO){
@@ -40,7 +40,6 @@ export class UserAddressService{
         for(const subdoc of user.addresses){
             subdoc.set({primary:false});
         }
-        user.save();
     }
 }
 

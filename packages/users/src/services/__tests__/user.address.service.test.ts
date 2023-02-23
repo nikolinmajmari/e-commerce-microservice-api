@@ -7,7 +7,7 @@ import User from "../../models/user.model";
 import { domainToASCII } from "node:url";
 const log = debug("test");
 const chance = new Chance();
-const dto:ICreateUserDTO= {
+const getDto = ()=>({
     firstName: chance.name(),
     lastName: chance.name(),
     email: chance.email(),
@@ -27,7 +27,7 @@ const dto:ICreateUserDTO= {
     phone:chance.phone(),
     status:"active",
     username: chance.email(),
-};
+} as ICreateUserDTO);
 const addressDto = {
     address:chance.address(),
     label: chance.name(),
@@ -38,14 +38,15 @@ const addressDto = {
 };
 const service = new UserAddressService();
 
-async function mockUser(){
+async function mockUser(dto:ICreateUserDTO){
     const user = User.build(dto);
     await user.save();
     return user;
 }
 it("Gets certain user addresses",async function(){
     /// create an user 
-    const user = await mockUser();
+    const dto = getDto();
+    const user = await mockUser(dto);
     const addresses = user.addresses;
     const address = await service.getUserAddress(user,addresses[0]._id);
     assert.equal(address.label,dto.addresses[0].label);
@@ -58,7 +59,8 @@ it("Gets certain user addresses",async function(){
 });
 
 it("Adds an address to an user",async function(){
-    const user = await mockUser();
+    const dto = getDto();
+    const user = await mockUser(dto);
     assert.equal(user.addresses.length,dto.addresses.length);
     const created = await service.addUserAddress(user,addressDto);
     assert.notEqual(created._id,null);
@@ -66,4 +68,13 @@ it("Adds an address to an user",async function(){
     assert.equal(user.addresses[1].label,addressDto.label)
     assert.equal(user.addresses[1].primary,addressDto.primary)
     assert.equal(user.addresses[1].city,addressDto.city)
-})
+});
+
+it("Automatically assings new address as main address if nessesary", async function(){
+    const dto = getDto();
+    const user = await mockUser(dto);
+    assert.equal(user.addresses[0].primary,true);
+    await service.addUserAddress(user,addressDto);
+    assert.notEqual(user.addresses[0].primary,true);
+    assert.equal(user.addresses[1].primary,true);
+});
