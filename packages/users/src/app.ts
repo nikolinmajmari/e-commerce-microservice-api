@@ -10,6 +10,7 @@ import ApiUserRoute from './routes/api.user.route';
 import ApiUsersRoute from './routes/api.users.route';
 import AnalitycsRoute from './routes/api.analitycs';
 import analitycsMiddleware from './middleware/analitycs/analitycs.middleware';
+import { identifierMidleware } from '@repo/app-event-emitter';
 const log = debug("app:main");
 
 export const PORT = +process.env.PORT || 3333;
@@ -18,6 +19,7 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(identifierMidleware.default);
 app.use(analitycsMiddleware);
 /// auth config and routes 
 (new AuthConfigService(app)).config();

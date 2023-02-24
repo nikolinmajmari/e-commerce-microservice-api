@@ -20,10 +20,6 @@ export class AuthConfigService{
             clientID: process.env.AUTH_CLIENT_ID,
             clientSecret:process.env.AUTH_CLIENT_SECRET,
             issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
-            // routes:{
-            //     login: false,
-            //     callback:"/profile"
-            // },
             authorizationParams: {
                 response_type: 'code', // This requires you to provide a client secret
                 audience: process.env.AUTH_AUDIENCE,

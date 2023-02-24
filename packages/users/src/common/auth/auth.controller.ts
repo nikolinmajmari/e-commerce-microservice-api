@@ -1,5 +1,6 @@
 import debug from "debug";
 import { NextFunction, Request,Response } from "express";
+import emmiter from "../emmiter";
 import authService from "./auth.service";
 const log = debug("app:auth:controller");
 
@@ -7,7 +8,7 @@ class AuthController{
 
     login(req:Request,res:Response){
         log("user logged in, redirecting to profile");
-        res.oidc.login({returnTo:"/profile"});
+        res.oidc.login({returnTo:"/profile",silent: false});
     }
 
     logout(req:Request,res:Response){

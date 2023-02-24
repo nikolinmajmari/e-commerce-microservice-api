@@ -7,6 +7,7 @@ import { IRequest } from '../../types';
 import authService from '../auth.service';
 import usersService from '../../../services/user.service';
 import { IPermissionLevel } from '../../../models/user.model';
+import emmiter from '../../emmiter';
 
 const log = debug('app:auth:middleware');
 const AUTHORIZATION_HEADER = 'authorization';
@@ -30,12 +31,14 @@ function isGranted(required:string,challange:string):boolean{
     return false;
 }
   
+function checkToken(token,permission){
+    return token && token[ROLES_KEY] && token[ROLES_KEY].find(role=>isGranted(permission,role));
+}
 
 export function minimumPermissionRequired(permission:string){
     log("minimum permission required",permission);
     return (req,res:Response,next:NextFunction)=>{
-        log(req.token);
-        if(req.token && req.token[ROLES_KEY] && req.token[ROLES_KEY].find(role=>isGranted(permission,role))){
+        if(checkToken(req.token,permission)){
             log("user can perform action to",req.originalUrl);
             next();
         }else{
@@ -62,9 +65,12 @@ export async function extractUserMiddleware(req:IRequest,res,next){
             req.token = jwt_decode(req.headers[AUTHORIZATION_HEADER].split(BEARER)[1]);
             log('token decoded');
             log("loading user");
-            req.user = await loadOrSignUpUser(req.token.sub);
-            log("user loaded");
-            next();
+            if(checkToken(req.token,ROLES.USER)){
+                req.user = await loadOrSignUpUser(req.token.sub);
+                log("user loaded");
+                return next();
+            }
+            throw new AccessDenied("You do not have proper roles/permission to access this api");
         }catch(e){
             next(e);
         }
@@ -72,12 +78,12 @@ export async function extractUserMiddleware(req:IRequest,res,next){
         next(new Forbidden("Authorization Header missing"));
     }
 }
-
 async function loadOrSignUpUser(id:string){
     const found = await usersService.getUserByUserId(id);
     if(found!==null){
         return found;
     }
+    log("user id to check",id);
     const oauthUser = await authService.management.getUser({id});
     const roles = await authService.management.getUserRoles({id});
     const permissionLevel = roles.reduce((acc:any,next:any)=>{
@@ -87,7 +93,7 @@ async function loadOrSignUpUser(id:string){
         return acc;
         },null);
     const created = await usersService.createUserFromOauthUser(
-        oauthUser,permissionLevel as unknown as IPermissionLevel
+        oauthUser,permissionLevel[1] as unknown as IPermissionLevel
     );
     return created;
 }

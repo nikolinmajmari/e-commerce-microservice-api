@@ -6,6 +6,7 @@ import User from "../models/user.model";
 import IPutProfileDto from "../dto/patch_profile.dto";
 import { IRequest } from "../common/types";
 import userAddressService from "../services/user.address.service";
+import emmiter from "../common/emmiter";
 const log = debug("app:controller:users");
 
 
@@ -48,6 +49,7 @@ export class UserController{
      */
     async changeUserPassword(req:IRequest,res:Response,next:NextFunction){
         try{
+            emmiter.emitPasswordChangeEvent(req.user,req);
             const {password} = req.body;
             await userService.updateUser(req.user,{password,});
             res.status(200).json({
@@ -64,6 +66,7 @@ export class UserController{
      */
     async changeUserEmailAddress(req:IRequest,res:Response,next:NextFunction){
         try{
+            emmiter.emmitEmailChangeEvent(req.user,req);
             const {email} = req.body;
             const user = req.user;
             await userService.updateUser(user,{
@@ -84,6 +87,8 @@ export class UserController{
      * @param next 
      */
     async updateUserProfile(req:IRequest,res:Response,next:NextFunction){
+       try{
+        emmiter.emmitProfileUpdateEvent(req.user,req);
         const {avatar,birthDate,firstName,gender,lastName} = req.body as IPutProfileDto;
         await userService.updateUser(
             req.user,
@@ -91,6 +96,9 @@ export class UserController{
             avatar,birthDate,firstName,gender,lastName
         });
         res.send(req.user);
+       }catch(e){
+        next(e);
+       }
     }
 
 
@@ -102,6 +110,7 @@ export class UserController{
      */
     async closeAccount(req:IRequest,res:Response,next:NextFunction){
        try{
+            emmiter.emmitCloseAccountEvent(req.user,req);
             await userService.updateUser(req.user,{
                 status: "closed"
             });

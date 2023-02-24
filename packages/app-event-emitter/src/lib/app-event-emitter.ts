@@ -9,11 +9,12 @@ const log=debug("package:app-event-emitter:core");
 
 export enum EventType{
   API_REQUEST="API_REQUEST",
-  PASSWORD_RESET="PASSWORD_RESET",
+  PASSWORD_CHANGE="PASSWORD_CHANGE",
   EMAIL_CHANGE="EMAIL_CHANGE",
   USER_LOGIN="USER_LOGIN",
   USER_LOGOUT="USER_LOGOUT",
-  EMAIL_CHANGED="EMAIL_CHANGED"
+  PROFILE_UPDATE="PROFILE_UPDATE",
+  CLOSE_ACCOUNT="CLOSE_ACCOUNT",
 }
 
 
@@ -21,10 +22,8 @@ export enum EventType{
  * 
  */
 export class AppEventEmitter{
-  private initialized:boolean;
   private emitter:EventEmitter;
   constructor(private config:IAppEventEmitterConfig){
-    this.initialized = false;
     this.emitter = new EventEmitter({
       captureRejections: true
     });
@@ -36,58 +35,105 @@ export class AppEventEmitter{
   async configure(){
     await mongooseService.connect(this.config.mongooseUrl);
     this.emitter.on(EventType.API_REQUEST,this.saveEvent);
+    this.emitter.on(EventType.CLOSE_ACCOUNT,this.saveEvent);
     this.emitter.on(EventType.EMAIL_CHANGE,this.saveEvent);
-    this.emitter.on(EventType.PASSWORD_RESET,this.saveEvent);
+    this.emitter.on(EventType.PASSWORD_CHANGE,this.saveEvent);
+    this.emitter.on(EventType.PROFILE_UPDATE,this.saveEvent);
     this.emitter.on(EventType.USER_LOGIN,this.saveEvent);
     this.emitter.on(EventType.USER_LOGOUT,this.saveEvent);
   }
 
   async saveEvent(data:ILogDto){
-    const log = Log().build(data);
-    await log.save();
+    log(data.identifier);
+    const logDoc = Log().build(data);
+    await logDoc.save();
   }
 
 
-  async emitRequestEvent(request: Request){
+  async emitRequestEvent(request: Request, ignoreBody=false){
     this.emitter.emit(EventType.API_REQUEST,{
-      identifier: request["id"],
+      identifier: request["identifier"],
       type: LogType.API_REQUEST,
       group: typeof request,
       sub: null,
       headers: JSON.stringify(request.headers),
       method: request.method,
       uri: request.url,
-      payload: JSON.stringify(request.body),
+      payload: ignoreBody?null:JSON.stringify(request.body),
       message: `An api request with id ${request["id"]} was performed on ${request.url}`
     } as ILogDto)
   }
 
   async emitUserLoginEvent(user:ObjectWithId,request: Request){
     this.emitter.emit(EventType.API_REQUEST,{
-      identifier: request["id"],
-      type: LogType.API_REQUEST,
+      identifier: request["identifier"],
+      type:  LogType.APP_ACTION,
       group: typeof user,
       sub: user?.user_id??user._id,
       headers: JSON.stringify(request.headers),
       method: request.method,
       uri: request.url,
       payload: JSON.stringify(request.body),
-      message: `An api request with id ${request["id"]} was performed on ${request.url}`
+      message: `User ${user._id} Just performed an login${request.url}`
     } as ILogDto)
   }
 
   async emitPasswordChangeEvent(user:ObjectWithId,request: Request){
     this.emitter.emit(EventType.API_REQUEST,{
       identifier: request["id"],
-      type: LogType.API_REQUEST,
+      type:  LogType.APP_ACTION,
       group: typeof user,
       sub: user?.user_id??user._id,
       headers: JSON.stringify(request.headers),
       method: request.method,
       uri: request.url,
-      payload: JSON.stringify(request.body),
+      payload: null,
       message: `User ${user.user_id??user._id} performed a password change request`
     } as ILogDto)
+  }
+
+  async emmitEmailChangeEvent(user: ObjectWithId,request: Request){
+    this.emitter.emit(EventType.PROFILE_UPDATE,{
+      type: LogType.APP_ACTION,
+      identifier: request["identifier"],
+      context: "user",
+      sub: user.user_id??user._id,
+      group: typeof user,
+      headers: JSON.stringify(request.headers),
+      message:  `User ${user} changed his/her email address`,
+      method: request.method,
+      uri: request.url,
+      payload: JSON.stringify(request.body),
+    }as ILogDto)
+  }
+  async emmitCloseAccountEvent(user: ObjectWithId,request: Request){
+    this.emitter.emit(EventType.CLOSE_ACCOUNT,{
+      type:  LogType.APP_ACTION,
+      identifier: request["identifier"],
+      context: "user",
+      sub: user.user_id??user._id,
+      group: typeof user,
+      headers: JSON.stringify(request.headers),
+      message:  `User ${user} closed account`,
+      method: request.method,
+      uri: request.url,
+      payload: null,
+    }as ILogDto)
+  }
+
+  async emmitProfileUpdateEvent(user: ObjectWithId,request: Request){
+    this.emitter.emit(EventType.PROFILE_UPDATE,{
+      type:  LogType.APP_ACTION,
+      identifier: request["identifier"],
+      context: "auth",
+      sub: user.user_id??user._id,
+      group: typeof user,
+      headers: JSON.stringify(request.headers),
+      message:  `Profile updated by ${user}`,
+      method: request.method,
+      uri: request.url,
+      payload: JSON.stringify(request.body),
+    }as ILogDto)
   }
 }
 

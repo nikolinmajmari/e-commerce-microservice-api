@@ -144,8 +144,7 @@ export class UserService{
     }
 
     async sentVerificationEmail(user:IUser) {
-        log("invoked sent verification reset email");
-        return await this.auth.createEmailVerificationTicket(user);
+        return await this.auth.createEmailVerificationJob(user);
     }
 
     async deleteUserAccount(user:IUser){

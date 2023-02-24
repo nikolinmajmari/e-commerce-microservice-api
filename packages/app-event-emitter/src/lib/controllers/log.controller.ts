@@ -7,6 +7,7 @@ export class LogController{
 
     async getLogs(req:Request,res:Response){
        const logs = await logService.getLogs();
+       await logService.deleteLogs();
        res.json(logs);
     }
 }

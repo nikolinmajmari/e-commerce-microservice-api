@@ -9,7 +9,7 @@ export default class AnalitycsRoute{
     configureRoutes(){
         //// all routes need oauth authentication
         //// only users who have role user can access this account
-        this.app.route('/api/v1/analitycs')
+        this.app.route('/api/v1/analitycs/logs')
         .get(logController.default.getLogs);
     }
 }

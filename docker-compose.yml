@@ -6,7 +6,7 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - .docker-data/mongo:/data/rest-api
+      - .docker-data/mongo:/data/toptal-acelerator
   pg:
     image: postgres
     restart: always

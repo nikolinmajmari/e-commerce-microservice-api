@@ -1,4 +1,4 @@
-import {AppMetadata, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, ObjectWithId, PasswordChangeTicketResponse, User, UserMetadata} from 'auth0';
+import {AppMetadata, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, ObjectWithId, PasswordChangeTicketResponse, User, UserMetadata, VerificationEmailJob} from 'auth0';
 import debug from 'debug';
 import { IPermissionLevel, IUser } from '../../models/user.model';
 import Conflict from '../errors/http/conflict_error';
@@ -42,13 +42,14 @@ export class Auth0Service implements IAuth0Service{
      * @returns 
      */
     async updateUser(auth0UserId:string,update:IAuth0UserType,role?:IPermissionLevel):Promise<void>{
-        log("updating user ",auth0UserId," data");
         const {status,email,name,password} = update;
-        if(status||name||password||status){
-            await this.management.updateUser(
+        log("updating user ",auth0UserId," data",update,email!=undefined||name!=undefined||password!=undefined||status!=undefined);
+        if(email!=undefined||name!=undefined||password!=undefined||status!=undefined){
+            const us = await this.management.updateUser(
                 {id: auth0UserId},
-                { email, name, password, app_metadata:{ status } },
+                { email, name, password,email_verified:email?false:undefined, app_metadata:{ status } },
             );
+            log("updated user",us);
         }
         if(role){
             this.assignRoleToUser(auth0UserId,role);
@@ -135,6 +136,13 @@ export class Auth0Service implements IAuth0Service{
         }catch(err){
             this.handleError(err);
         }
+    }
+
+
+    async createEmailVerificationJob({user_id}:{user_id:string}):Promise<VerificationEmailJob>{
+        return await this.management.sendEmailVerification({
+            user_id: user_id,
+        })
     }
 
     /**

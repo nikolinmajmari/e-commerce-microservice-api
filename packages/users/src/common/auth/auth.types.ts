@@ -1,4 +1,4 @@
-import {User,AppMetadata,UserMetadata, EmailVerificationTicketOptions, PasswordChangeTicketResponse} from "auth0";
+import {User,AppMetadata,UserMetadata, EmailVerificationTicketOptions, PasswordChangeTicketResponse, VerificationEmailJob} from "auth0";
 import ICreateOauthUserDTO from "../../dto/create_oauth_user.dto";
 import { IUpdateUserDto } from "../../dto/update_user.dto";
 import {IAccountStatus, IPermissionLevel} from "../../models/user.model";
@@ -29,6 +29,8 @@ export interface IAuth0Service{
         {user_id}:{user_id:string}
     ):Promise<EmailVerificationTicketOptions>;
     findAndRemoveUserByEmail(email:string);
+
+    createEmailVerificationJob({user_id}:{user_id:string}):Promise<VerificationEmailJob>;
 }
 
 
