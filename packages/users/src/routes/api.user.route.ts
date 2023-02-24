@@ -1,6 +1,7 @@
 import { Application } from "express"
 import { requiresAuth } from "express-openid-connect";
 import { body } from "express-validator";
+import { checkJwt } from "../common/auth/auth.config";
 import { extractUserMiddleware, isAdmin, isUser } from "../common/auth/middleware/auth.middleware";
 import userController from "../controllers/user.controller";
 import usersController from "../controllers/users.controller";
@@ -22,7 +23,7 @@ export default class ApiUserRoute{
         this.app.use([
                 `/api/v1/user`,
                 `/api/user`
-            ],extractUserMiddleware, isUser());
+            ],checkJwt,extractUserMiddleware, isUser());
         this.app.route('/api/v1/user')
         .get(userController.getUser);
 

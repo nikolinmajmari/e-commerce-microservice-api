@@ -78,3 +78,27 @@ it("Automatically assings new address as main address if nessesary", async funct
     assert.notEqual(user.addresses[0].primary,true);
     assert.equal(user.addresses[1].primary,true);
 });
+
+it("Updates a certain address ",async function(){
+    const dto = getDto();
+    const user = await mockUser(dto);
+    const addressDto = {
+        address:chance.address(),
+        label: chance.name(),
+        postalCode:chance.integer({min:1000,max:1900}).toString(),
+    };
+    const address = user.addresses[0];
+    const newAddress = await service.patchUserAddress(user,address,addressDto);
+    assert.equal(newAddress.city ,dto.addresses[0].city);
+    assert.equal(newAddress.primary,dto.addresses[0].primary);
+    assert.equal(addressDto.label,newAddress.label);
+    //assert.equal(addressDto.address,newAddress.address);
+});
+
+it("deletes a certain address",async function(){
+    const dto = getDto();
+    const user = await mockUser(dto);
+    const address = user.addresses[0];
+    await service.deleteUserAddress(user,address);
+    assert.equal(user.addresses.length, dto.addresses.length-1);
+});

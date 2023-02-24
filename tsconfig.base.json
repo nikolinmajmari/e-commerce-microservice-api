@@ -20,9 +20,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@toptal-node-jan23/t-events": ["packages/t-events/src/index.ts"],
-      "@toptal-node-jan23/toptal-events": [
-        "packages/toptal-events/src/index.ts"
+      "@repo/app-event-emitter": [
+        "packages/app-event-emitter/src/index.ts"
       ]
     }
   },

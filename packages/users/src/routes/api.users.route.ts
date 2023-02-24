@@ -7,6 +7,7 @@ import newAddressRules from "../middleware/validation_rules/new.address.rules";
 import newUserRules from "../middleware/validation_rules/new.user.rules";
 import patchUserRules from "../middleware/validation_rules/patch.user.rules";
 import patchAddressRules from "../middleware/validation_rules/patch.address.rules";
+import { checkJwt } from "../common/auth/auth.config";
 
 
 export default class ApiUsersRoute{
@@ -18,7 +19,7 @@ export default class ApiUsersRoute{
     //api/users
     configureRoutes(){
 
-        this.app.use(`/api/v1/users`,extractUserMiddleware,isAdmin());
+        this.app.use(`/api/v1/users`,checkJwt,extractUserMiddleware,isAdmin());
 
         //api/users
         this.app.route(`/api/v1/users`)

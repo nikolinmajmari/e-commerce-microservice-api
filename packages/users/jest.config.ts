@@ -3,7 +3,7 @@ export default {
   displayName: 'users',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: [
-    "./src/tests/setup.ts"
+    "./src/tests/setup.test.ts"
   ],
   globals: {
     'ts-jest': {
