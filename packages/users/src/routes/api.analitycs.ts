@@ -1,6 +1,6 @@
 import { Application } from "express";
 import {logController} from "@repo/app-event-emitter";
-export default class ApiUserRoute{
+export default class AnalitycsRoute{
    
     constructor(private app:Application,private prefix="/api"){
         this.configureRoutes();
