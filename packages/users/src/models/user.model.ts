@@ -1,5 +1,6 @@
 import mongoose, { Schema,Document,Model, Types } from "mongoose";
 import ICreateUserDTO from "../dto/create_user.dto";
+import { hashPassword } from "../services/hasher";
 import schema, { IAddress } from "./adress.schema";
 
 export type IPermissionLevel = "Admin"|"User";
@@ -74,8 +75,7 @@ userSchema.index({email:1},{unique:true});
 
 userSchema.pre("save",async function (done){
     if(this.isModified("password")){
-        /// hash the password with password hasher
-        /// this.set("password",hashed);
+        this.set("password",await hashPassword(this.get("password")))
     }
     done();
 })
