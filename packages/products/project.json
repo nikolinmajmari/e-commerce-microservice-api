@@ -42,7 +42,7 @@
         "lintFilePatterns": ["packages/products/**/*.ts"]
       }
     },
-    "test": {
+    " test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
@@ -55,6 +55,33 @@
           "codeCoverage": true
         }
       }
+    },
+    "build-migration-config": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/products",
+        "main": "packages/products/src/app/typeorm.config.ts",
+        "tsConfig": "packages/products/tsconfig.app.json"
+      }
+    },
+    "typeorm-generate-migrations": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "cwd": "packages/products",
+        "commands": ["typeorm -d ../../dist/packages/products/main.js migration:generate"]
+      },
+      "dependsOn": ["build-migration-config"]
+    },
+    "typeorm-run-migrations": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "cwd": "packages/products",
+        "commands": ["typeorm -d ../../dist/packages/products/main.js migration:run"]
+      },
+      "dependsOn": ["build-migration-config"]
     }
   },
   "tags": []

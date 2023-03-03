@@ -20,9 +20,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@repo/app-event-emitter": [
-        "packages/app-event-emitter/src/index.ts"
-      ]
+      "@repo/app-event-emitter": ["packages/app-event-emitter/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
