@@ -1,13 +1,18 @@
-import Log from "../model/log.model";
+import getLogModel, { ILogModel } from "../model/log.model";
 
 export class LogService{
 
+    get model() { return getLogModel();}
+    
     async getLogs(){
-        return await Log().find({}).sort({_id: "descending"});
+        return this.model.find({});
     }
-
-    async deleteLogs(){
-        return await Log().deleteMany({})
+    /**
+     * 
+     * @returns 
+     */
+    async deleteMany(){
+        await this.model.deleteMany({});
     }
 }
 

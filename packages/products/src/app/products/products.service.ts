@@ -1,6 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
 import {InjectRepository} from '@nestjs/typeorm';
-import { join } from "path";
 import { EntityManager, Repository } from "typeorm";
 import { CreateProductDto } from "./dto/create_product.dto";
 import { ListProductsInput } from "./dto/list_products.input";

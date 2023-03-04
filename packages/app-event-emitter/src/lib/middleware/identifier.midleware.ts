@@ -1,5 +1,4 @@
-import { Request,Response,NextFunction } from "express";
-import debug from "debug";
+import {NextFunction } from "express";
 import { randomBytes } from "crypto";
 export default  function (req,res,next:NextFunction){
     randomBytes(20,function(err,buff){

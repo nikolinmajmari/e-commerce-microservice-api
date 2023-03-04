@@ -1,3 +1,6 @@
+import { Request } from "express";
+import { EventType } from "../common/types";
+
 export interface ILogDto{
     identifier: string,
     type?: string,
@@ -5,8 +8,29 @@ export interface ILogDto{
     group?: string,
     message?: string,
     context?: string,
-    payload?: string,
-    headers?:string,
+    payload?: any,
+    headers?:any,
+    method?:string,
+    uri?:string,
+}
+
+export interface IApiRequest{
+    identifier: string,
+    method: string,
+    type:EventType,
+    uri: string,
+    headers: any,
+    message: string
+}
+
+export interface IApiAction{
+    identifier: string,
+    sub?: string,
+    context?: string,
+    group?: string,
+    message?: string,
+    payload?: any,// serialized
+    headers?:any, // serialized 
     method?:string,
     uri?:string,
 }

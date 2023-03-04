@@ -19,7 +19,7 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use(identifierMidleware.default);
+app.use(identifierMidleware);
 app.use(analitycsMiddleware);
 /// auth config and routes 
 (new AuthConfigService(app)).config();

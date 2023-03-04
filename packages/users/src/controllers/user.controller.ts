@@ -49,7 +49,7 @@ export class UserController{
      */
     async changeUserPassword(req:IRequest,res:Response,next:NextFunction){
         try{
-            emmiter.emitPasswordChangeEvent(req.user,req);
+            emmiter.emitPasswordChangeEvent(req);
             const {password} = req.body;
             await userService.updateUser(req.user,{password,});
             res.status(200).json({
@@ -66,7 +66,7 @@ export class UserController{
      */
     async changeUserEmailAddress(req:IRequest,res:Response,next:NextFunction){
         try{
-            emmiter.emmitEmailChangeEvent(req.user,req);
+            emmiter.emitEmailChangeEvent(req);
             const {email} = req.body;
             const user = req.user;
             await userService.updateUser(user,{
@@ -88,7 +88,7 @@ export class UserController{
      */
     async updateUserProfile(req:IRequest,res:Response,next:NextFunction){
        try{
-        emmiter.emmitProfileUpdateEvent(req.user,req);
+        emmiter.emitUserProfileUpdateEvent(req);
         const {avatar,birthDate,firstName,gender,lastName} = req.body as IPutProfileDto;
         await userService.updateUser(
             req.user,
@@ -110,7 +110,7 @@ export class UserController{
      */
     async closeAccount(req:IRequest,res:Response,next:NextFunction){
        try{
-            emmiter.emmitCloseAccountEvent(req.user,req);
+            emmiter.emitCloseUserAccount(req);
             await userService.updateUser(req.user,{
                 status: "closed"
             });

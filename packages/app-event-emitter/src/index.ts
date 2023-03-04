@@ -1,4 +1,10 @@
-export * as logService from './lib/services/log.service';
-export * from './lib/app-event-emitter';
-export * as logController from "../src/lib/controllers/log.controller";
-export * as identifierMidleware from './lib/middleware/identifier.midleware'
+import logService from './lib/services/log.service';
+import { AppEventEmitter } from './lib/app-event-emitter';'./lib/app-event-emitter';
+import logController from './lib/controllers/log.controller'; "../src/lib/controllers/log.controller";
+import identifierMidleware from './lib/middleware/identifier.midleware';
+import { EventGroup} from "./lib/common/types";
+
+
+export {
+    logService,AppEventEmitter,logController,identifierMidleware,EventGroup
+};

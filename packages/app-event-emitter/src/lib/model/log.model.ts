@@ -54,8 +54,17 @@ const logSchema = new Schema({
 });
 
 logSchema.statics.build = function(dto: ILogDto):ILog{
-    const model = getModel();
+    const model = getLogModel();
     return new model(dto);
 }
-const getModel = ()=>mongooseService.getConnection().model<ILog,ILogModel>("log",logSchema);
-export default getModel;
+
+let _model:ILogModel|undefined;
+
+const getLogModel = ()=>{
+    if(_model===undefined){
+        _model = mongooseService.getConnection().model<ILog,ILogModel>("log",logSchema);
+    }
+    return mongooseService.getConnection().model<ILog,ILogModel>("log",logSchema);
+    return _model;
+};
+export default getLogModel;
