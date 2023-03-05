@@ -1,21 +1,21 @@
 import { Inject, Injectable } from "@nestjs/common";
 import {InjectRepository} from '@nestjs/typeorm';
 import { EntityManager, Repository } from "typeorm";
-import { CreateProductDto } from "./dto/create_product.dto";
-import { ListProductsInput } from "./dto/list_products.input";
-import { UpdateProductDto } from "./dto/update_product.dto";
-import { ProductEntity } from "./entities/product.entity";
-import { VariantEntity } from "./entities/variant.entity";
+import { CreateProductDto } from "../dto/create_product.dto";
+import { ListProductsInput } from "../dto/list_products.input";
+import { UpdateProductDto } from "../dto/update_product.dto";
+import { Product } from "../entities/product.entity";
+import { Variant } from "../entities/variant.entity";
 
 @Injectable()
 export class ProductsService{
     constructor(
         @Inject(EntityManager) 
         private readonly em:EntityManager,
-        @InjectRepository(ProductEntity)
-        private readonly productRepository:Repository<ProductEntity>,
-        @InjectRepository(VariantEntity)
-        private readonly variantRepository:Repository<VariantEntity>
+        @InjectRepository(Product)
+        private readonly productRepository:Repository<Product>,
+        @InjectRepository(Variant)
+        private readonly variantRepository:Repository<Variant>
     ){
     }
 

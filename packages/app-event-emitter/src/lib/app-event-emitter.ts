@@ -19,9 +19,6 @@ export class AppEventEmitter{
     });
   }
 
-  /**
-   * 
-   */
   async configure(){
     await mongooseService.connect(this.config.mongooseUrl);
     this.emitter.on(EventType.API_REQUEST,this.handleApiRequestEvent);
@@ -32,6 +29,7 @@ export class AppEventEmitter{
     const logDoc = getLogModel().build({
       identifier: data.identifier,
       method: data.method,
+      group: "",
       headers: JSON.stringify(data.headers??"{}"),
       uri: data.uri,
       message: `Api access, from request with identifier ${data.identifier} on url ${data.uri}`,

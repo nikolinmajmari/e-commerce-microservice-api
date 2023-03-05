@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { EventType } from "../common/types";
+import { EventType, ObjectWithId } from "../common/types";
 
 export interface ILogDto{
     identifier: string,
@@ -25,7 +25,7 @@ export interface IApiRequest{
 
 export interface IApiAction{
     identifier: string,
-    sub?: string,
+    sub?: ObjectWithId,
     context?: string,
     group?: string,
     message?: string,

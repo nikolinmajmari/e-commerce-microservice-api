@@ -1,6 +1,8 @@
 import {AppEventEmitter} from "@repo/app-event-emitter";
+import debug from "debug";
 
 const mongooseURL = process.env.MONGODB_URL || 'mongodb://localhost/logs-repository';
+const log = debug("app:common:emitter");
 
 
 const emitter = new AppEventEmitter({
@@ -113,7 +115,6 @@ export class UsersEventEmmitter {
         })
     }
 }
-
 
 
 export default new UsersEventEmmitter(emitter);

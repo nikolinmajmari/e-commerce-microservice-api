@@ -4,4 +4,4 @@ export interface IFilterDto{
     group?: string,
     headers?:string,
     method?:string,
-} 
+}

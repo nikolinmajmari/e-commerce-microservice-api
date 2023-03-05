@@ -1,9 +1,12 @@
-import { User, AppMetadata, UserMetadata, PasswordChangeTicketResponse, EmailVerificationTicketOptions } from "auth0";
+import { User, AppMetadata, UserMetadata, PasswordChangeTicketResponse, EmailVerificationTicketOptions, VerificationEmailJob } from "auth0";
 import { randomBytes } from "crypto";
 import { IAuth0Service, IAuth0UserType } from "../common/auth/auth.types";
 import { IPermissionLevel } from "../models/user.model";
 
 export class MockAuth0Service implements IAuth0Service{
+    createEmailVerificationJob({ user_id }: { user_id: string; }): Promise<VerificationEmailJob> {
+        throw new Error("Method not implemented.");
+    }
     async findUserByEmail(email: string): Promise<User<AppMetadata, UserMetadata>> {
         return {
             email: email,

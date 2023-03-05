@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import { ProductEntity, VariantEntity } from '../products/entities';
+import { Attribute,Category,Product,ProductAttribute,ProductType,Variant,VariantPrice  } from '../products/entities';
 
 @Module({
     imports:[
@@ -19,7 +19,7 @@ import { ProductEntity, VariantEntity } from '../products/entities';
                 migrationsRun: true,
                 synchronize: true,
                 entities:[
-                    ProductEntity,VariantEntity
+                    Attribute,Category,Product,ProductAttribute,ProductType,Variant,VariantPrice 
                ]
             };},
             inject: [ConfigService]

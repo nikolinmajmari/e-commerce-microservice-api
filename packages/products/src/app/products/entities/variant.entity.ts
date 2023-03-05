@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ProductEntity } from "./product.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "./product.entity";
+import { VariantPrice } from "./variant_price.entity";
 
 @Entity({name: "variant"})
-export class VariantEntity{
+export class Variant{
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -12,14 +13,23 @@ export class VariantEntity{
     @Column()
     title: string;
 
+    @Column({type:"text",array: true})
+    images: string[];
+
+    @Column({type: "int",default:0})
+    stock: number
+
     @Column()
     weight: number;
 
     @Column()
     weight_unit: string;
 
-    @ManyToOne(()=>ProductEntity,product=>product.variants)
-    product: ProductEntity
+    @OneToMany(()=>VariantPrice,price=>price.variant)
+    prices: VariantPrice[]
+
+    @ManyToOne(()=>Product,product=>product.variants)
+    product: Product
 
     @CreateDateColumn()
     createdAt:Date

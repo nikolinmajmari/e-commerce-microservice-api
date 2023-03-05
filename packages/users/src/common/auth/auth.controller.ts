@@ -1,17 +1,19 @@
 import debug from "debug";
 import { NextFunction, Request,Response } from "express";
-import emmiter from "../emmiter";
+import usersEventEmitter from "../emmiter";
 import authService from "./auth.service";
 const log = debug("app:auth:controller");
 
 class AuthController{
 
     login(req:Request,res:Response){
+        usersEventEmitter.emitUserLoginEvent(req);
         log("user logged in, redirecting to profile");
-        res.oidc.login({returnTo:"/profile",silent: false});
+        res.oidc.login({returnTo:"/profile",silent: false,});
     }
 
     logout(req:Request,res:Response){
+        usersEventEmitter.emitUserLogoutEvent(req);
         log("user logged out");
         res.oidc.logout({returnTo:"/"});
     }

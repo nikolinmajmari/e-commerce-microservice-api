@@ -1,8 +1,7 @@
 import { DataSource } from 'typeorm';
-import { ProductEntity } from './products/entities/product.entity';
-import { VariantEntity } from './products/entities/variant.entity';
 import dotenv from "dotenv";
-import { initialSetup1677882574591 } from '../migrations/1677882574591-initial-setup';
+import { Attribute,Category,Product,ProductAttribute,ProductType,Variant,VariantPrice } from './products/entities';
+import { initialDb1678000899386 } from '../migrations/1678000899386-initial-db';
 dotenv.config();
 
 export default new DataSource({
@@ -13,9 +12,9 @@ export default new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   entities: [
-    VariantEntity,ProductEntity
+    Attribute,Category,Product,ProductAttribute,ProductType,Variant,VariantPrice 
   ],
   migrations:[
-    initialSetup1677882574591
+    initialDb1678000899386
   ]
 });
