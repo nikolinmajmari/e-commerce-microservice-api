@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import { ProductAttribute } from "./product_attribute.entity";
+import { VariantAttribute } from "./product_attribute.entity";
 import { ProductType } from "./product_type.entity";
 
 export enum AttributeType{
@@ -14,7 +14,7 @@ export class Attribute{
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({nullable: false,unique: true})
+    @Column({nullable: false})
     name: string;
 
     @Column({type: "enum",enum:[AttributeType.FLOAT,AttributeType.INT,AttributeType.TEXT]})
@@ -38,7 +38,7 @@ export class Attribute{
     productType: ProductType;
 
     @OneToMany(
-        ()=>ProductAttribute,productAttribute=>productAttribute.attribute)
-    productAttributes:ProductAttribute[];
+        ()=>VariantAttribute,productAttribute=>productAttribute.attribute)
+    variantAttributes:VariantAttribute[];
 
 }

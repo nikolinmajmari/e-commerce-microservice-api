@@ -14,7 +14,8 @@ export class AuthConfigService{
     config(){
         const config:ConfigParams = {
             authRequired: false,
-            auth0Logout: true,
+            auth0Logout: true, 
+            idpLogout: true,
             secret: process.env.SECRET,
             baseURL: process.env.BASE_URL,
             clientID: process.env.AUTH_CLIENT_ID,

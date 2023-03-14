@@ -1,9 +1,9 @@
 import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import { Attribute } from "./attribute.entity";
-import { Product } from "./product.entity";
+import { Variant } from "./variant.entity";
 
-@Entity({ name: "product_attribute",})
-export class ProductAttribute{
+@Entity({ name: "variant_attribute",})
+export class VariantAttribute{
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -16,8 +16,8 @@ export class ProductAttribute{
     @ManyToOne(()=>Attribute)
     attribute: Attribute;
 
-    @ManyToOne(()=>Product)
-    product: Product;
+    @ManyToOne(()=>Variant)
+    variant: Variant;
 
     @CreateDateColumn()
     createdAt: Date;

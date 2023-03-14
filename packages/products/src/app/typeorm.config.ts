@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import dotenv from "dotenv";
-import { Attribute,Category,Product,ProductAttribute,ProductType,Variant,VariantPrice } from './products/entities';
-import { initialDb1678000899386 } from '../migrations/1678000899386-initial-db';
+import { Attribute,Category,Product,VariantAttribute,ProductType,Variant,VariantPrice } from './products/entities';
+
 dotenv.config();
 
 export default new DataSource({
@@ -11,10 +11,8 @@ export default new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
+  synchronize: true,
   entities: [
-    Attribute,Category,Product,ProductAttribute,ProductType,Variant,VariantPrice 
-  ],
-  migrations:[
-    initialDb1678000899386
+    Attribute,Category,Product,VariantAttribute,ProductType,Variant,VariantPrice 
   ]
 });

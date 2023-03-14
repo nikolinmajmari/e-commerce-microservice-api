@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { DecimalTransformer } from "../transformers/decimal.transformer";
 import { Variant } from "./variant.entity";
 
 export enum Currency {
@@ -12,7 +13,7 @@ export class VariantPrice{
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({type: "decimal", precision: 10, scale: 2, default: 0})
+    @Column({type: "decimal", precision: 10, scale: 2, default: 0.0,transformer: new DecimalTransformer()})
     price: number;
 
     @Column({enum: Currency,type: "enum",})
@@ -21,7 +22,7 @@ export class VariantPrice{
     @Column({type:"bool"})
     active: boolean;
 
-    @ManyToOne(()=>Variant,variant=>variant.prices)
+    @ManyToOne(()=>Variant,variant=>variant.prices,{lazy: true})
     variant: Variant
 
     @CreateDateColumn()

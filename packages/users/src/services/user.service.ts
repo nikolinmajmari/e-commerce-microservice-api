@@ -69,6 +69,7 @@ export class UserService{
         });
         newUser.user_id = oauthUser.user_id;
         await newUser.save();
+        this.auth.updateUser(oauthUser.user_id,newUser.toJSON())
         return newUser;
     }
 
@@ -85,7 +86,7 @@ export class UserService{
             session.startTransaction();
             const user = User.build(createUserDto);
             const oauthUser = await this.auth.createUser(
-                fromUserDto(createUserDto)
+                createUserDto
             );
             user.user_id = oauthUser.user_id;
             await user.save();
@@ -115,11 +116,9 @@ export class UserService{
         log("started transaction");
         session.startTransaction();
         log("updating user on oauth servers")
-        await this.auth.updateUser(
-            user.user_id,
-            fromUserDto(update),
-            update.permissionLevel
-        );
+        await this.auth.updateUser(user.user_id,{
+            ...user.toJSON(),...update
+        },update.permissionLevel);
         log("updating user data in mongoose");
         await user.set({...update});
         await user.save();

@@ -5,7 +5,7 @@ paths:
         - Bearer: []
       tags:
         - Users
-      summary: Update existing user 
+      summary: Get user data
       produces: 
         - application/json
       parameters:
@@ -16,22 +16,11 @@ paths:
             type: string
             minimum: 1
           description: The user ID
-      requestBody:
-        content:
-          application/json:
-            name: sign up 
-            description: Update am user with a patch request to /users
-            required: true 
-            schema: 
-              $ref: '#/definitions/user'
       responses:
         201:
           description: The  user object
         404:
           description: User not found
-
-definitions:
-  user:
     type: object
     properties:
       firstName: 

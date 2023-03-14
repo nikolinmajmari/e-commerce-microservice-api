@@ -8,6 +8,7 @@ import { PageDto } from "../dto/page.dto";
 import { CreateProductTypeDto } from "../dto/product_type.create.dto";
 import { Attribute, ProductType } from "../entities";
 import debug from "debug";
+import { UpdateProductTypeDto } from "../dto/product_type.update.dto";
 
 @Injectable()
 export class ProductTypeService{
@@ -31,8 +32,9 @@ export class ProductTypeService{
 
     async findAll(page:PageDto){
        return await this.repository.find({
+          relations:["attributes"],
           skip: page.offset,
-          take: page.limit
+          take: page.limit,
        })
     }
 
@@ -42,7 +44,7 @@ export class ProductTypeService{
         })
     }
 
-    async update(id: string, dto: UpdateAttributeDto){
+    async update(id: string, dto: UpdateProductTypeDto){
         const result = await this.repository.update({
             id: id
         },dto);

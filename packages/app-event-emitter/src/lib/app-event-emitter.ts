@@ -31,8 +31,8 @@ export class AppEventEmitter{
       method: data.method,
       group: "",
       headers: JSON.stringify(data.headers??"{}"),
-      uri: data.uri,
-      message: `Api access, from request with identifier ${data.identifier} on url ${data.uri}`,
+      uri: data.url,
+      message: `Api access, from request with identifier ${data.identifier} on url ${data.url}`,
       type:EventType.API_REQUEST,
     });
     await logDoc.save();
@@ -43,7 +43,7 @@ export class AppEventEmitter{
     const logDoc = getLogModel().build({
       identifier: data.identifier,
       context: data.context,
-      sub: data.sub.user_id,
+      sub: data.sub,
       group: data.group,
       message: data.message,
       headers: JSON.stringify(data.headers),

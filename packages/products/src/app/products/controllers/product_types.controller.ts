@@ -5,6 +5,7 @@ import { CreateAttributeDto } from '../dto/attribute.create.dto';
 import { UpdateAttributeDto } from '../dto/attribute.update.dto';
 import { CreateProductDto } from '../dto/create_product.dto';
 import { CreateProductTypeDto } from '../dto/product_type.create.dto';
+import { UpdateProductTypeDto } from '../dto/product_type.update.dto';
 import { UpdateProductDto } from '../dto/update_product.dto';
 import { ProductTypeService } from '../services/product_type.service';
 
@@ -38,7 +39,7 @@ export class ProductTypesController {
     }
 
     @Patch(":id")
-    update(@Param("id") id: string,@Body() dto: UpdateProductDto){
+    update(@Param("id") id: string,@Body() dto: UpdateProductTypeDto){
         return this.service.update(id,dto);
     }
 

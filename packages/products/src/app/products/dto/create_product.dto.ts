@@ -1,76 +1,120 @@
 import {Field, InputType} from "@nestjs/graphql";
-import {IsString,IsNotEmpty,IsPositive,IsNumber,IsEnum, IsArray, IsDecimal} from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import {IsString,IsPositive,IsNumber,IsEnum, IsArray, IsDecimal, isNotEmpty} from "class-validator";
+import {  ProductType } from "../entities";
 import { ProductStatus } from "../entities/product.entity";
 import { Currency } from "../entities/variant_price.entity";
 
+
 @InputType()
-export class CreateProductDto{
+export class VariantPriceDto{
 
-    @IsString()
+
+    @ApiProperty({
+        type: Number,
+        example: "123.34"
+    })
     @Field(()=>String)
-    name: string;
+    price: number;
 
-    @IsEnum(ProductStatus,{message: "Please specify a valid value"})
+
+    @ApiProperty({
+        type: String,
+        enum: [Currency.ALL,Currency.EUR,Currency.USD]
+    })
+    @IsEnum(Currency)
     @Field(()=>String)
-    status: string;
-
-    @IsArray()
-    @IsString({each: true})
-    @Field(()=>[String])
-    tags: string[];
-    
-    @IsArray()
-    @IsString({each: true})
-    @Field(()=>[String])
-    images: [];
-
-    @IsNotEmpty()
-    @Field(()=>[VariantDto])
-    variants?: VariantDto[];
+    currency:Currency;
 }
+
 
 @InputType()
 export class VariantDto{
+    
+    @ApiProperty()
     @IsString()
     @Field(()=>String)
     sku: string;
 
+    @ApiProperty()
     @IsString()
     @Field(()=>String)
     title: string;
 
+    @ApiProperty({
+        type: String,
+        isArray: true
+    })
     @IsArray()
     @IsString({each: true})
     @Field(()=>[String])
     images: [];
 
+
+    @ApiProperty({
+        type: Number,
+        default: 0
+    })
     @IsNumber()
     @IsPositive()
     @Field(()=>String)
     stock : number;
 
-    @IsNumber()
-    @IsPositive()
-    @Field(()=>String,{nullable: true})
-    weight?: number;
 
-    @IsString()
-    @Field(()=>String,{nullable: true})
-    weight_unit?:string;
-
+    @ApiProperty({
+        type: VariantPriceDto,
+        isArray: true
+    })
     @IsArray()
     @Field(()=>[VariantPriceDto])
     prices: VariantPriceDto[];
 }
 
 @InputType()
-export class VariantPriceDto{
-    @IsDecimal({decimal_digits:"10,2"})
-    @Field(()=>String)
-    price: number;
+export class CreateProductDto{
 
-    @IsEnum(Currency)
+    @IsString()
     @Field(()=>String)
-    currency:Currency;
+    @ApiProperty()
+    name: string;
+
+    @IsEnum(ProductStatus)
+    @Field(()=>String)
+    @ApiProperty({
+        enum: [ProductStatus.ACTIVE,ProductStatus.INACTIVE],
+        type: String
+    })
+    status: string;
+
+    @ApiProperty({
+        isArray: true,
+        type: String
+    })
+    @IsArray()
+    @IsString({each: true})
+    @Field(()=>[String])
+    tags: string[];
+    
+    @ApiProperty({
+        isArray: true,
+        type: String
+    })
+    @IsArray()
+    @IsString({each: true})
+    @Field(()=>[String])
+    images: string[];
+
+    @ApiProperty({
+        type: String
+    })
+    @Field(()=>ProductType)
+    type: ProductType;
+
+    @ApiProperty({
+        type: VariantDto,
+        isArray:true
+    })
+    @IsArray()
+    @Field(()=>[VariantDto])
+    variants: VariantDto[];
 }
-

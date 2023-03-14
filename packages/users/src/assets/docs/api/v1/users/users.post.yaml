@@ -1,10 +1,9 @@
 paths:
   /api/v1/users:
     post:
-      security:
-        - Bearer: []
       tags:
         - Users
+        - Public
       summary: Create new user 
       produces: 
         - application/json

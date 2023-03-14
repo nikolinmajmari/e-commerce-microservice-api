@@ -11,3 +11,27 @@ paths:
           description: Ticket
         401:
           description: Forbidden
+  /login:
+    post:
+      tags:
+        - Public
+      summary: Create change email ticket
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Ticket
+        401:
+          description: Forbidden
+  /signUp:
+    post:
+      tags:
+        - Public
+      summary: Create change email ticket
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: Ticket
+        401:
+          description: Forbidden

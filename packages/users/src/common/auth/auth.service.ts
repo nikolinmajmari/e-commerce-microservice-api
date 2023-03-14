@@ -1,21 +1,38 @@
-import {AppMetadata, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, ObjectWithId, PasswordChangeTicketResponse, User, UserMetadata, VerificationEmailJob} from 'auth0';
+import {AppMetadata, DatabaseAuthenticator, DatabaseClientOptions, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, OAuthAuthenticator, OAuthClientOptions, ObjectWithId, PasswordChangeTicketResponse, User, UserMetadata, VerificationEmailJob} from 'auth0';
 import debug from 'debug';
 import { IPermissionLevel, IUser } from '../../models/user.model';
 import Conflict from '../errors/http/conflict_error';
 import BadRequest from '../errors/http/bad_request_error';
 import NotFound from '../errors/http/not_found.error.';
 import { IAuth0Service, IAuth0UserType } from './auth.types';
+import { CoreAppMetadata } from './metadata/core.app-metadata';
+import { CoreUserMetadata } from './metadata/core.user-metadata';
+import ICreateUserDTO from '../../dto/create_user.dto';
+import { auth } from 'express-openid-connect';
 
 const log = debug('app:common:auth:service');
 /**
  * This class defines the instance used to manage users from auth0 database
  */
 export class Auth0Service implements IAuth0Service{
-    management: ManagementClient;
-    constructor(options: ManagementClientOptions){
-        this.management = new ManagementClient(
-            options
-        );
+    management: ManagementClient<CoreAppMetadata,CoreUserMetadata>;
+    databaseAuthenticator: DatabaseAuthenticator<CoreAppMetadata,CoreUserMetadata>;
+    authenticator: OAuthAuthenticator;
+    constructor(options: ManagementClientOptions&DatabaseClientOptions&OAuthClientOptions){
+        this.management = new ManagementClient<CoreAppMetadata,CoreUserMetadata>({
+            clientId: options.clientId,
+            clientSecret: options.clientSecret,
+            domain: options.domain
+        });
+        // this.authenticator = new OAuthAuthenticator({
+        //     clientId: options.clientId,
+        //     clientSecret: options.clientSecret,
+        //     baseUrl: options.scope
+        // });
+        // this.databaseAuthenticator = new DatabaseAuthenticator({
+        //     baseUrl: options.baseUrl,
+        //     clientId: options.clientId,
+        // },this.authenticator);
     }
 
     /**
@@ -41,19 +58,33 @@ export class Auth0Service implements IAuth0Service{
      * @param role 
      * @returns 
      */
-    async updateUser(auth0UserId:string,update:IAuth0UserType,role?:IPermissionLevel):Promise<void>{
-        const {status,email,name,password} = update;
-        log("updating user ",auth0UserId," data",update,email!=undefined||name!=undefined||password!=undefined||status!=undefined);
-        if(email!=undefined||name!=undefined||password!=undefined||status!=undefined){
-            const us = await this.management.updateUser(
-                {id: auth0UserId},
-                { email, name, password,email_verified:email?false:undefined, app_metadata:{ status } },
-            );
-            log("updated user",us);
-        }
+    async updateUser(
+        auth0UserId:string,
+        update:CoreAppMetadata|CoreUserMetadata,
+        role?:IPermissionLevel
+    ):Promise<void>{
+        const {id,permissionLevel,phone,status,username} = update;
+        const {avatar,birthDate,firstName,gender,lastName} = update;
+        log({ 
+            app_metadata:{ id,permissionLevel,phone,status,username},
+            user_metadata: {avatar,birthDate,firstName,gender,lastName},
+        },);
+        await this.management.updateUser({id: auth0UserId},
+            {   name: `${firstName} ${lastName}`,
+                app_metadata:{ id,permissionLevel,phone,status,username},
+                user_metadata: {avatar,birthDate,firstName,gender,lastName},
+            },
+        );
         if(role){
             this.assignRoleToUser(auth0UserId,role);
         }
+    }
+
+
+    async updateUserEmail(auth0UserId: string, newEmail: string, verifyEmail: boolean) {
+        return await this.management.updateUser({id:auth0UserId},
+            {email: newEmail,verify_email: verifyEmail}
+        );
     }
 
 
@@ -62,22 +93,30 @@ export class Auth0Service implements IAuth0Service{
      * @param user 
      * @returns 
      */
-    async createUser(user:IAuth0UserType){
+    async createUser(user:ICreateUserDTO){
         try{
             log("creating oauth0 user");
-            const {email,name,password,role} = user;
+            const {
+                email,firstName,lastName,password,permissionLevel,status,phone,username
+            } = user;
             const oauthUser =  await this.management.createUser({
                 connection: 'Username-Password-Authentication',
                 ...{
-                    email,
-                    name,
+                    email:email,
+                    name:`${firstName} ${lastName}`,
                     password,
                 },
                 email_verified: false,
                 verify_email: true,
-                app_metadata:{ status:"active" } 
+                app_metadata:{ phone,username,permissionLevel,status:status??"active" },
+                user_metadata: {
+                    firstName,lastName,
+                    avatar: user.avatar,
+                    birthDate: user.birdhDate,
+                    gender:user.gender,
+                }
             });
-            this.assignRoleToUser(oauthUser.user_id,role);
+            this.assignRoleToUser(oauthUser.user_id,permissionLevel);
             return oauthUser;
         }catch(e){
             this.handleError(e);
@@ -168,10 +207,17 @@ export class Auth0Service implements IAuth0Service{
             id: user.user_id
         });
     }
+
+
+    async signIn(email:string){
+        
+        ///
+    }
 }
 
 export default new Auth0Service({
     clientId:process.env.AUTH_CLIENT_ID,
     clientSecret:process.env.AUTH_CLIENT_SECRET,
     domain:process.env.AUTH_DOMAIN,
+    baseUrl: process.env.AUTH_ISSUER_BASE_URL,
 });

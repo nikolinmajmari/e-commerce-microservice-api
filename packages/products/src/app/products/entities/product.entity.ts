@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import { Category } from "./product_category.entity";
+import { Category } from "./category.entity";
 import { ProductType } from "./product_type.entity";
 import { Variant } from "./variant.entity";
 
@@ -27,13 +27,19 @@ export class Product{
     @Column({type:"text",array: true})
     images: string[];
 
-    @ManyToOne(()=>ProductType,type=>type.products)
+    @ManyToOne(()=>ProductType,type=>type.products,{
+        lazy: true
+    })
     type: ProductType;
     
-    @OneToMany(()=>Variant,variant=>variant.product)
+    @OneToMany(()=>Variant,variant=>variant.product,{
+        lazy: true
+    })
     variants: Variant[];
 
-    @ManyToMany(()=>Category)
+    @ManyToMany(()=>Category,{
+        lazy: true
+    })
     @JoinTable()
     categories:Category[];
 

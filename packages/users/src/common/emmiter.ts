@@ -27,7 +27,7 @@ export class UsersEventEmmitter {
     }
 
     private emitUserEvent(
-        user:any,
+        user:{_id:string},
         params:{
             group:UserEventsGroup,
             req?,headers?,body?,
@@ -38,7 +38,7 @@ export class UsersEventEmmitter {
             identifier: (req as unknown)["identifier"],
             context: "user",
             group: group,
-            sub: user?._id,
+            sub: user._id,
             payload: body,
             headers: headers,
             message: message??`User event of ${group} group `,

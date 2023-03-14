@@ -13,7 +13,6 @@ export class Category{
     description:string;
     
     @ManyToMany(()=>Product)
-    @JoinTable()
     products:Product[]
 
     @CreateDateColumn()

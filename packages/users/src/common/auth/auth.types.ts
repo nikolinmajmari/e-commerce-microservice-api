@@ -2,17 +2,15 @@ import {User,AppMetadata,UserMetadata, EmailVerificationTicketOptions, PasswordC
 import ICreateOauthUserDTO from "../../dto/create_oauth_user.dto";
 import { IUpdateUserDto } from "../../dto/update_user.dto";
 import {IAccountStatus, IPermissionLevel} from "../../models/user.model";
+import { CoreAppMetadata } from "./metadata/core.app-metadata";
+import { CoreUserMetadata } from "./metadata/core.user-metadata";
 
 export interface IAuth0Service{
     findUserByEmail(
         email:string
     ):Promise<User<AppMetadata,UserMetadata>>;
-    updateUser(
-        auth0UserId:string,
-        update:IAuth0UserType,
-        role?:IPermissionLevel
-    );
-    
+
+
     createUser(
         user:IAuth0UserType,
     ):Promise<User<AppMetadata, UserMetadata>>;
@@ -25,10 +23,26 @@ export interface IAuth0Service{
     createPassowrdResetTicket(
         {user_id,connection_id,email}:{user_id?:string,connection_id?:string,email:string}
     ):Promise<PasswordChangeTicketResponse>;
+
     createEmailVerificationTicket(
         {user_id}:{user_id:string}
     ):Promise<EmailVerificationTicketOptions>;
+
+
     findAndRemoveUserByEmail(email:string);
+
+
+    updateUser(
+        auth0UserId:string,
+        update:CoreAppMetadata|CoreUserMetadata,
+        role?:IPermissionLevel
+    );
+
+    updateUserEmail(
+        auth0UserId:string,
+        newEmail: string,
+        verifyEmail: boolean,
+    );
 
     createEmailVerificationJob({user_id}:{user_id:string}):Promise<VerificationEmailJob>;
 }

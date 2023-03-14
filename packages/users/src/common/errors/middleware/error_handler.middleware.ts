@@ -22,8 +22,8 @@ export default function(err,req:Request,res:Response,next:NextFunction){
                 ...err.toJson(),
             }
         )
-    }else if(err.status==400){
-        res.status(400).json(err);
+    }else if(err.status && err.status<500){
+        res.status(err.status).json(err);
     }
     else{
         log("An unhandled error occured",err);
