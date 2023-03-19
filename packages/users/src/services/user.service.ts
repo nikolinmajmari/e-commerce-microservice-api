@@ -137,6 +137,12 @@ export class UserService{
 
     }
 
+    async closeUserAccount(user:IUser){
+        return await this.updateUser(user,{
+            status: "closed"
+        })
+    }
+
     async sendPasswordResetEmail(user:IUser) {
         log("invoked sent password reset email");
         return await this.auth.createPassowrdResetTicket(user);

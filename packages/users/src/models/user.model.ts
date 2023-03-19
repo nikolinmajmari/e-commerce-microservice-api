@@ -21,6 +21,7 @@ export interface IUser extends Document{
     avatar:string,
     addresses:Types.DocumentArray<IAddress>,
     status:IAccountStatus,
+    get fullName():string,
     createdAt:number,
     modifiedAt:number,
 }
@@ -64,6 +65,13 @@ const userSchema = new Schema({
             delete ret._id;
             delete ret.password;
             delete ret.__v;
+        }
+    },
+    virtuals:{
+        fullName:{
+            get(){
+                return `${this.firstName} ${this.lastName}`;
+            }
         }
     }
 });

@@ -1,70 +1,41 @@
 import { EventEmitter } from "stream";
 import mongooseService from "./common/mongoose.service";
 import debug from "debug";
-import { IApiAction, IApiRequest } from "./dto/log.dto";
-import getLogModel from "./model/log.model";
-import {  EventType } from "./common/types";
-const log=debug("package:app-event-emitter:core");
+import { KafkaConsumer } from "./common/broker/kafka.consumer";
+import { KafkaProducer } from "./common/broker/kafka.producer";
+import { Kafka} from "kafkajs";
+import { AppMessageConsumer, Topic } from "./common/broker/brokers";
+import { IActionLogDto, IRequestLogDto } from "./dto/log.dto";
+const log=debug("app:package:app-event-emitter:core");
 
 /**
  * 
  */
-export class AppEventEmitter{
-  private emitter:EventEmitter;
+export class AppEventEmitter {
+  
+  private consumer: KafkaConsumer;
+  private producer: KafkaProducer;
 
-
-  constructor(private config:IAppEventEmitterConfig){
-    this.emitter = new EventEmitter({
-      captureRejections: true
-    });
+  constructor(private kafka:Kafka){
+    this.consumer = new KafkaConsumer(kafka);
+    this.producer = new KafkaProducer(kafka);
+    log("event emmitter created ");
   }
 
-  async configure(){
-    await mongooseService.connect(this.config.mongooseUrl);
-    this.emitter.on(EventType.API_REQUEST,this.handleApiRequestEvent);
-    this.emitter.on(EventType.API_ACTION,this.handleApiActionEvent);
+  produceAppRequestEvent(dto:IRequestLogDto){
+    this.producer.produce(Topic.API_REQUEST,dto);
   }
 
-  async handleApiRequestEvent(data:IApiRequest){
-    const logDoc = getLogModel().build({
-      identifier: data.identifier,
-      method: data.method,
-      group: "",
-      headers: JSON.stringify(data.headers??"{}"),
-      uri: data.url,
-      message: `Api access, from request with identifier ${data.identifier} on url ${data.url}`,
-      type:EventType.API_REQUEST,
-    });
-    await logDoc.save();
+  produceAppActionEvent(dto:IActionLogDto){
+    this.producer.produce(Topic.APP_ACTION,dto);
   }
 
-
-  async handleApiActionEvent(data:IApiAction){
-    const logDoc = getLogModel().build({
-      identifier: data.identifier,
-      context: data.context,
-      sub: data.sub,
-      group: data.group,
-      message: data.message,
-      headers: JSON.stringify(data.headers),
-      method: data.method,
-      payload: JSON.stringify(data.payload??"{}"),
-      type: EventType.API_ACTION,
-    });
-    await logDoc.save()
+  consumeAppRequestEvent( handler:AppMessageConsumer<IRequestLogDto>){
+    this.consumer.consume<IRequestLogDto>(
+      Topic.API_REQUEST,handler);
   }
 
-
-  async emitApiRequestEvent(data:IApiRequest){
-    this.emitter.emit(EventType.API_REQUEST,data);
+  consumeAppActionEvent(handler:AppMessageConsumer<IActionLogDto>){
+    this.consumer.consume<IActionLogDto>(Topic.APP_ACTION,handler);
   }
-
-  async emitApiActionEvent(data:IApiAction){
-    this.emitter.emit(EventType.API_ACTION,data);
-  }
- 
-}
-
-export interface IAppEventEmitterConfig{
-  mongooseUrl: string,
 }

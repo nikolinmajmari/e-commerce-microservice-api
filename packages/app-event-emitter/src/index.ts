@@ -1,10 +1,17 @@
-import logService from './lib/services/log.service';
 import { AppEventEmitter } from './lib/app-event-emitter';'./lib/app-event-emitter';
-import logController from './lib/controllers/log.controller'; "../src/lib/controllers/log.controller";
 import identifierMidleware from './lib/middleware/identifier.midleware';
-import { EventGroup} from "./lib/common/types";
-
+import { Topic } from './lib/common/broker/brokers';
+import { ProductsLogGroup,ApiRequestLogGroup,UsersLogGroup,LogGroup } from './lib/model/log_group';
+import { IActionLogDto,IRequestLogDto } from './lib/dto/log.dto';
 
 export {
-    logService,AppEventEmitter,logController,identifierMidleware,EventGroup
+    AppEventEmitter,
+    identifierMidleware,
+    LogGroup,
+    Topic,
+    ProductsLogGroup,
+    IActionLogDto,
+    IRequestLogDto,
+    ApiRequestLogGroup,
+    UsersLogGroup
 };

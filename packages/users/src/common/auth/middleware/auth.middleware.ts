@@ -7,7 +7,7 @@ import { IRequest } from '../../types';
 import authService from '../auth.service';
 import usersService from '../../../services/user.service';
 import { IPermissionLevel } from '../../../models/user.model';
-import emmiter from '../../emmiter';
+import emmiter from '../../event_emitter.service';
 
 const log = debug('app:auth:middleware');
 const AUTHORIZATION_HEADER = 'authorization';

@@ -1,12 +1,11 @@
 
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import debug from "debug";
 import userService from "../services/user.service";
-import User from "../models/user.model";
 import IPutProfileDto from "../dto/patch_profile.dto";
 import { IRequest } from "../common/types";
 import userAddressService from "../services/user.address.service";
-import emmiter from "../common/emmiter";
+import emitter from "../common/event_emitter.service";
 import { unlinkUploadedFile } from "../common/uploader";
 const log = debug("app:controller:users");
 
@@ -50,9 +49,9 @@ export class UserController{
      */
     async changeUserPassword(req:IRequest,res:Response,next:NextFunction){
         try{
-            emmiter.emitPasswordChangeEvent(req);
             const {password} = req.body;
             await userService.updateUser(req.user,{password,});
+            emitter.logUserPasswordChange(req);
             res.status(200).json({
                 message: "Password changed successfully"
             });
@@ -67,12 +66,12 @@ export class UserController{
      */
     async changeUserEmailAddress(req:IRequest,res:Response,next:NextFunction){
         try{
-            emmiter.emitEmailChangeEvent(req);
             const {email} = req.body;
             const user = req.user;
             await userService.updateUser(user,{
                 email,
             });
+            emitter.logUserChangeEmailAction(req);
             res.status(200).json({
                 message: "Email address changed successfully"
             });
@@ -89,13 +88,13 @@ export class UserController{
      */
     async updateUserProfile(req:IRequest,res:Response,next:NextFunction){
        try{
-        emmiter.emitUserProfileUpdateEvent(req);
         const {avatar,birthDate,firstName,gender,lastName} = req.body as IPutProfileDto;
         await userService.updateUser(
             req.user,
         {
             avatar,birthDate,firstName,gender,lastName
         });
+        emitter.logUserProfileUpdate(req);
         res.send(req.user);
        }catch(e){
         next(e);
@@ -113,10 +112,8 @@ export class UserController{
      */
     async closeAccount(req:IRequest,res:Response,next:NextFunction){
        try{
-            emmiter.emitCloseUserAccount(req);
-            await userService.updateUser(req.user,{
-                status: "closed"
-            });
+            await userService.closeUserAccount(req.user);
+            emitter.logUserClosesAccount(req);
             res.status(200).send();
        }catch(e){
             next(e);

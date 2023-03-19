@@ -1,8 +1,9 @@
+import { UsersLogGroup } from "@repo/app-event-emitter";
 import debug from "debug";
 import { NextFunction, Request,Response } from "express";
 import ISignUpUserDTO from "../../dto/sign_up_user.dto";
 import userService from "../../services/user.service";
-import usersEventEmitter from "../emmiter";
+import emitter from "../event_emitter.service";
 import { unlinkUploadedFile } from "../uploader";
 import authService from "./auth.service";
 const log = debug("app:auth:controller");
@@ -16,7 +17,7 @@ class AuthController{
     }
 
     logout(req:Request,res:Response){
-        usersEventEmitter.emitUserLogoutEvent(req);
+        emitter.logUserLogOut(req);
         log("user logged out");
         res.oidc.logout({returnTo:"/"});
     }
@@ -37,7 +38,11 @@ class AuthController{
                 email:req.query.email.toString(),
                 connection_id:process.env.AUTH_CONNECTION_ID,
             });
-            res.send(ticket);
+            /// todo sent ticket via email 
+            res.send({
+                message: "ticket was created. you have 1 hour time to use it"
+            });
+            emitter.logAnonymousAction(UsersLogGroup.CHANGE_PASSWORD,req,`Unauthenticated user tried to ask for a password change`);
         }catch(e){
             next(e);
         }

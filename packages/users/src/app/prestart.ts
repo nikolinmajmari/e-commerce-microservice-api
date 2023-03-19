@@ -1,6 +1,5 @@
 /// initialize mongoose 
 import mongoservice from "../common/mongoose";
-import {emitter} from "../common/emmiter";
 /// configure env variables
 import * as dotenv from 'dotenv';
 
@@ -9,7 +8,3 @@ dotenv.config()
 
 /// initialize mongoodb connection
 mongoservice.connect();
-
-///
-
-emitter.configure();

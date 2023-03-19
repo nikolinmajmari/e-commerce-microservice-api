@@ -1,6 +1,5 @@
 import express from 'express';
 import * as path from 'path';
-import bodyParser from 'body-parser';
 import debug from "debug";
 import helmet from 'helmet';
 import { SwaggerConfig } from './swagger.config';
@@ -9,8 +8,6 @@ import { AuthConfigService } from './common/auth/auth.config';
 import AppErrorHandler from './common/errors/errors.service';
 import ApiUserRoute from './routes/api.user.route';
 import ApiUsersRoute from './routes/api.users.route';
-import AnalitycsRoute from './routes/api.analitycs';
-import fileUpload from 'express-fileupload';
 import analitycsMiddleware from './middleware/analitycs/analitycs.middleware';
 import { identifierMidleware } from '@repo/app-event-emitter';
 const log = debug("app:main");
@@ -28,7 +25,6 @@ app.use(analitycsMiddleware);
 (new AuthConfigService(app)).config();
 new AuthRoutes(app);
 /// config auth 
-new AnalitycsRoute(app);
 /// configure swagger 
 new SwaggerConfig(app, HOST, PORT);
 /// inject users route
