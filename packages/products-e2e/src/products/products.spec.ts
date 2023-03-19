@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+
+beforeAll(()=>{
+  1;
+});
+
 describe('GET /', () => {
   it('should return a message', async () => {
     const res = await axios.get(`/`);

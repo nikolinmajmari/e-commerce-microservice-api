@@ -3,15 +3,16 @@ import { NextFunction, Request,Response } from "express";
 import ISignUpUserDTO from "../../dto/sign_up_user.dto";
 import userService from "../../services/user.service";
 import usersEventEmitter from "../emmiter";
+import { unlinkUploadedFile } from "../uploader";
 import authService from "./auth.service";
 const log = debug("app:auth:controller");
 
 class AuthController{
 
     login(req:Request,res:Response){
-        usersEventEmitter.emitUserLoginEvent(req);
         log("user logged in, redirecting to profile");
         res.oidc.login({returnTo:"/profile",silent: false,});
+      // usersEventEmitter.emitUserLoginEvent(req);
     }
 
     logout(req:Request,res:Response){
@@ -44,11 +45,16 @@ class AuthController{
 
     async signUp(req,res,next){
        try{
+        console.log(req.body);
         const {addresses,avatar,birdhDate,email,firstName,gender,lastName,password,phone,status,username} = req.body as ISignUpUserDTO; 
-        await userService.createUser({
+        const user = await userService.createUser({
             addresses,avatar,birdhDate,email,firstName,gender,lastName,password,phone,status,username
         });
+        res.send({
+            id: user._id
+        })
        }catch(e){
+        unlinkUploadedFile(req);
         next(e);
        }
     }

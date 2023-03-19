@@ -19,11 +19,17 @@ paths:
       requestBody:
         content:
           application/json:
-            name: sign up 
+            name: patch user 
             description: Update am user with a patch request to /users
             required: true 
             schema: 
-              $ref: '#/definitions/patch'
+              $ref: '#/definitions/patchUser'
+          multipart/form-data:
+            name: patch user
+            description: Update am user with a patch request to /users
+            required: true 
+            schema: 
+              $ref: '#/definitions/patchUserMult'
       responses:
         201:
           description: The updated user object
@@ -33,7 +39,7 @@ paths:
           description: Conflict, user email already exists
 
 definitions:
-  patch:
+  patchUser:
     type: object
     properties:
       firstName: 
@@ -58,6 +64,36 @@ definitions:
         type: string
       avatar: 
         type: string
+      status:
+        type: string
+        enum: ["active","closed"]
+
+  patchUserMult:
+    type: object
+    properties:
+      firstName: 
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ["male","female"]
+      email: 
+        type: string
+      permissionLevel:
+        type: string
+        enum: ["Admin","User"]
+      phone: 
+        type: string
+      username: 
+        type: string
+      password:
+        type: string
+      birthDate: 
+        type: string
+      avatar: 
+        type: string
+        format: binary
       status:
         type: string
         enum: ["active","closed"]

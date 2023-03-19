@@ -25,7 +25,10 @@ export class AuthConfigService{
                 response_type: 'code', // This requires you to provide a client secret
                 audience: process.env.AUTH_AUDIENCE,
                 scope: "openid email profile name",
-            },     
+            },
+            routes:{
+                login: false,
+            }     
         };
         
         this.app.use(auth(config));

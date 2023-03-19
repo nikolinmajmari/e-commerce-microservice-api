@@ -3,9 +3,7 @@ import debug from "debug";
 import authController from "./auth.controller";
 import { requiresAuth } from "express-openid-connect";
 import newUserRules from "../../middleware/validation_rules/new.user.rules";
-
 const log = debug("app:auth:routes");
-
 
 export default class AuthRoutes{
     constructor(private app:Application){
@@ -18,6 +16,9 @@ export default class AuthRoutes{
         this.app.get("/callback",requiresAuth(),authController.profile);
         this.app.get("/logout",requiresAuth(),authController.logout);
         this.app.get("/resetPassword",authController.resetPassword);
-        this.app.post("/signup",newUserRules(),authController.signUp);
+        this.app.post(
+            "/signup",
+        newUserRules(),
+        authController.signUp);
     }
 }

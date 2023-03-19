@@ -38,6 +38,12 @@ paths:
             required: true 
             schema: 
               $ref: '#/definitions/signUp'
+          multipart/form-data:
+            name: sign up 
+            description: User sign up data 
+            required: true 
+            schema: 
+              $ref: '#/definitions/signUpMult'
       responses:
         201:
           description: The id of the created user
@@ -67,3 +73,28 @@ definitions:
         type: string
       avatar: 
         type: string
+  signUpMult:
+    type: object
+    properties:
+      firstName: 
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ["male","female"]
+      email: 
+        type: string
+      phone: 
+        type: string
+      username: 
+        type: string
+      password:
+        type: string
+      birthDate: 
+        type: string
+      avatar: 
+        type: string
+        format: binary
+
+

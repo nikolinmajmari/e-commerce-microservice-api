@@ -3,7 +3,7 @@ paths:
     post:
       tags:
         - Users
-      summary: Create new user 
+      summary: Create new user ( only for admin )
       produces: 
         - application/json
       requestBody:
@@ -14,6 +14,12 @@ paths:
             required: true 
             schema: 
               $ref: '#/definitions/createUser'
+          multipart/form-data:
+            name: sign up 
+            description: Creates a new user with a post request to /users
+            required: true 
+            schema: 
+              $ref: '#/definitions/createUserMult'
       responses:
         201:
           description: The id of the created user
@@ -46,3 +52,31 @@ definitions:
         type: string
       avatar: 
         type: string
+  createUserMult:
+    type: object
+    properties:
+      firstName: 
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ["male","female"]
+      email: 
+        type: string
+      permissionLevel:
+        type: string
+        enum: ["Admin","User"]
+      phone: 
+        type: string
+      username: 
+        type: string
+      password:
+        type: string
+      birthDate: 
+        type: string
+      avatar: 
+        type: string
+        format: binary
+
+

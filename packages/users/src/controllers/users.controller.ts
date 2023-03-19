@@ -3,6 +3,7 @@ import debug from "debug";
 import userService from "../services/user.service";
 import userAddressService from "../services/user.address.service";
 import { minimumPermissionRequired } from "../common/auth/middleware/auth.middleware";
+import { unlinkUploadedFile } from "../common/uploader";
 const log = debug("app:controller:users");
 
 /**
@@ -45,6 +46,9 @@ class UsersController{
         }catch(e){
             next(e);
         }
+        finally{
+          unlinkUploadedFile(req);
+        }
     }
 
 
@@ -80,6 +84,9 @@ class UsersController{
       }catch(e){
         next(e);
       }
+      finally{
+        unlinkUploadedFile(req);
+       }
     }
 
     /**

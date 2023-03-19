@@ -7,6 +7,7 @@ import IPutProfileDto from "../dto/patch_profile.dto";
 import { IRequest } from "../common/types";
 import userAddressService from "../services/user.address.service";
 import emmiter from "../common/emmiter";
+import { unlinkUploadedFile } from "../common/uploader";
 const log = debug("app:controller:users");
 
 
@@ -98,6 +99,8 @@ export class UserController{
         res.send(req.user);
        }catch(e){
         next(e);
+       }finally{
+        unlinkUploadedFile(req);
        }
     }
 
