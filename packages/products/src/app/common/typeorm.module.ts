@@ -10,6 +10,7 @@ import { Attribute,Category,Product,VariantAttribute,ProductType,Variant,Variant
                 return {
                 keepAlive: true,
                 type: "postgres",
+                
                 host: config.get<string>("DB_HOST"),
                 port: config.get<number>("DB_PORT"),
                 username: config.get<string>("DB_USERNAME"),
@@ -26,4 +27,5 @@ import { Attribute,Category,Product,VariantAttribute,ProductType,Variant,Variant
         })
     ],
 })
+
 export class TypeOrmCustomModule{}

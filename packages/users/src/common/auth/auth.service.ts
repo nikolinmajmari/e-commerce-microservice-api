@@ -116,7 +116,9 @@ export class Auth0Service implements IAuth0Service{
                     gender:user.gender,
                 }
             });
-            this.assignRoleToUser(oauthUser.user_id,permissionLevel);
+            if(permissionLevel){
+                this.assignRoleToUser(oauthUser.user_id,permissionLevel);
+            }
             return oauthUser;
         }catch(e){
             this.handleError(e);

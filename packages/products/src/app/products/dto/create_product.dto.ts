@@ -68,6 +68,12 @@ export class VariantDto{
     @IsArray()
     @Field(()=>[VariantPriceDto])
     prices: VariantPriceDto[];
+
+    @ApiProperty({
+        type: Boolean,
+    })
+    @Field(()=>Boolean)
+    main?: boolean;
 }
 
 @InputType()

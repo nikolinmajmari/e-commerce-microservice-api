@@ -6,7 +6,6 @@ Attribute,Category,Product,VariantAttribute,ProductType,Variant,VariantPrice
 
 dotenv.config();
 
-
 const dataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST_TEST,

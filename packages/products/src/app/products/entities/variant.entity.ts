@@ -17,6 +17,9 @@ export class Variant{
     @Column({type:"text",array: true})
     images: string[];
 
+    @Column({type:"bool",default: true})
+    main: boolean;
+
     @Column({type: "int",default:0})
     stock: number
 

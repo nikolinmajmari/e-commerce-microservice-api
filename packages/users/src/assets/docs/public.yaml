@@ -15,7 +15,7 @@ paths:
     post:
       tags:
         - Public
-      summary: Create change email ticket
+      summary: Navigate here with browser to login
       produces: 
         - application/json
       responses:
@@ -23,15 +23,47 @@ paths:
           description: Ticket
         401:
           description: Forbidden
-  /signUp:
+  /signup:
     post:
       tags:
         - Public
-      summary: Create change email ticket
+      summary: CSIgn up a new user
       produces: 
         - application/json
+      requestBody:
+        content:
+          application/json:
+            name: sign up 
+            description: User sign up data 
+            required: true 
+            schema: 
+              $ref: '#/definitions/signUp'
       responses:
-        200:
-          description: Ticket
-        401:
-          description: Forbidden
+        201:
+          description: The id of the created user
+        409:
+          description: Conflict, user email already exists
+
+definitions:
+  signUp:
+    type: object
+    properties:
+      firstName: 
+        type: string
+      lastName:
+        type: string
+      gender:
+        type: string
+        enum: ["male","female"]
+      email: 
+        type: string
+      phone: 
+        type: string
+      username: 
+        type: string
+      password:
+        type: string
+      birthDate: 
+        type: string
+      avatar: 
+        type: string

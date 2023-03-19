@@ -19,16 +19,13 @@ export default class ApiUsersRoute{
     //api/users
     configureRoutes(){
 
-        /// creating a new user is public
-        this.app.post(`/api/v1/users`,
-            newUserRules(), usersController.createUser
-        );
 
         this.app.use(`/api/v1/users`,checkJwt,extractUserMiddleware,isAdmin());
 
         //api/users
         this.app.route(`/api/v1/users`)
-        .get(usersController.getUsers);
+        .get(usersController.getUsers)
+        .post(newUserRules(),usersController.createUser);
         
         //api/user/:id
         this.app.route(`/api/v1/users/:id`)

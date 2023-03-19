@@ -5,6 +5,7 @@ import { TypeOrmCustomModule } from './typeorm.module';
 
 @Module({
     imports: [ConfigurationModule,TypeOrmCustomModule],
-    exports: [ConfigurationModule,TypeOrmCustomModule]
+    exports: [ConfigurationModule,TypeOrmCustomModule],
 })
 export class CommonModule{}
+

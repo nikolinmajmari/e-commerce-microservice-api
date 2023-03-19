@@ -1,5 +1,7 @@
 import debug from "debug";
 import { NextFunction, Request,Response } from "express";
+import ISignUpUserDTO from "../../dto/sign_up_user.dto";
+import userService from "../../services/user.service";
 import usersEventEmitter from "../emmiter";
 import authService from "./auth.service";
 const log = debug("app:auth:controller");
@@ -38,6 +40,17 @@ class AuthController{
         }catch(e){
             next(e);
         }
+    }
+
+    async signUp(req,res,next){
+       try{
+        const {addresses,avatar,birdhDate,email,firstName,gender,lastName,password,phone,status,username} = req.body as ISignUpUserDTO; 
+        await userService.createUser({
+            addresses,avatar,birdhDate,email,firstName,gender,lastName,password,phone,status,username
+        });
+       }catch(e){
+        next(e);
+       }
     }
 
 }

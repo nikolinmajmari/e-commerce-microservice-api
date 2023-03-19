@@ -108,10 +108,19 @@ export class ProductsService{
         })
     }
 
+    async makeProductVariantsAsNonMain(product:string){
+        return await  this.variantRepository.update({
+            product: {id: product},
+        },{main: false});
+    }
+
     async addProductVariant(prod:string,dto:VariantDto){
         const product = await this.findOne(prod);
         const variant = this.variantRepository.create(dto);
         variant.product = product;
+        if(variant.main){
+            await this.makeProductVariantsAsNonMain(prod);
+        }
         return await this.variantRepository.save(variant);
     }
 
@@ -198,14 +207,6 @@ export class ProductsService{
         try{
             queryRunner.startTransaction("REPEATABLE READ");
             const attribute = await this.productTypeService.getAttribute(type.id,dto.attribute);
-            const alreadyExists = await this.variantAttributeRepository.findOneBy({
-                attribute: {id: attribute.id},
-                variant: {id: id}
-            });
-            if(null===alreadyExists){
-                Logger.log(alreadyExists);
-               // throw new Error("This attribute exitss");
-            }
             const createdAttribute = this.variantAttributeRepository.create({
                 unit: dto.unit,value: dto.value,
             });

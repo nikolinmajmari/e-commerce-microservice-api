@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import debug from "debug";
 import userService from "../services/user.service";
 import userAddressService from "../services/user.address.service";
+import { minimumPermissionRequired } from "../common/auth/middleware/auth.middleware";
 const log = debug("app:controller:users");
 
 /**
@@ -36,9 +37,8 @@ class UsersController{
      * @param next 
      * @returns 
      */
-    async createUser(req:Request,res:Response,next:NextFunction){
+    async createUser(req,res:Response,next:NextFunction){
         try{
-            log("creating new user");
             const created =  await userService.createUser(req.body);
             return res.status(201)
                       .json(created);
