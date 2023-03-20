@@ -7,6 +7,7 @@ import { IRequest } from "../common/types";
 import userAddressService from "../services/user.address.service";
 import emitter from "../common/event_emitter.service";
 import { unlinkUploadedFile } from "../common/uploader";
+import { clean } from "../app/utils";
 const log = debug("app:controller:users");
 
 
@@ -89,11 +90,10 @@ export class UserController{
     async updateUserProfile(req:IRequest,res:Response,next:NextFunction){
        try{
         const {avatar,birthDate,firstName,gender,lastName} = req.body as IPutProfileDto;
+        
         await userService.updateUser(
-            req.user,
-        {
-            avatar,birthDate,firstName,gender,lastName
-        });
+            req.user,clean({avatar,birthDate,firstName,gender,lastName})
+        );
         emitter.logUserProfileUpdate(req);
         res.send(req.user);
        }catch(e){

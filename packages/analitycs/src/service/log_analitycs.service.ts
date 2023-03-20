@@ -5,7 +5,7 @@ import { IFilterDto } from "../dto/filter.dto";
 import Log from "../model/log.model";
 
 
-const log = debug("app:app-event-emmitter:services:log-service");
+const logger = debug("app:analitycs:services:log-service");
 
 export class LogService{
 
@@ -23,6 +23,7 @@ export class LogService{
     }
 
     async saveActionLog(dto:IActionLogDto){
+        logger("got action log",dto);
         const {
             headers,host,identifier,method,path,context,group,message,payload,sub
         } = dto;
@@ -35,6 +36,7 @@ export class LogService{
     }
 
     async saveRequestLog(dto:IRequestLogDto){
+        logger("got request log",dto);
         const {
             headers,host,identifier,method,path
         } = dto;

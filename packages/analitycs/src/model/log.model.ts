@@ -13,7 +13,7 @@ export interface ILog extends Document{
     sub?: string,
     message?: string,
     payload?: string,
-    headers?:string,
+    headers?:any,
     method?:string,
     host?: string,
     path?:string,
@@ -32,8 +32,11 @@ const logSchema = new mongoose.Schema({
     sub: String,
     group: String,
     message: String,
-    payload: String,
-    headers: String,
+    payload: mongoose.Schema.Types.Mixed,
+    headers: {
+        type: Map,
+        of: String
+    },
     method: String,
     path: String,
     host: String,

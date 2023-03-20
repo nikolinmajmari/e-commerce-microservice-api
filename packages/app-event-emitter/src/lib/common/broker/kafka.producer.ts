@@ -1,15 +1,19 @@
-import { Kafka, Producer } from "kafkajs";
+import { Kafka, Producer, RecordMetadata } from "kafkajs";
 import { ProducerInterface, Topic } from "./brokers";
+import {EventEmitter} from 'node:events';
 
 import  debug from 'debug';
 const log = debug('app:package:app-emitter:dispatcher');
 
 export class KafkaProducer implements ProducerInterface{
-    
+    private emitter:EventEmitter;
     private producer: Producer;
     constructor(
         private kafka:Kafka
     ){
+        this.emitter = new EventEmitter({
+            captureRejections: true
+        });
         this.configure();   
     }
 
@@ -24,7 +28,7 @@ export class KafkaProducer implements ProducerInterface{
     }
 
     
-    produce<T>(topic: Topic, dto: T) {
+    async produce<T>(topic: Topic, dto: T):Promise<RecordMetadata[]>{
         try{
             return this.producer.send({
                 topic: topic,

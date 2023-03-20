@@ -1,0 +1,34 @@
+paths:
+  /analitycs:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Analitycs
+      summary: Gets User Logs
+      parameters:
+        - in: query
+          name: group
+          schema:
+            type: string
+            enum: [
+              "RESET_PASSWORD","CHANGE_PASSWORD","CHANGE_EMAIL",
+              "CLOSE_ACCOUNT","PROFILE_UPDATE","USER_LOGIN","USER_LOGOUT"
+              ]
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: ["API_REQUEST","APP_ACTION"]
+        - in: query
+          name: sub
+          schema:
+            type: string
+          description: User id in local db
+      produces: 
+        - application/json
+      responses:
+        200:
+          description: OK
+        401:
+          description: Forbidden

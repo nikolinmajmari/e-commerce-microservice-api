@@ -1,3 +1,4 @@
+import { RecordMetadata } from "kafkajs";
 
 export enum Topic{
     API_REQUEST="api.request",
@@ -11,7 +12,7 @@ export interface ConsumerInterface{
 }
 
 export interface ProducerInterface{
-    produce<T>(topic:Topic,dto: T);
+    produce<T>(topic:Topic,dto: T):Promise<RecordMetadata[]>;
 }
 
-export type AppMessageConsumer<T> = (dto:T,topic:Topic)=>void;
+export type AppMessageConsumer<T> = (dto:T,topic:Topic)=>Promise<any>;

@@ -1,11 +1,10 @@
-import { EventEmitter } from "stream";
-import mongooseService from "./common/mongoose.service";
-import debug from "debug";
+import {EventEmitter} from 'node:events';
+import { Kafka} from "kafkajs";
 import { KafkaConsumer } from "./common/broker/kafka.consumer";
 import { KafkaProducer } from "./common/broker/kafka.producer";
-import { Kafka} from "kafkajs";
 import { AppMessageConsumer, Topic } from "./common/broker/brokers";
 import { IActionLogDto, IRequestLogDto } from "./dto/log.dto";
+import debug from "debug";
 const log=debug("app:package:app-event-emitter:core");
 
 /**
@@ -15,11 +14,12 @@ export class AppEventEmitter {
   
   private consumer: KafkaConsumer;
   private producer: KafkaProducer;
+  private emitter:EventEmitter;
 
   constructor(private kafka:Kafka){
+    this.emitter = new EventEmitter();
     this.consumer = new KafkaConsumer(kafka);
     this.producer = new KafkaProducer(kafka);
-    log("event emmitter created ");
   }
 
   produceAppRequestEvent(dto:IRequestLogDto){

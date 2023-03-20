@@ -9,6 +9,7 @@ import AppErrorHandler from './common/errors/errors.service';
 import ApiUserRoute from './routes/api.user.route';
 import ApiUsersRoute from './routes/api.users.route';
 import analitycsMiddleware from './middleware/analitycs/analitycs.middleware';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { identifierMidleware } from '@repo/app-event-emitter';
 const log = debug("app:main");
 

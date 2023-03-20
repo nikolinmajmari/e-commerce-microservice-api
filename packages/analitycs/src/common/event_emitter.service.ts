@@ -11,7 +11,6 @@ class EventEmitterService {
     constructor(
         private emitter:AppEventEmitter
     ){
-        this.configure();
     }
 
     /**
@@ -21,12 +20,10 @@ class EventEmitterService {
         this.emitter.consumeAppRequestEvent(
             log_analitycsService.saveRequestLog
         );
-        this.emitter.consumeAppRequestEvent(
-            log_analitycsService.saveRequestLog
+        this.emitter.consumeAppActionEvent(
+            log_analitycsService.saveActionLog
         )
     }
 }
 
-
-
-export default emitter;
+export default new EventEmitterService(emitter);
