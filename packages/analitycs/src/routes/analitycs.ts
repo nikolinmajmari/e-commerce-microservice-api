@@ -1,4 +1,5 @@
 import { Application } from "express";
+import auth from "../common/auth";
 import analitycsController from "../controller/analitycs.controller";
 
 export default class AnalitycsRoute {
@@ -10,7 +11,11 @@ export default class AnalitycsRoute {
     }
 
     configureRoutes(){
-        this.app.route("/analitycs")
+        this.app.use(
+            "/analitycs",
+            auth()
+        );
+        this.app.route("/analitycs/logs")
         .get(analitycsController.getLogs);
 
     }

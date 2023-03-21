@@ -1,5 +1,5 @@
 paths:
-  /api/v1/analitycs/logs:
+  /analitycs/logs:
     get:
       security:
         - Bearer: []

@@ -12,7 +12,6 @@ import analitycsMiddleware from './middleware/analitycs/analitycs.middleware';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { identifierMidleware } from '@repo/app-event-emitter';
 const log = debug("app:main");
-
 export const PORT = +process.env.PORT || 3333;
 export const HOST = process.env.HOST || 'localhost';
 const app = express();
