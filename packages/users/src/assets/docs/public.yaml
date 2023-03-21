@@ -6,6 +6,17 @@ paths:
       summary: Create change email ticket
       produces: 
         - application/json
+      requestBody:
+        content:
+          application/json:
+            name: email
+            description: User data
+            required: true 
+            schema: 
+              type: object
+              properties:
+                email:
+                  type: string
       responses:
         200:
           description: Ticket

@@ -156,8 +156,9 @@ export class Auth0Service implements IAuth0Service{
         return this.management.createPasswordChangeTicket({
             ...data,
             ttl_sec:600
-        })
+        });
        }catch(err){
+        log(err);
         this.handleError(err);
        }
     }

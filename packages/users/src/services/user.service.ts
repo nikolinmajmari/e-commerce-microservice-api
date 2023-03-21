@@ -7,11 +7,12 @@ import mongooseService from "../common/mongoose";
 import IPatchUserDTO from "../dto/patch_user_dto";
 import { fromUserDto, IAuth0Service } from "../common/auth/auth.types";
 import { User as AuthUser } from "auth0";
+import mailer, { Mailer } from "../common/mailer";
 const log = debug("app:services:UserService");
 
 export class UserService{
 
-    constructor(private auth:IAuth0Service){}
+    constructor(private auth:IAuth0Service,private mailer:Mailer){}
 
     private startMongooseSession() {
         return mongooseService.getMongoose().startSession();
@@ -94,6 +95,12 @@ export class UserService{
             await session.commitTransaction();
             log("ending session");
             session.endSession();
+            //// when creating an user require email verification if email not verified yet
+            if(!oauthUser.email_verified){
+                await authService.createEmailVerificationJob({
+                    user_id: oauthUser.user_id
+                });
+            }
             return user;
         }catch(err){
             log(err);
@@ -145,7 +152,8 @@ export class UserService{
 
     async sendPasswordResetEmail(user:IUser) {
         log("invoked sent password reset email");
-        return await this.auth.createPassowrdResetTicket(user);
+        const ticket = await this.auth.createPassowrdResetTicket(user);
+        await this.mailer.sentPasswordResetEmail(user,ticket);
     }
 
     async sentVerificationEmail(user:IUser) {
@@ -176,4 +184,4 @@ export class UserService{
 
 }
 
-export default new UserService(authService);
+export default new UserService(authService,mailer);
