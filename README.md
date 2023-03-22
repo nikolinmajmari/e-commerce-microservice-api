@@ -15,3 +15,14 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+
+### to install this project
+
+- run ```npm install``` to install all dependencies 
+- create ```.env``` files under each of projects  ( users, analitycs and products), use .env.example as a scaffold
+- run ```docker compose build``` to build the nesesary containers for the app 
+- run ```docker compose up``` to  start the containers 
+  this system uses 5 containers, 1 mongodb, 1 prostgres and 3 other containers for kafka 
+- run ```nx run <project>:serve``` to start all projects
+ 
