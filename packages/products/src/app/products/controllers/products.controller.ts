@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseFilters } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateProductDto, VariantDto } from '../dto/create_product.dto';
 import { UpdateProductDto } from '../dto/update_product.dto';
+import { TypeOrmNotFOundErrorFilter, TypeOrmUniqueConstraintVoilationFilter } from '../filters/typeorm.exception.filter';
 import { ProductsService } from '../services/products.service';
 
 @Controller('products')
@@ -11,6 +12,8 @@ export class ProductsController {
     constructor(private readonly productsService:ProductsService){}
 
     @Post()
+    @HttpCode(201)
+    @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     create(@Body() dto: CreateProductDto){
         return this.productsService.create(dto);
     }
@@ -21,16 +24,21 @@ export class ProductsController {
     }
 
     @Get(":id")
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
     findOne(@Param("id") id: string){
         return this.productsService.findOne(id);
     }
 
     @Patch(":id")
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
+    @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     update(@Param("id") id: string,@Body() dto: UpdateProductDto){
         return this.productsService.update(id,dto);
     }
 
     @Delete(":id")
+    @HttpCode(204)
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
     remove(@Param("id") id: string){
         return this.productsService.remove(id);
     }

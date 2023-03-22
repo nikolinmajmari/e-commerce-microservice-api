@@ -1,0 +1,1228 @@
+{
+	"info": {
+		"_postman_id": "b80fc030-0949-452c-a8ee-5de1d2a98704",
+		"name": "Incremental Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7822578"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Product Types",
+					"item": [
+						{
+							"name": "List Product Types",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Product List",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/productTypes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"productTypes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2192"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"890-mmVwXDlf1on2voraGq6yiXOkuDk\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 09:17:54 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"9d5b234b-ccb1-4646-a2d9-d72242a64c08\",\n        \"name\": \"I Pad\",\n        \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n        \"updatedAt\": \"2023-03-22T07:34:19.166Z\",\n        \"attributes\": [\n            {\n                \"id\": \"bcb30719-36e1-48d9-9735-e8254640a930\",\n                \"name\": \"Screen Size\",\n                \"type\": \"FLOAT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n                \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n            },\n            {\n                \"id\": \"7ce49f49-fdbe-4856-b2d7-c8a3546efa53\",\n                \"name\": \"RAM\",\n                \"type\": \"INT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n                \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n            },\n            {\n                \"id\": \"04361096-4d58-45ae-9b88-e2f16ea33fe3\",\n                \"name\": \"Memory\",\n                \"type\": \"INT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n                \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n            },\n            {\n                \"id\": \"ed99a740-287f-4fd2-a294-0f8284ad086a\",\n                \"name\": \"Color\",\n                \"type\": \"TEXT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n                \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n            },\n            {\n                \"id\": \"bd206bab-906c-4670-9f0b-23cd1aca96a0\",\n                \"name\": \"IOS\",\n                \"type\": \"INT\",\n                \"searchable\": false,\n                \"required\": false,\n                \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n                \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n            }\n        ]\n    },\n    {\n        \"id\": \"022bd906-25de-4c7e-a010-4d0ec9339ef5\",\n        \"name\": \"Mobile Phone\",\n        \"createdAt\": \"2023-03-22T08:17:34.453Z\",\n        \"updatedAt\": \"2023-03-22T08:17:34.453Z\",\n        \"attributes\": [\n            {\n                \"id\": \"8a3913df-2e50-491b-bd90-7a65a7dd969c\",\n                \"name\": \"Screen Size\",\n                \"type\": \"FLOAT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T08:17:34.453Z\",\n                \"updatedAt\": \"2023-03-22T08:17:34.453Z\"\n            },\n            {\n                \"id\": \"4c52077d-feb4-4c19-a329-2e29127a0fb9\",\n                \"name\": \"RAM\",\n                \"type\": \"INT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T08:17:34.453Z\",\n                \"updatedAt\": \"2023-03-22T08:17:34.453Z\"\n            },\n            {\n                \"id\": \"f3501d27-3d51-4657-bb97-e5b345d2c193\",\n                \"name\": \"Memory\",\n                \"type\": \"INT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T08:17:34.453Z\",\n                \"updatedAt\": \"2023-03-22T08:17:34.453Z\"\n            },\n            {\n                \"id\": \"d264af28-d7ee-4569-80d1-d1419d13f2cc\",\n                \"name\": \"Color\",\n                \"type\": \"TEXT\",\n                \"searchable\": true,\n                \"required\": true,\n                \"createdAt\": \"2023-03-22T08:17:34.453Z\",\n                \"updatedAt\": \"2023-03-22T08:17:34.453Z\"\n            },\n            {\n                \"id\": \"beca0397-45a3-4825-b1e2-74bf16862901\",\n                \"name\": \"IOS\",\n                \"type\": \"INT\",\n                \"searchable\": false,\n                \"required\": false,\n                \"createdAt\": \"2023-03-22T08:17:34.453Z\",\n                \"updatedAt\": \"2023-03-22T08:17:34.453Z\"\n            }\n        ]\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Create Product Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Mobile Phone\",\n    \"attributes\":[\n        {\n            \"name\": \"Screen Size\",\n             \"type\": \"FLOAT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n           {\n            \"name\": \"RAM\",\n             \"type\": \"INT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n           {\n            \"name\": \"Memory\",\n             \"type\": \"INT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n           {\n            \"name\": \"Color\",\n             \"type\": \"TEXT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n        {\n            \"name\": \"IOS\",\n             \"type\": \"INT\",\n             \"searchable\":false,\n             \"required\":false\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"Mobile Phone\",\n    \"attributes\":[\n        {\n            \"name\": \"Screen Size\",\n             \"type\": \"FLOAT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n           {\n            \"name\": \"RAM\",\n             \"type\": \"INT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n           {\n            \"name\": \"Memory\",\n             \"type\": \"INT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n           {\n            \"name\": \"Color\",\n             \"type\": \"TEXT\",\n             \"searchable\":true,\n             \"required\":true\n        },\n        {\n            \"name\": \"IOS\",\n             \"type\": \"INT\",\n             \"searchable\":false,\n             \"required\":false\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/productTypes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"productTypes"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "45"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2d-K2JW3by0++eUWO23tqL6tKfGpFM\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 09:17:34 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"022bd906-25de-4c7e-a010-4d0ec9339ef5\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Product Type",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes",
+										"9d5b234b-ccb1-4646-a2d9-d72242a64c08"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "product",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"productTypes",
+												"9d5b234b-ccb1-4646-a2d9-d72242a64c08"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1091"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"443-ndXeIObqZa/F3CL+PxWtIkBGBV0\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 09:16:55 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"9d5b234b-ccb1-4646-a2d9-d72242a64c08\",\n    \"name\": \"I Pad\",\n    \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n    \"updatedAt\": \"2023-03-22T07:34:19.166Z\",\n    \"attributes\": [\n        {\n            \"id\": \"bcb30719-36e1-48d9-9735-e8254640a930\",\n            \"name\": \"Screen Size\",\n            \"type\": \"FLOAT\",\n            \"searchable\": true,\n            \"required\": true,\n            \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n            \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n        },\n        {\n            \"id\": \"7ce49f49-fdbe-4856-b2d7-c8a3546efa53\",\n            \"name\": \"RAM\",\n            \"type\": \"INT\",\n            \"searchable\": true,\n            \"required\": true,\n            \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n            \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n        },\n        {\n            \"id\": \"04361096-4d58-45ae-9b88-e2f16ea33fe3\",\n            \"name\": \"Memory\",\n            \"type\": \"INT\",\n            \"searchable\": true,\n            \"required\": true,\n            \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n            \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n        },\n        {\n            \"id\": \"ed99a740-287f-4fd2-a294-0f8284ad086a\",\n            \"name\": \"Color\",\n            \"type\": \"TEXT\",\n            \"searchable\": true,\n            \"required\": true,\n            \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n            \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n        },\n        {\n            \"id\": \"bd206bab-906c-4670-9f0b-23cd1aca96a0\",\n            \"name\": \"IOS\",\n            \"type\": \"INT\",\n            \"searchable\": false,\n            \"required\": false,\n            \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n            \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Patch Product Type",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"I Padi\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes",
+										"9d5b234b-ccb1-4646-a2d9-d72242a64c08"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "update",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"I Pad\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"productTypes",
+												"9d5b234b-ccb1-4646-a2d9-d72242a64c08"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "138"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"8a-Q3NvVD5XNYrIIf9fRul4eh0A+8M\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 09:16:45 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"9d5b234b-ccb1-4646-a2d9-d72242a64c08\",\n    \"name\": \"I Pad\",\n    \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n    \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Product Type",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes/4a07000d-1702-4866-84d9-139c530c78a9",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes",
+										"4a07000d-1702-4866-84d9-139c530c78a9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Product Type Attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes",
+										"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+										"attributes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "attributes",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"productTypes",
+												"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+												"attributes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "939"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3ab-rfqXODRkjEwSD37pZKwhHmofa98\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 09:16:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"bcb30719-36e1-48d9-9735-e8254640a930\",\n        \"name\": \"Screen Size\",\n        \"type\": \"FLOAT\",\n        \"searchable\": true,\n        \"required\": true,\n        \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n        \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n    },\n    {\n        \"id\": \"7ce49f49-fdbe-4856-b2d7-c8a3546efa53\",\n        \"name\": \"RAM\",\n        \"type\": \"INT\",\n        \"searchable\": true,\n        \"required\": true,\n        \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n        \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n    },\n    {\n        \"id\": \"04361096-4d58-45ae-9b88-e2f16ea33fe3\",\n        \"name\": \"Memory\",\n        \"type\": \"INT\",\n        \"searchable\": true,\n        \"required\": true,\n        \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n        \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n    },\n    {\n        \"id\": \"ed99a740-287f-4fd2-a294-0f8284ad086a\",\n        \"name\": \"Color\",\n        \"type\": \"TEXT\",\n        \"searchable\": true,\n        \"required\": true,\n        \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n        \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n    },\n    {\n        \"id\": \"bd206bab-906c-4670-9f0b-23cd1aca96a0\",\n        \"name\": \"IOS\",\n        \"type\": \"INT\",\n        \"searchable\": false,\n        \"required\": false,\n        \"createdAt\": \"2023-03-22T07:34:19.166Z\",\n        \"updatedAt\": \"2023-03-22T07:34:19.166Z\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Add Product Type Attribute",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Papas\",\n    \"type\": \"FLOAT\",\n    \"searchable\": true,\n    \"required\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes",
+										"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+										"attributes",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Added Attribute",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Height\",\n    \"type\": \"FLOAT\",\n    \"searchable\": true,\n    \"required\": true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"productTypes",
+												"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+												"attributes"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "188"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"bc-dikzt5FPF8Ym7lFA36nYDym7TOE\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 09:39:55 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"e842498f-23af-40bb-bd6c-f57ab1c2a8f6\",\n    \"name\": \"Height\",\n    \"type\": \"FLOAT\",\n    \"searchable\": true,\n    \"required\": true,\n    \"createdAt\": \"2023-03-22T08:39:55.366Z\",\n    \"updatedAt\": \"2023-03-22T08:39:55.366Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update product type attribute",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Trash\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes/7ce49f49-fdbe-4856-b2d7-c8a3546efa53",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes",
+										"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+										"attributes",
+										"7ce49f49-fdbe-4856-b2d7-c8a3546efa53"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Updated Attribute",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"Super Attribute\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes/e842498f-23af-40bb-bd6c-f57ab1c2a8f6",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"productTypes",
+												"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+												"attributes",
+												"e842498f-23af-40bb-bd6c-f57ab1c2a8f6"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "197"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c5-bh4+oQBbigjC6Jk+W9/7F05R3TY\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 09:41:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"e842498f-23af-40bb-bd6c-f57ab1c2a8f6\",\n    \"name\": \"Super Attribute\",\n    \"type\": \"FLOAT\",\n    \"searchable\": true,\n    \"required\": true,\n    \"createdAt\": \"2023-03-22T08:39:55.366Z\",\n    \"updatedAt\": \"2023-03-22T08:39:55.366Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Product Type Attribute",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes/e842498f-23af-40bb-bd6c-f57ab1c2a8f6",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"productTypes",
+										"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+										"attributes",
+										"e842498f-23af-40bb-bd6c-f57ab1c2a8f6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Get Products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/products",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "product list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/products",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "399"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"18f-7Xd71MFnFbkIW3VlsnZTVBp81ok\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 13:25:42 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"720ef331-ff6b-4f3e-a9e4-9c69110f6221\",\n        \"name\": \"IPhone 12\",\n        \"status\": \"active\",\n        \"tags\": [\n            \"iphone\",\n            \"apple\"\n        ],\n        \"images\": [],\n        \"createdAt\": \"2023-03-22T12:15:58.468Z\",\n        \"updatedAt\": \"2023-03-22T12:15:58.468Z\"\n    },\n    {\n        \"id\": \"aaacbe17-5cfb-4009-9b35-557150353c11\",\n        \"name\": \"Iphone 10\",\n        \"status\": \"active\",\n        \"tags\": [\n            \"iphone\",\n            \"apple\"\n        ],\n        \"images\": [],\n        \"createdAt\": \"2023-03-22T11:45:50.927Z\",\n        \"updatedAt\": \"2023-03-22T11:45:50.927Z\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Create Product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"IPhone 12\",\n    \"status\":\"active\",\n    \"tags\":[\"iphone\",\"apple\"],\n    \"images\":[],\n    \"variants\":[\n        {\n            \"sku\":\"appleIphoneUK20202-Prod-2020202304\",\n            \"title\":\"Iphone 12 Blue\",\n            \"images\":[],\n            \"stock\":20,\n            \"prices\":[]\n        }\n    ],\n    \"type\":\"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/products",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"IPhone 10\",\n    \"status\":\"active\",\n    \"tags\":[\"iphone\",\"apple\"],\n    \"images\":[],\n    \"variants\":[],\n    \"type\":\"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "266"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"10a-LxEp7+S/fz0p6AM2yQm0GVB23RU\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 12:50:41 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"name\": \"IPhone 10\",\n    \"status\": \"active\",\n    \"tags\": [\n        \"iphone\",\n        \"apple\"\n    ],\n    \"images\": [],\n    \"__type__\": \"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\",\n    \"__variants__\": [],\n    \"id\": \"d5266f41-3c84-41d0-897d-9303a7174393\",\n    \"createdAt\": \"2023-03-22T11:50:41.834Z\",\n    \"updatedAt\": \"2023-03-22T11:50:41.834Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Product By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/products/d5266f41-3c84-41d0-897d-9303a7174393",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products",
+										"d5266f41-3c84-41d0-897d-9303a7174393"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "product by id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/d5266f41-3c84-41d0-897d-9303a7174393",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"d5266f41-3c84-41d0-897d-9303a7174393"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "216"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"d8-kuGFOKpfQqHiW2iNjxjLxhFHs3g\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 12:51:03 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"d5266f41-3c84-41d0-897d-9303a7174393\",\n    \"name\": \"IPhone 10\",\n    \"status\": \"active\",\n    \"tags\": [\n        \"iphone\",\n        \"apple\"\n    ],\n    \"images\": [],\n    \"createdAt\": \"2023-03-22T11:50:41.834Z\",\n    \"updatedAt\": \"2023-03-22T11:50:41.834Z\",\n    \"__variants__\": []\n}"
+								}
+							]
+						},
+						{
+							"name": "update product",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"IPhone 12\",\n    \"variants\":[\n        {\n            \"title\":\"some title\"\n        }\n    ],\n    \"productType\":\"sku\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/products/aaacbe17-5cfb-4009-9b35-557150353c11",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products",
+										"aaacbe17-5cfb-4009-9b35-557150353c11"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"Iphone 10\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/d5266f41-3c84-41d0-897d-9303a7174393",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"d5266f41-3c84-41d0-897d-9303a7174393"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "216"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"d8-e6G1FUlvkaNwFyBhTaN1Pj+Y+uM\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 12:54:17 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"d5266f41-3c84-41d0-897d-9303a7174393\",\n    \"name\": \"Iphone 10\",\n    \"status\": \"active\",\n    \"tags\": [\n        \"iphone\",\n        \"apple\"\n    ],\n    \"images\": [],\n    \"createdAt\": \"2023-03-22T11:50:41.834Z\",\n    \"updatedAt\": \"2023-03-22T11:50:41.834Z\",\n    \"__variants__\": []\n}"
+								},
+								{
+									"name": "conflict",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"IPhone 12\",\n    \"variants\":[\n        {\n            \"title\":\"some title\"\n        }\n    ],\n    \"productType\":\"sku\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/aaacbe17-5cfb-4009-9b35-557150353c12",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"aaacbe17-5cfb-4009-9b35-557150353c12"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "97"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"61-a/xUs/TCiznYHiVwPhH7FKJs02A\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 13:30:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 409,\n    \"message\": \"product with (name)=(IPhone 12) already exists.\",\n    \"error\": \"Conflict\"\n}"
+								},
+								{
+									"name": "not found",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"IPhone 12\",\n    \"variants\":[\n        {\n            \"title\":\"some title\"\n        }\n    ],\n    \"productType\":\"sku\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/aaacbe17-5cfb-4009-9b35-557150353c13",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"aaacbe17-5cfb-4009-9b35-557150353c13"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "139"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"8b-keT3OX704+1FvN9ETccPEzYIR7c\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 13:31:18 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 404,\n    \"timestamp\": \"2023-03-22T13:31:18.344Z\",\n    \"message\": \"Not Found\",\n    \"path\": \"/api/products/aaacbe17-5cfb-4009-9b35-557150353c13\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Product",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/products/b6de6a63-24b3-47c2-b46e-7de6fa34c51b",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products",
+										"b6de6a63-24b3-47c2-b46e-7de6fa34c51b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

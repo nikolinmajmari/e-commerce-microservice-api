@@ -63,7 +63,7 @@ export class ProductsService{
     }
 
     async findOne(id:string){
-        return this.productRepository.findOne({
+        return this.productRepository.findOneOrFail({
             where: {
                 id: id
             },
@@ -74,8 +74,12 @@ export class ProductsService{
     }
 
     async update(id: string, dto: UpdateProductDto){
-        const updated = await  this.productRepository.update(id,dto);
-        return updated.generatedMaps;
+        if(Object.keys(dto).length!==0){
+            await  this.productRepository.update(id,dto);
+        }
+        return this.productRepository.findOneOrFail({
+            where: {id:id}
+        });
     }
 
     async remove(id: string){

@@ -13,5 +13,5 @@ export class UpdateProductTypeDto {
     @ApiProperty()
     @IsString()
     @Field(()=>String)
-    name: string;
+    name?: string;
 }

@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId} from "typeorm";
 import { Category } from "./category.entity";
 import { ProductType } from "./product_type.entity";
 import { Variant } from "./variant.entity";
@@ -39,7 +39,8 @@ export class Product{
 
 
     @ManyToOne(()=>ProductType,type=>type.products,{
-        lazy: true
+        lazy: true,
+        nullable: false,
     })
     type: ProductType;
     
