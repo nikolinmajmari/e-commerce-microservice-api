@@ -1,7 +1,7 @@
 import {Field, InputType} from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import {IsString,IsPositive,IsNumber,IsEnum, IsArray, IsDecimal, isNotEmpty, ValidateNested, ArrayMinSize, IsNotEmpty} from "class-validator";
+import {IsString,IsPositive,IsNumber,IsEnum, IsArray, IsDecimal, isNotEmpty, ValidateNested, ArrayMinSize, IsNotEmpty, IsBoolean} from "class-validator";
 import {  ProductType } from "../entities";
 import { ProductStatus } from "../entities/product.entity";
 import { Currency } from "../entities/variant_price.entity";
@@ -16,7 +16,17 @@ export class VariantPriceDto{
         example: "123.34"
     })
     @Field(()=>String)
+    @IsNumber()
     price: number;
+
+
+    @ApiProperty({
+        type: Boolean,
+        example: true
+    })
+    @IsBoolean()
+    @Field(()=>Boolean)
+    active:boolean;
 
 
     @ApiProperty({
@@ -67,12 +77,17 @@ export class VariantDto{
         isArray: true
     })
     @IsArray()
+    @ValidateNested({ each: true })
+    @ArrayMinSize(1)
+    @IsNotEmpty()
+    @Type(()=>VariantPriceDto)
     @Field(()=>[VariantPriceDto])
     prices: VariantPriceDto[];
 
     @ApiProperty({
         type: Boolean,
     })
+    @IsBoolean()
     @Field(()=>Boolean)
     main?: boolean;
 }

@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseFilters
 import { ApiTags } from '@nestjs/swagger';
 import { CreateProductDto, VariantDto } from '../dto/create_product.dto';
 import { UpdateProductDto } from '../dto/update_product.dto';
+import { UpdateVariantDto } from '../dto/variant.update.dto';
 import { TypeOrmNotFOundErrorFilter, TypeOrmUniqueConstraintVoilationFilter } from '../filters/typeorm.exception.filter';
 import { ProductsService } from '../services/products.service';
 
@@ -47,11 +48,15 @@ export class ProductsController {
 
 
     @Get(":id/variants")
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
     async getVariants(@Param("id") id:string){
         return this.productsService.getProductVariants(id);
     }
 
     @Post(":id/variants")
+    @HttpCode(201)
+    @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
     async createVariant(
         @Param("id") id:string,
         @Body() dto:VariantDto
@@ -62,16 +67,21 @@ export class ProductsController {
 
     /// get specific variant
     @Get(":id/variants/:variant")
+    @HttpCode(200)
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
     async getVariant(@Param("id") id:string, @Param("variant") variant:string){
         return this.productsService.getProductVariant(id,variant);
     }
 
     @Patch(":id/variants/:variant")
-    async patchVariant(@Param("id") id:string, @Param("variant") variant:string,@Body() dto:VariantDto){
+    @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
+    async patchVariant(@Param("id") id:string, @Param("variant") variant:string,@Body() dto:UpdateVariantDto){
         return this.productsService.updateProductVariant(id,variant,dto);
     }
 
     @Delete(":id/variants/:variant")
+    @UseFilters(new TypeOrmNotFOundErrorFilter())
     async deleteVariant(@Param("id") id:string, @Param("variant") variant:string){
         return this.productsService.deleteProductVariant(id,variant);
     }

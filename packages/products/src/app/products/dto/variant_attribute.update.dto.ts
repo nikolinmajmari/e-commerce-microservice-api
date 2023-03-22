@@ -1,20 +1,29 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, PartialType } from "@nestjs/swagger";
+import { IsString } from "class-validator";
+
+@InputType()
+export class UpdateVariantAttributeBaseDto{
+
+    @ApiProperty()
+    @Field(()=>String)
+    @IsString()
+    value:string;
+
+    @ApiProperty()
+    @IsString()
+    @Field(()=>String)
+    unit: string;
+}
 
 
 @InputType()
-export class UpdateVariantAttributeDto{
+export class UpdateVariantAttributeDto extends PartialType(UpdateVariantAttributeBaseDto){
 
     @Field(()=>String)
     id: string;
-
-    @ApiProperty()
-    @Field(()=>String)
-    value?:string;
-
-
-    @ApiProperty()
-    @Field(()=>String)
-    unit?: string;
 }
+
+
+
 

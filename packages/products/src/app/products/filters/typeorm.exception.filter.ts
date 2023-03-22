@@ -1,5 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, Logger, BadRequestException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
+import { error } from 'console';
 import { Request, Response } from 'express';
 import { EntityNotFoundError, QueryFailedError, TypeORMError } from 'typeorm';
 import { TypeOrmCodes } from './typeorm.codes';
@@ -17,12 +18,13 @@ export class TypeOrmNotFOundErrorFilter implements ExceptionFilter {
             timestamp: new Date().toISOString(),
             message: "Not Found",
             path: request.url,
+            description: err.message
         });
   }
 }
 
 @Catch(QueryFailedError)
-export class TypeOrmUniqueConstraintVoilationFilter extends BaseExceptionFilter{
+export class TypeOrmUniqueConstraintVoilationFilter implements ExceptionFilter {
     catch(exception: QueryFailedError|any, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
@@ -35,8 +37,15 @@ export class TypeOrmUniqueConstraintVoilationFilter extends BaseExceptionFilter{
                 message:  exception.detail.replace('Key', messageStart),
                 error: "Conflict"
             })
+        }else{
+            response.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .json({
+                statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+                message:"internal server error",
+                code: exception.code,
+                ...exception
+            })
         }
-        super.catch(exception,host);
     }
     
 }

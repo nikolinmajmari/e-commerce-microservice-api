@@ -397,7 +397,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08/attributes",
+									"raw": "127.0.0.1:3334/api/productTypes/bfe86af7-2b6b-4c4d-bf34-37d99c767aba/attributes",
 									"host": [
 										"127",
 										"0",
@@ -408,7 +408,7 @@
 									"path": [
 										"api",
 										"productTypes",
-										"9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+										"bfe86af7-2b6b-4c4d-bf34-37d99c767aba",
 										"attributes"
 									]
 								}
@@ -795,7 +795,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\":\"IPhone 12\",\n    \"status\":\"active\",\n    \"tags\":[\"iphone\",\"apple\"],\n    \"images\":[],\n    \"variants\":[\n        {\n            \"sku\":\"appleIphoneUK20202-Prod-2020202304\",\n            \"title\":\"Iphone 12 Blue\",\n            \"images\":[],\n            \"stock\":20,\n            \"prices\":[]\n        }\n    ],\n    \"type\":\"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\"\n}",
+									"raw": "{\n    \"name\":\"IPhone 14\",\n    \"status\":\"active\",\n    \"tags\":[\"iphone\",\"apple\"],\n    \"images\":[],\n    \"variants\":[\n        {\n            \"sku\":\"appleIphoneUK20202-Prod-2020202304\",\n            \"title\":\"Iphone 12 Blue\",\n            \"images\":[],\n            \"stock\":20,\n            \"prices\":[]\n        }\n    ],\n    \"type\":\"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1218,7 +1218,1496 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/b6de6a63-24b3-47c2-b46e-7de6fa34c51b",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"b6de6a63-24b3-47c2-b46e-7de6fa34c51b"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "139"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"8b-3ABPvT3glKNNWYonAcrru9fWJvw\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 14:44:30 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 404,\n    \"timestamp\": \"2023-03-22T14:44:30.982Z\",\n    \"message\": \"Not Found\",\n    \"path\": \"/api/products/b6de6a63-24b3-47c2-b46e-7de6fa34c51b\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Product Variants",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products",
+										"d525e768-e993-49cd-96a4-d81760cb038b",
+										"variants"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "variant list",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"d525e768-e993-49cd-96a4-d81760cb038b",
+												"variants"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1532"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"5fc-Ar6VaSxghweC/Z5z8kNblXn5Qh8\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 14:44:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"fbef721e-b8aa-4c4f-8611-3e32f6c191c1\",\n        \"sku\": \"SomeSKU1003030ALL\",\n        \"title\": \"Iphone 13 BLueRay\",\n        \"images\": [],\n        \"main\": false,\n        \"stock\": 3,\n        \"createdAt\": \"2023-03-22T13:32:49.033Z\",\n        \"updatedAt\": \"2023-03-22T13:32:49.033Z\"\n    },\n    {\n        \"id\": \"cf7fb96d-5f59-4f15-995b-e36360f096e2\",\n        \"sku\": \"appleIphoneUK20202-Prod-2020202304\",\n        \"title\": \"Iphone 12 Blue\",\n        \"images\": [],\n        \"main\": false,\n        \"stock\": 20,\n        \"createdAt\": \"2023-03-22T13:14:11.577Z\",\n        \"updatedAt\": \"2023-03-22T13:14:11.577Z\"\n    },\n    {\n        \"id\": \"234ec1af-8352-4a85-baae-740bf526b276\",\n        \"sku\": \"SKU_APPLE_INC_ENG_AL22304040SP_ALO\",\n        \"title\": \"Iphone 13 BLueRay\",\n        \"images\": [],\n        \"main\": false,\n        \"stock\": 3,\n        \"createdAt\": \"2023-03-22T13:31:32.622Z\",\n        \"updatedAt\": \"2023-03-22T13:31:32.622Z\"\n    },\n    {\n        \"id\": \"8ee7f675-a26e-40fe-b894-a1e8ff870043\",\n        \"sku\": \"SKU_APPLE_INC_ENG_AL22304040SP_ALO\",\n        \"title\": \"Iphone 13 BLueRay\",\n        \"images\": [],\n        \"main\": false,\n        \"stock\": 3,\n        \"createdAt\": \"2023-03-22T13:31:51.130Z\",\n        \"updatedAt\": \"2023-03-22T13:31:51.130Z\"\n    },\n    {\n        \"id\": \"ad3587e1-c134-44d2-aadb-18ef74e632b5\",\n        \"sku\": \"SomeSKU1003030ALL\",\n        \"title\": \"Iphone 13 BLueRay\",\n        \"images\": [],\n        \"main\": false,\n        \"stock\": 3,\n        \"createdAt\": \"2023-03-22T13:31:49.126Z\",\n        \"updatedAt\": \"2023-03-22T13:31:49.126Z\"\n    },\n    {\n        \"id\": \"3c65baee-1bfe-4804-978f-bc2523b20008\",\n        \"sku\": \"SomeSKU1003030ALL\",\n        \"title\": \"Iphone 13 BLueRay\",\n        \"images\": [],\n        \"main\": false,\n        \"stock\": 3,\n        \"createdAt\": \"2023-03-22T13:31:50.275Z\",\n        \"updatedAt\": \"2023-03-22T13:31:50.275Z\"\n    },\n    {\n        \"id\": \"58a427c4-c01b-4c41-b8ef-643b608a7be4\",\n        \"sku\": \"SSPPSSPS\",\n        \"title\": \"Iphone 13 BLueRay\",\n        \"images\": [],\n        \"main\": false,\n        \"stock\": 3,\n        \"createdAt\": \"2023-03-22T13:31:38.139Z\",\n        \"updatedAt\": \"2023-03-22T13:31:38.139Z\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Add Product Variant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sku\":\"SKU_APPLE_INC_ENG_AL22304040SP_ALO\",\n    \"title\": \"Iphone 13 BLueRay\",\n    \"images\":[],\n    \"stock\":3,\n    \"main\":true,\n    \"prices\":[\n        {\n            \"currency\":\"USD\",\n            \"price\":20202.22,\n            \"active\":true\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products",
+										"d525e768-e993-49cd-96a4-d81760cb038b",
+										"variants"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"sku\":\"SKU_APPLE_INC_ENG_AL22304040SP_ALO\",\n    \"title\": \"Iphone 13 BLueRay\",\n    \"images\":[],\n    \"stock\":3,\n    \"main\":true,\n    \"prices\":[\n        {\n            \"currency\":\"USD\",\n            \"price\":20202.22,\n            \"active\":true\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"d525e768-e993-49cd-96a4-d81760cb038b",
+												"variants"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "45"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2d-U+We6jNvfs6+917EGNwCcVL0swc\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 14:31:51 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"8ee7f675-a26e-40fe-b894-a1e8ff870043\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Product Variant",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"main\":true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants/564bca09-dfa1-489d-9495-3ce51885b5f6",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products",
+										"d525e768-e993-49cd-96a4-d81760cb038b",
+										"variants",
+										"564bca09-dfa1-489d-9495-3ce51885b5f6"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"main\":true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants/564bca09-dfa1-489d-9495-3ce51885b5f6",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"d525e768-e993-49cd-96a4-d81760cb038b",
+												"variants",
+												"564bca09-dfa1-489d-9495-3ce51885b5f6"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "228"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"e4-n0UsiiME6QerdiMLdMfbh6CsrHA\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 14:39:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"564bca09-dfa1-489d-9495-3ce51885b5f6\",\n    \"sku\": \"SKU_APPLE_INC_ENG_AL22304040SP_ALO\",\n    \"title\": \"Iphone 13 BLueRay\",\n    \"images\": [],\n    \"main\": true,\n    \"stock\": 3,\n    \"createdAt\": \"2023-03-22T13:31:36.003Z\",\n    \"updatedAt\": \"2023-03-22T13:31:36.003Z\"\n}"
+								},
+								{
+									"name": "not found",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"main\":true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants/564bca09-dfa1-489d-9495-3ce51885b5f6",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"d525e768-e993-49cd-96a4-d81760cb038b",
+												"variants",
+												"564bca09-dfa1-489d-9495-3ce51885b5f6"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "185"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"b9-CWO6NWXWAIWs8XrPecg4zu3ce5M\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 14:43:46 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 404,\n    \"timestamp\": \"2023-03-22T14:43:46.219Z\",\n    \"message\": \"Not Found\",\n    \"path\": \"/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants/564bca09-dfa1-489d-9495-3ce51885b5f6\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Product Variant",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants/564bca09-dfa1-489d-9495-3ce51885b5f6",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"products",
+										"d525e768-e993-49cd-96a4-d81760cb038b",
+										"variants",
+										"564bca09-dfa1-489d-9495-3ce51885b5f6"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete Product Variant",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants/564bca09-dfa1-489d-9495-3ce51885b5f6",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products",
+												"d525e768-e993-49cd-96a4-d81760cb038b",
+												"variants",
+												"564bca09-dfa1-489d-9495-3ce51885b5f6"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "185"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"b9-jBkxEsF6+t65I+dCNb0GpzuODHA\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 14:43:23 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 404,\n    \"timestamp\": \"2023-03-22T14:43:23.266Z\",\n    \"message\": \"Not Found\",\n    \"path\": \"/api/products/d525e768-e993-49cd-96a4-d81760cb038b/variants/564bca09-dfa1-489d-9495-3ce51885b5f6\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Variant Api",
+					"item": [
+						{
+							"name": "Get Variant Prices",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"prices"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "prices",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"prices"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "519"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"207-RIrpFhucN6uv12Riqe94ulwkmeA\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:05:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"41042a80-6391-4b8b-9632-60791d4ab8a7\",\n        \"price\": \"20202.22\",\n        \"currency\": \"USD\",\n        \"active\": true,\n        \"createdAt\": \"2023-03-22T13:32:49.033Z\",\n        \"updatedAt\": \"2023-03-22T13:32:49.033Z\"\n    },\n    {\n        \"id\": \"7685dd77-166b-484d-b081-783741929ebd\",\n        \"price\": \"200.22\",\n        \"currency\": \"ALL\",\n        \"active\": true,\n        \"createdAt\": \"2023-03-22T18:03:19.816Z\",\n        \"updatedAt\": \"2023-03-22T18:03:19.816Z\"\n    },\n    {\n        \"id\": \"50a6c9e5-d80d-487d-bd2e-eeae60df450a\",\n        \"price\": \"192.22\",\n        \"currency\": \"EUR\",\n        \"active\": true,\n        \"createdAt\": \"2023-03-22T18:04:51.559Z\",\n        \"updatedAt\": \"2023-03-22T18:04:51.559Z\"\n    }\n]"
+								},
+								{
+									"name": "not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c2/prices",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c2",
+												"prices"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "146"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"92-GRcrPTa/q58jDHZCglXwXYwqs1A\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:08:31 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 404,\n    \"timestamp\": \"2023-03-22T19:08:31.617Z\",\n    \"message\": \"Not Found\",\n    \"path\": \"/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c2/prices\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add Variant Price",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\":192.22,\n    \"active\":true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"prices"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\":192.22,\n    \"active\":true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"prices"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "45"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2d-CBVvu5wx7mKnJiZph7zmmr3TUUc\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:04:51 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"50a6c9e5-d80d-487d-bd2e-eeae60df450a\"\n}"
+								},
+								{
+									"name": "Add Variant Price",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"price\":192.22,\n    \"active\":true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"prices"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "114"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"72-wqHf8vHmwdHonddxTX1d3LEPK74\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:06:09 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 400,\n    \"message\": [\n        \"currency must be one of the following values: USD, EUR, ALL\"\n    ],\n    \"error\": \"Bad Request\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Variant Price",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"active\":true,\n    \"price\":200.01\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices/41042a80-6391-4b8b-9632-60791d4ab8a7",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"prices",
+										"41042a80-6391-4b8b-9632-60791d4ab8a7"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "update",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"active\":true,\n    \"price\":200.01\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices/41042a80-6391-4b8b-9632-60791d4ab8a7",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"prices",
+												"41042a80-6391-4b8b-9632-60791d4ab8a7"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "171"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"ab-TussS0TXIBWT57jHpPBde0db/OM\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:21:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"41042a80-6391-4b8b-9632-60791d4ab8a7\",\n    \"price\": \"200.01\",\n    \"currency\": \"USD\",\n    \"active\": true,\n    \"createdAt\": \"2023-03-22T13:32:49.033Z\",\n    \"updatedAt\": \"2023-03-22T13:32:49.033Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Variant Price",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices/7685dd77-166b-484d-b081-783741929ebd",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"prices",
+										"7685dd77-166b-484d-b081-783741929ebd"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices/7685dd77-166b-484d-b081-783741929ebd",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"prices",
+												"7685dd77-166b-484d-b081-783741929ebd"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "183"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"b7-rVHurUe+M/yuma3ladawIW+C9Ow\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:22:20 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 404,\n    \"timestamp\": \"2023-03-22T19:22:20.094Z\",\n    \"message\": \"Not Found\",\n    \"path\": \"/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/prices/7685dd77-166b-484d-b081-783741929ebd\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Variant Attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"attributes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "attributes",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"attributes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "448"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1c0-tDXxji8M8jLtrZBjIRsqepZ5g5Y\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:34:05 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"daac2482-14bf-4e34-83e9-ee2e0cc566b9\",\n        \"value\": \"200\",\n        \"unit\": \"MB\",\n        \"createdAt\": \"2023-03-22T18:32:33.015Z\",\n        \"updatedAt\": \"2023-03-22T18:32:33.015Z\"\n    },\n    {\n        \"id\": \"0a2fce5d-1d99-42bc-9c63-bec6b7050b42\",\n        \"value\": \"6\",\n        \"unit\": \"MB\",\n        \"createdAt\": \"2023-03-22T18:33:03.857Z\",\n        \"updatedAt\": \"2023-03-22T18:33:03.857Z\"\n    },\n    {\n        \"id\": \"cffb91c5-3426-4de8-a509-7fcf6416e81a\",\n        \"value\": \"BLUE\",\n        \"unit\": \"\",\n        \"createdAt\": \"2023-03-22T18:33:45.156Z\",\n        \"updatedAt\": \"2023-03-22T18:33:45.156Z\"\n    }\n]"
+								},
+								{
+									"name": "attributes extended",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"attributes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1050"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"41a-YzdRKdZEhCmxZDZILN2QZ748rE0\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 20:09:41 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"daac2482-14bf-4e34-83e9-ee2e0cc566b9\",\n        \"value\": \"200\",\n        \"unit\": \"MB\",\n        \"createdAt\": \"2023-03-22T18:32:33.015Z\",\n        \"updatedAt\": \"2023-03-22T18:32:33.015Z\",\n        \"attribute\": {\n            \"id\": \"0f3ab460-2a11-4925-887d-4b2c8d47f3c3\",\n            \"name\": \"Screen Size\",\n            \"type\": \"FLOAT\",\n            \"searchable\": true,\n            \"required\": true,\n            \"createdAt\": \"2023-03-22T11:45:12.955Z\",\n            \"updatedAt\": \"2023-03-22T11:45:12.955Z\"\n        }\n    },\n    {\n        \"id\": \"cffb91c5-3426-4de8-a509-7fcf6416e81a\",\n        \"value\": \"BLUE\",\n        \"unit\": \"\",\n        \"createdAt\": \"2023-03-22T18:33:45.156Z\",\n        \"updatedAt\": \"2023-03-22T18:33:45.156Z\",\n        \"attribute\": {\n            \"id\": \"f9ec7bda-e4bd-4cc3-a378-b23224289c5b\",\n            \"name\": \"Color\",\n            \"type\": \"TEXT\",\n            \"searchable\": true,\n            \"required\": true,\n            \"createdAt\": \"2023-03-22T11:45:12.955Z\",\n            \"updatedAt\": \"2023-03-22T11:45:12.955Z\"\n        }\n    },\n    {\n        \"id\": \"0a2fce5d-1d99-42bc-9c63-bec6b7050b42\",\n        \"value\": \"10\",\n        \"unit\": \"GB\",\n        \"createdAt\": \"2023-03-22T18:33:03.857Z\",\n        \"updatedAt\": \"2023-03-22T18:33:03.857Z\",\n        \"attribute\": {\n            \"id\": \"0641b6e3-48cc-4159-8d5b-fcc0090e0470\",\n            \"name\": \"RAM\",\n            \"type\": \"INT\",\n            \"searchable\": true,\n            \"required\": true,\n            \"createdAt\": \"2023-03-22T11:45:12.955Z\",\n            \"updatedAt\": \"2023-03-22T11:45:12.955Z\"\n        }\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Add Variant Attribute",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"BLUE\",\n    \"unit\": \"\",\n    \"attribute\":\"f9ec7bda-e4bd-4cc3-a378-b23224289c5b\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"attributes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"value\": \"6\",\n    \"unit\": \"MB\",\n    \"attribute\":\"0641b6e3-48cc-4159-8d5b-fcc0090e0470\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"attributes"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "45"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2d-m9WShm9JKeexYzFB1YEhmC8wgC8\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:33:03 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"0a2fce5d-1d99-42bc-9c63-bec6b7050b42\"\n}"
+								},
+								{
+									"name": "conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"value\": \"BLUE\",\n    \"unit\": \"\",\n    \"attribute\":\"f9ec7bda-e4bd-4cc3-a378-b23224289c5b\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"attributes"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "198"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c6-mWV4xXIdJpXtVCS8jKBQsAL6Yd4\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 19:33:50 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"statusCode\": 409,\n    \"message\": \"variant attribute with (\\\"attributeId\\\", \\\"variantId\\\")=(f9ec7bda-e4bd-4cc3-a378-b23224289c5b, fbef721e-b8aa-4c4f-8611-3e32f6c191c1) already exists.\",\n    \"error\": \"Conflict\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Variant Attribute",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"value\": \"10\",\n    \"unit\":\"GB\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes/0a2fce5d-1d99-42bc-9c63-bec6b7050b42",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"attributes",
+										"0a2fce5d-1d99-42bc-9c63-bec6b7050b42"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"value\": \"10\",\n    \"unit\":\"GB\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes/0a2fce5d-1d99-42bc-9c63-bec6b7050b42",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"attributes",
+												"0a2fce5d-1d99-42bc-9c63-bec6b7050b42"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "148"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"94-ZEH9lNUq/AxTjs6LitksJjtZElc\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 20:07:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"0a2fce5d-1d99-42bc-9c63-bec6b7050b42\",\n    \"value\": \"10\",\n    \"unit\": \"GB\",\n    \"createdAt\": \"2023-03-22T18:33:03.857Z\",\n    \"updatedAt\": \"2023-03-22T18:33:03.857Z\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Variant Attribute",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes/cffb91c5-3426-4de8-a509-7fcf6416e81a",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3334",
+									"path": [
+										"api",
+										"variants",
+										"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+										"attributes",
+										"cffb91c5-3426-4de8-a509-7fcf6416e81a"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:3334/api/variants/fbef721e-b8aa-4c4f-8611-3e32f6c191c1/attributes/cffb91c5-3426-4de8-a509-7fcf6416e81a",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"variants",
+												"fbef721e-b8aa-4c4f-8611-3e32f6c191c1",
+												"attributes",
+												"cffb91c5-3426-4de8-a509-7fcf6416e81a"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 22 Mar 2023 20:12:11 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Content-Length",
+											"value": "0"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
 						}
 					]
 				}

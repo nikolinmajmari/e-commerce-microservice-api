@@ -40,13 +40,20 @@ export class Variant{
 
 
     @Field(()=>[VariantAttribute])
-    @OneToMany(()=>VariantAttribute,attribute=>attribute.variant)
+    @OneToMany(()=>VariantAttribute,
+    attribute=>attribute.variant,{
+        lazy: true,
+        cascade: true,
+        onDelete: "CASCADE"
+    })
     attributes:VariantAttribute[]
 
 
     @Field(()=>[VariantPrice])
     @OneToMany(()=>VariantPrice,price=>price.variant,{
-        cascade: true
+        cascade: true,
+        onDelete: "CASCADE",
+        lazy: true
     })
     prices: VariantPrice[]
 

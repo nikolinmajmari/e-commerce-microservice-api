@@ -12,6 +12,7 @@ import { Variant } from "../entities/variant.entity";
 import { ProductTypeService } from "./product_type.service";
 import debug from "debug";
 import { UpdateVariantAttributeDto } from "../dto/variant_attribute.update.dto";
+import { UpdateVariantPriceDto } from "../dto/variant_price.update.dto";
 const log = debug("app:main");
 
 @Injectable()
@@ -128,15 +129,27 @@ export class ProductsService{
         return await this.variantRepository.save(variant);
     }
 
-    async updateProductVariant(prod:string,variant :string,dto:VariantDto){
-         await this.variantRepository.update({
-            id: variant,
-            product: {id:prod}
-        },dto);
+    async updateProductVariant(prod:string,variant :string,dto:UpdateVariantDto){
+        if(Object.keys(dto).length!==0){
+            if(dto.main){
+                await this.makeProductVariantsAsNonMain(prod);
+            }
+            await this.variantRepository.update({
+                id: variant,
+                product: {id:prod}
+            },dto);
+        }
         return await this.variantRepository.findOneByOrFail({id:variant});
     }
 
     async deleteProductVariant(prod:string,variant:string){
+        const entity = await this.getProductVariant(prod,variant);
+        for(const price of await entity.prices){
+           await this.variantPriceRepository.remove(price);
+        }
+        for(const attribute of await entity.attributes){
+            await this.variantAttributeRepository.remove(attribute);
+        }
         await this.variantRepository.delete({
             id: variant,
             product: {id:prod}
@@ -181,22 +194,26 @@ export class ProductsService{
         return await this.variantPriceRepository.save(price);
     }
 
-    async updateVariantPrice(variant:string,price:string,dto:VariantPriceDto){
+    async updateVariantPrice(variant:string,price:string,dto:UpdateVariantPriceDto){
         const filter = { id: price,variant:{id:variant}};
-        await this.variantPriceRepository.update(filter,dto);
+        if(Object.keys(dto).length!==0){
+            await this.variantPriceRepository.update(filter,dto);
+        }
         return await this.variantPriceRepository.findOneByOrFail(filter);
     }
 
     async deleteVariantPrice(variant:string,price:string){
         const filter = { id: price,variant:{id:variant}};
         const entity = await this.variantPriceRepository.findOneByOrFail(filter)
-        return await this.variantPriceRepository.remove(entity);
+        await this.variantPriceRepository.remove(entity);
     }
 
     //// attributes methods
     async getVariantAttributes(id:string){
-        const variant = await this.getVariant(id);
-        return await variant.attributes;
+        const attributes = await this.variantAttributeRepository.find({
+            where: {variant:{id:id}},relations: {attribute: true}
+        })
+        return attributes;
     }
 
     /// add variant attribute 
@@ -229,10 +246,18 @@ export class ProductsService{
 
 
     async updateVariantAttribute(variant:string,variantAttribute:string,dto:UpdateVariantAttributeDto){
-        await this.variantAttributeRepository.update({
-            id: variantAttribute,
-            variant:{id:variant}
-        },dto);
+        Logger.log(dto.unit,dto.value,dto.id);
+        const filter = { id: variantAttribute,variant:{id:variant}};
+        if(Object.keys(dto).length!==0){
+            await this.variantAttributeRepository.update({
+                id: variantAttribute,
+                variant:{id: variant}
+                },dto
+            );
+        }
+        return await this.variantAttributeRepository.findOneOrFail(
+            {where: filter,relations:{attribute:true}}
+        );
     }
 
 
