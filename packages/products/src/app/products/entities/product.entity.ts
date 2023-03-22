@@ -1,3 +1,4 @@
+import { Field, ObjectType } from "@nestjs/graphql";
 import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import { Category } from "./category.entity";
 import { ProductType } from "./product_type.entity";
@@ -11,27 +12,39 @@ export enum ProductStatus{
 @Entity({
     name: "product",
 })
+@ObjectType()
 export class Product{
+
+    @Field(()=>String)
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
+    @Field(()=>String)
     @Column({nullable: false,unique: true})
     name: string;
 
+    @Field(()=>String)
     @Column({type: "enum",enum:[ProductStatus.ACTIVE,ProductStatus.INACTIVE]})
     status: string;
 
+
+    @Field(()=>[String])
     @Column({type: "text",array: true,nullable:true})
     tags?: string[];
 
+
+    @Field(()=>[String])
     @Column({type:"text",array: true})
     images: string[];
+
 
     @ManyToOne(()=>ProductType,type=>type.products,{
         lazy: true
     })
     type: ProductType;
     
+
+    @Field(()=>[Variant])
     @OneToMany(()=>Variant,variant=>variant.product,{
         lazy: true
     })
@@ -43,9 +56,13 @@ export class Product{
     @JoinTable()
     categories:Category[];
 
+
+    @Field(()=>Date)
     @CreateDateColumn()
     createdAt: Date;
 
+
+    @Field(()=>Date)
     @CreateDateColumn()
     updatedAt: Date;
 

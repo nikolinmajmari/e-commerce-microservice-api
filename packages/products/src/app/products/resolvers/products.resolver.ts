@@ -15,7 +15,7 @@ export class ProductsResolver{
     }
 
     @Mutation(()=>Product)
-    crreateProduct(@Args("dto") dto: CreateProductDto){
+    createProduct(@Args("dto") dto: CreateProductDto){
         return this.productsService.create(dto);
     }
 

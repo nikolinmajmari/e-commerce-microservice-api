@@ -1,31 +1,50 @@
+import { Field, ObjectType } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./product.entity";
 import { VariantAttribute } from "./product_attribute.entity";
 import { VariantPrice } from "./variant_price.entity";
 
 @Entity({name: "variant"})
+@ObjectType()
 export class Variant{
+
+
+    @Field(()=>String)
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
+
+    @Field(()=>String)
     @Column()
     sku: string;
 
+
+    @Field(()=>String)
     @Column()
     title: string;
 
+
+    @Field(()=>[String])
     @Column({type:"text",array: true})
     images: string[];
 
+
+    @Field(()=>Boolean)
     @Column({type:"bool",default: true})
     main: boolean;
 
+
+    @Field(()=>Number)
     @Column({type: "int",default:0})
     stock: number
 
+
+    @Field(()=>[VariantAttribute])
     @OneToMany(()=>VariantAttribute,attribute=>attribute.variant)
     attributes:VariantAttribute[]
 
+
+    @Field(()=>[VariantPrice])
     @OneToMany(()=>VariantPrice,price=>price.variant,{
         cascade: true
     })

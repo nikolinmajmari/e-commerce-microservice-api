@@ -39,36 +39,50 @@ export class ProductTypeService{
     }
 
     async findOne(id:string){
-        return await this.repository.findOneByOrFail({
-            id: id,
+        return await this.repository.findOneOrFail({
+            where:{
+                id:id
+            },
+            relations:{
+                attributes:true
+            }
         })
     }
 
     async update(id: string, dto: UpdateProductTypeDto){
-        const result = await this.repository.update({
+       if(Object.keys(dto).length!==0){
+        await this.repository.update({
             id: id
         },dto);
-       return result.raw;
+       }
+       return await this.repository.findOne({
+        where:{id}
+       });
     }
 
     async remove(id: string){
-        const attribute = await this.findOne(id);
-        await this.repository.remove([attribute]);
+        const type = await this.findOne(id);
+        if(type){
+            for(const attr of await type.attributes){
+                this.attributeRepository.remove(attr);
+            }
+            await this.repository.remove([type]);
+        }
+        return type;
     }
 
-    async getAttributes(prod: string){
+    async getAttributes(id: string){
         return this.attributeRepository.findBy({
-            productType: {id: prod}
+            productType: {id: id}
         })
     }
 
-    async addAtribute(prod: string,dto:CreateAttributeDto){
-        const product = await this.findOne(prod);
-        console.log(product);
-        (await product.attributes).push(
-            this.attributeRepository.create(dto)
-        );
-        await this.repository.save(product,{transaction:true});
+    async addAtribute(id: string,dto:CreateAttributeDto){
+        const type = await this.findOne(id);
+        const attribute = this.attributeRepository.create(dto);
+        attribute.productType = type;
+        await this.attributeRepository.save(attribute);
+        return await this.attributeRepository.findOneByOrFail({id:attribute.id});
     }
 
     async getAttribute(prod:string,attr:string){
@@ -79,10 +93,12 @@ export class ProductTypeService{
     }
 
     async updateAttribute(prod: string, attr: string,dto: UpdateAttributeDto){
-        await this.attributeRepository.update({
-            productType:{id:prod},
-            id: attr
-        },dto);
+        if (Object.keys(dto).length !== 0){
+            await this.attributeRepository.update({
+                productType:{id:prod},
+                id: attr
+            },dto);
+        }
         return await this.getAttribute(prod,attr);
     }
 

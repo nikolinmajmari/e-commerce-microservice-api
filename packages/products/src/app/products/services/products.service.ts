@@ -31,7 +31,7 @@ export class ProductsService{
         private readonly productTypeService:ProductTypeService
     ){
     }
-
+    
     async create(dto: CreateProductDto){
         const queryRunner = this.em.connection.createQueryRunner("master");
         await queryRunner.connect();
@@ -56,7 +56,7 @@ export class ProductsService{
 
 
     async findAll(listProductsInput:ListProductsInput){
-        return this.productRepository.findAndCount({
+        return this.productRepository.find({
             skip: listProductsInput.offset,
             take: listProductsInput.limit
         })

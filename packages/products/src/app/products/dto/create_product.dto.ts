@@ -113,7 +113,7 @@ export class CreateProductDto{
     @ApiProperty({
         type: String
     })
-    @Field(()=>ProductType)
+    @Field(()=>String)
     type: ProductType;
 
     @ApiProperty({
