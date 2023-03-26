@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, Int, ObjectType,Float } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./product.entity";
 import { VariantAttribute } from "./product_attribute.entity";
@@ -34,7 +34,7 @@ export class Variant{
     main: boolean;
 
 
-    @Field(()=>Number)
+    @Field(()=>Int)
     @Column({type: "int",default:0})
     stock: number
 

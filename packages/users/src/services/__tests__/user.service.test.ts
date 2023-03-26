@@ -5,9 +5,10 @@ import ICreateUserDTO from "../../dto/create_user.dto";
 import debug from "debug";
 import assert from 'node:assert';
 import User from "../../models/user.model";
+import { Mailer } from "../../common/mailer";
 const log = debug("test");
 const chance = new Chance();
-const userService = new UserService(mockAuth0Service);
+const userService = new UserService(mockAuth0Service,{});
 
 const dto:ICreateUserDTO= {
     firstName: chance.name(),

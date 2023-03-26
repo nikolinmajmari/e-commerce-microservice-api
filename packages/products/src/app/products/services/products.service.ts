@@ -40,14 +40,10 @@ export class ProductsService{
             await queryRunner.startTransaction("REPEATABLE READ");
             const product = this.productRepository.create(dto);
             await queryRunner.manager.save(product);
-            dto.variants.map(async (variant)=>{
-                const productVariant = this.variantRepository.create({...variant});
-                productVariant.product = product;
-                await queryRunner.manager.save(productVariant);
-            });
             await queryRunner.commitTransaction();
             return product;
         }catch(e){
+            Logger.log(e);
             await queryRunner.rollbackTransaction();
             throw e;
         }finally{
@@ -126,7 +122,10 @@ export class ProductsService{
         if(variant.main){
             await this.makeProductVariantsAsNonMain(prod);
         }
-        return await this.variantRepository.save(variant);
+        await this.variantRepository.save(variant,{
+            transaction:true
+        });
+        return variant;
     }
 
     async updateProductVariant(prod:string,variant :string,dto:UpdateVariantDto){
@@ -227,7 +226,7 @@ export class ProductsService{
         await queryRunner.connect();
         try{
             queryRunner.startTransaction("REPEATABLE READ");
-            const attribute = await this.productTypeService.getAttribute(type.id,dto.attribute);
+            const attribute = await this.productTypeService.getAttribute(type.id,dto.attribute as unknown as  string);
             const createdAttribute = this.variantAttributeRepository.create({
                 unit: dto.unit,value: dto.value,
             });

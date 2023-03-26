@@ -21,7 +21,7 @@ export class Attribute{
     id: string;
 
 
-    @Field(()=>String)
+    @Field(()=>String,{nullable:true})
     @Column({nullable: false})
     name: string;
 
@@ -53,9 +53,9 @@ export class Attribute{
     @ManyToOne(()=>ProductType,type=>type.attributes,{
         orphanedRowAction:"delete",
     })
-    productType: ProductType;
+    productType?: ProductType;
 
     @OneToMany(
         ()=>VariantAttribute,productAttribute=>productAttribute.attribute)
-    variantAttributes:VariantAttribute[];
+    variantAttributes?:VariantAttribute[];
 }

@@ -42,12 +42,14 @@ export class Product{
         lazy: true,
         nullable: false,
     })
+    @Field(()=>ProductType)
     type: ProductType;
     
 
     @Field(()=>[Variant])
     @OneToMany(()=>Variant,variant=>variant.product,{
-        lazy: true
+        lazy: true,
+        cascade:true
     })
     variants: Variant[];
 

@@ -23,12 +23,18 @@ export class VariantAttribute{
     unit: string;
 
 
-    @Field(()=>[Attribute])
-    @ManyToOne(()=>Attribute)
+    @Field(()=>Attribute,{nullable:true})
+    @ManyToOne(()=>Attribute,{
+        onDelete: "NO ACTION",
+        lazy:true
+    })
     attribute: Attribute;
 
 
-    @ManyToOne(()=>Variant)
+    @ManyToOne(()=>Variant,{
+        
+    })
+    @Field(()=>Variant)
     variant: Variant;
 
 

@@ -7,7 +7,7 @@ export class CommonEntity {
    * You need to override this function to customize the json output of class-transformer library
    * @returns 
    */
-  toJSON(): {[key:string]:any} {
+  toJSON?(): {[key:string]:any} {
     const record = instanceToPlain(this);
 
     // Remove all double underscores `__` from all properties when serializing object

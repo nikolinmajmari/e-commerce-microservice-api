@@ -54,8 +54,9 @@
     "typeorm": "^0.3.12"
   },
   "devDependencies": {
+    "@golevelup/ts-jest": "^0.3.5",
     "@nestjs/schematics": "^9.0.0",
-    "@nestjs/testing": "^9.0.0",
+    "@nestjs/testing": "^9.3.12",
     "@nestjs/typeorm": "^9.0.1",
     "@nrwl/eslint-plugin-nx": "15.6.3",
     "@nrwl/express": "15.6.3",
@@ -78,6 +79,7 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
+    "better-sqlite3": "^8.2.0",
     "chance": "^1.1.10",
     "debug": "^4.3.4",
     "eslint": "~8.15.0",

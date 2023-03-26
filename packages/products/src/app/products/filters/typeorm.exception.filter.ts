@@ -1,5 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, Logger, BadRequestException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
+import { GqlArgumentsHost, GqlExceptionFilter } from '@nestjs/graphql';
 import { error } from 'console';
 import { Request, Response } from 'express';
 import { EntityNotFoundError, QueryFailedError, TypeORMError } from 'typeorm';
@@ -47,5 +48,12 @@ export class TypeOrmUniqueConstraintVoilationFilter implements ExceptionFilter {
             })
         }
     }
-    
+}
+
+@Catch(Error)
+export class GraphqlErrorHandler implements GqlExceptionFilter {
+  catch(exception: Error, host: ArgumentsHost) {
+    const gqlHost = GqlArgumentsHost.create(host);
+    return exception;
+  }
 }

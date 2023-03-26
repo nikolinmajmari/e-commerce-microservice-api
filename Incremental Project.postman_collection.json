@@ -194,7 +194,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "127.0.0.1:3334/api/productTypes/9d5b234b-ccb1-4646-a2d9-d72242a64c08",
+									"raw": "127.0.0.1:3334/api/productTypes/bfe86af7-2b6b-4c4d-bf34-37d99c767aba",
 									"host": [
 										"127",
 										"0",
@@ -205,7 +205,7 @@
 									"path": [
 										"api",
 										"productTypes",
-										"9d5b234b-ccb1-4646-a2d9-d72242a64c08"
+										"bfe86af7-2b6b-4c4d-bf34-37d99c767aba"
 									]
 								}
 							},
@@ -795,7 +795,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\":\"IPhone 14\",\n    \"status\":\"active\",\n    \"tags\":[\"iphone\",\"apple\"],\n    \"images\":[],\n    \"variants\":[\n        {\n            \"sku\":\"appleIphoneUK20202-Prod-2020202304\",\n            \"title\":\"Iphone 12 Blue\",\n            \"images\":[],\n            \"stock\":20,\n            \"prices\":[]\n        }\n    ],\n    \"type\":\"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\"\n}",
+									"raw": "{\n    \"name\":\"IPhone 23 ZflipApple\",\n    \"status\":\"active\",\n    \"tags\":[\"iphone\",\"apple\"],\n    \"images\":[],\n    \"variants\":[\n        {\n            \"sku\":\"appleIphoneUK20202-Prod-2020202304\",\n            \"title\":\"Iphone 12 Blue\",\n            \"images\":[],\n            \"stock\":20,\n            \"attributes\":[\n                {\n                    \"value\":\"200\",\n                    \"unit\":\"MB\",\n                    \"attribute\":\"0641b6e3-48cc-4159-8d5b-fcc0090e0470\"\n                }\n            ],\n            \"main\":true,\n            \"prices\":[{\n                \"price\":200.20,\n                \"active\":true,\n                \"currency\":\"ALL\"\n            }]\n        }\n    ],\n    \"type\":\"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -882,6 +882,71 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"name\": \"IPhone 10\",\n    \"status\": \"active\",\n    \"tags\": [\n        \"iphone\",\n        \"apple\"\n    ],\n    \"images\": [],\n    \"__type__\": \"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\",\n    \"__variants__\": [],\n    \"id\": \"d5266f41-3c84-41d0-897d-9303a7174393\",\n    \"createdAt\": \"2023-03-22T11:50:41.834Z\",\n    \"updatedAt\": \"2023-03-22T11:50:41.834Z\"\n}"
+								},
+								{
+									"name": "created with deep structure",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\":\"IPhone 23 ZflipApple\",\n    \"status\":\"active\",\n    \"tags\":[\"iphone\",\"apple\"],\n    \"images\":[],\n    \"variants\":[\n        {\n            \"sku\":\"appleIphoneUK20202-Prod-2020202304\",\n            \"title\":\"Iphone 12 Blue\",\n            \"images\":[],\n            \"stock\":20,\n            \"attributes\":[\n                {\n                    \"value\":\"200\",\n                    \"unit\":\"MB\",\n                    \"attribute\":\"0641b6e3-48cc-4159-8d5b-fcc0090e0470\"\n                }\n            ],\n            \"main\":true,\n            \"prices\":[{\n                \"price\":200.20,\n                \"active\":true,\n                \"currency\":\"ALL\"\n            }]\n        }\n    ],\n    \"type\":\"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:3334/api/products",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "3334",
+											"path": [
+												"api",
+												"products"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "913"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"391-rxY69PWAfwFTrKqRbiG2Fryw8qA\""
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 24 Mar 2023 16:53:55 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"name\": \"IPhone 23 ZflipApple\",\n    \"status\": \"active\",\n    \"tags\": [\n        \"iphone\",\n        \"apple\"\n    ],\n    \"images\": [],\n    \"__type__\": \"bfe86af7-2b6b-4c4d-bf34-37d99c767aba\",\n    \"__variants__\": [\n        {\n            \"sku\": \"appleIphoneUK20202-Prod-2020202304\",\n            \"title\": \"Iphone 12 Blue\",\n            \"images\": [],\n            \"main\": true,\n            \"stock\": 20,\n            \"__attributes__\": [\n                {\n                    \"value\": \"200\",\n                    \"unit\": \"MB\",\n                    \"__attribute__\": \"0641b6e3-48cc-4159-8d5b-fcc0090e0470\",\n                    \"id\": \"4e6957b7-1b58-4e51-85c3-009a2d777379\",\n                    \"createdAt\": \"2023-03-24T15:53:55.625Z\",\n                    \"updatedAt\": \"2023-03-24T15:53:55.625Z\"\n                }\n            ],\n            \"__prices__\": [\n                {\n                    \"price\": \"200.2\",\n                    \"currency\": \"ALL\",\n                    \"active\": true,\n                    \"id\": \"fa04adc7-a4ab-478d-9884-192c7292bc64\",\n                    \"createdAt\": \"2023-03-24T15:53:55.625Z\",\n                    \"updatedAt\": \"2023-03-24T15:53:55.625Z\"\n                }\n            ],\n            \"id\": \"2955e31d-0ad7-4692-9c79-0b5ce2072525\",\n            \"createdAt\": \"2023-03-24T15:53:55.625Z\",\n            \"updatedAt\": \"2023-03-24T15:53:55.625Z\"\n        }\n    ],\n    \"id\": \"d6a04d8f-1888-4ed6-bd60-8899d9fce1c0\",\n    \"createdAt\": \"2023-03-24T15:53:55.625Z\",\n    \"updatedAt\": \"2023-03-24T15:53:55.625Z\"\n}"
 								}
 							]
 						},
