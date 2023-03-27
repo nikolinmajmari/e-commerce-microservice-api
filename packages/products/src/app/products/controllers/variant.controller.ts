@@ -1,32 +1,35 @@
 import { Body, Controller, Delete, Get, HttpCode, Logger, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UpdateAttributeDto } from '../dto/attribute.update.dto';
 import { VariantPriceDto } from '../dto/create_product.dto';
 import { CreateVariantAttribute } from '../dto/variant_attribute.create.dto';
 import { UpdateVariantAttributeDto } from '../dto/variant_attribute.update.dto';
 import { UpdateVariantPriceDto } from '../dto/variant_price.update.dto';
 import { TypeOrmNotFOundErrorFilter, TypeOrmUniqueConstraintVoilationFilter } from '../filters/typeorm.exception.filter';
-import { ProductsService } from '../services/products.service';
+import { VariantAttributeService } from '../services/variant_attributes.service';
+import { VariantPriceService } from '../services/variant_prices.service';
 
 @Controller('variants')
 @ApiTags("variants")
 export class VariantsController {
 
-    constructor(private readonly productsService:ProductsService){}
+    constructor(
+        private readonly variantAttributeService:VariantAttributeService,
+        private readonly variantPriceService:VariantPriceService
+    ){}
 
 
         //// price api 
         @Get(":id/prices")
         @UseFilters(new TypeOrmNotFOundErrorFilter())
         async getVariantPrices(@Param("id") id:string){
-            return this.productsService.getVariantPrices(id);
+            return this.variantPriceService.getVariantPrices(id);
         }
     
         
         @Post(":id/prices")
         @UseFilters(new TypeOrmNotFOundErrorFilter())
         async addVariantPrice(@Param("id") id:string,@Body() dto:VariantPriceDto){
-            const entity =  await this.productsService.addVariantPrice(id,dto);
+            const entity =  await this.variantPriceService.addVariantPrice(id,dto);
             return {id: entity.id};
         }
     
@@ -38,7 +41,7 @@ export class VariantsController {
            @Param("price") price:string,
            @Body() dto:UpdateVariantPriceDto
            ){
-            return this.productsService.updateVariantPrice(id,price,dto);
+            return this.variantPriceService.updateVariantPrice(id,price,dto);
         }
     
         /// get specific variant
@@ -49,14 +52,14 @@ export class VariantsController {
             @Param("id") id:string, 
             @Param("price") price:string,
            ){
-            return this.productsService.deleteVariantPrice(id,price);
+            return this.variantPriceService.deleteVariantPrice(id,price);
         }
 
     //// attribute api
      @Get(":id/attributes")
      @UseFilters(new TypeOrmNotFOundErrorFilter())
      async getVariantAttributes(@Param("id") id:string){
-         return this.productsService.getVariantAttributes(id);
+         return this.variantAttributeService.getVariantAttributes(id);
      }
  
      @Post(":id/attributes")
@@ -65,7 +68,7 @@ export class VariantsController {
      async createVariantAttribute(
         @Param("id") id:string,
         @Body() dto:CreateVariantAttribute){
-         const entity =  await this.productsService.addVariantAttribute(id,dto);
+         const entity =  await this.variantAttributeService.addVariantAttribute(id,dto);
          return {id: ( entity).id};
      }
  
@@ -79,7 +82,7 @@ export class VariantsController {
         @Body() dto:UpdateVariantAttributeDto
         ){
             Logger.log(JSON.stringify(dto));
-         return this.productsService.updateVariantAttribute(id,attr,dto);
+         return this.variantAttributeService.updateVariantAttribute(id,attr,dto);
      }
  
      /// get specific variant
@@ -90,6 +93,6 @@ export class VariantsController {
         @Param("id") id:string, 
         @Param("attr") attr:string
         ){
-         return this.productsService.deleteVariantAttribute(id,attr);
+         return this.variantAttributeService.deleteVariantAttribute(id,attr);
      }
 }

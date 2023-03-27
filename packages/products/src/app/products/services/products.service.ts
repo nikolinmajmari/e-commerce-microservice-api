@@ -5,15 +5,10 @@ import { CreateProductDto, VariantDto, VariantPriceDto } from "../dto/create_pro
 import { ListProductsInput } from "../dto/list_products.input";
 import { UpdateProductDto } from "../dto/update_product.dto";
 import { UpdateVariantDto } from "../dto/variant.update.dto";
-import { CreateVariantAttribute } from "../dto/variant_attribute.create.dto";
-import { Attribute, VariantAttribute, VariantPrice } from "../entities";
+import { VariantAttribute, VariantPrice } from "../entities";
 import { Product } from "../entities/product.entity";
 import { Variant } from "../entities/variant.entity";
-import { ProductTypeService } from "./product_type.service";
-import debug from "debug";
-import { UpdateVariantAttributeDto } from "../dto/variant_attribute.update.dto";
-import { UpdateVariantPriceDto } from "../dto/variant_price.update.dto";
-const log = debug("app:main");
+
 
 @Injectable()
 export class ProductsService{
@@ -27,9 +22,7 @@ export class ProductsService{
         @InjectRepository(VariantAttribute)
         private readonly variantAttributeRepository:Repository<VariantAttribute>,
         @InjectRepository(VariantPrice)
-        private readonly variantPriceRepository: Repository<VariantPrice>,
-        @Inject(ProductTypeService)
-        private readonly productTypeService:ProductTypeService
+        private readonly variantPriceRepository: Repository<VariantPrice>
     ){
     }
     
@@ -41,7 +34,7 @@ export class ProductsService{
             const product = this.productRepository.create(dto);
             await queryRunner.manager.save(product);
             await queryRunner.commitTransaction();
-            return product;
+           return product;
         }catch(e){
             Logger.log(e);
             await queryRunner.rollbackTransaction();
@@ -81,12 +74,14 @@ export class ProductsService{
 
     async remove(id: string){
         const product = await this.findOne(id);
-        await this.em.remove(product);
+        await this.productRepository.remove(product);
     }
 
     async getProductVariants(prod:string){
-        return await this.em.getRepository(Variant).findBy({
-            product: {id: prod}
+        return await this.variantRepository.find({
+            where:{
+                product: {id: prod}
+            }
         })
     }
 
@@ -122,10 +117,10 @@ export class ProductsService{
         if(variant.main){
             await this.makeProductVariantsAsNonMain(prod);
         }
-        await this.variantRepository.save(variant,{
+        const saved = await this.variantRepository.save(variant,{
             transaction:true
         });
-        return variant;
+        return saved;
     }
 
     async updateProductVariant(prod:string,variant :string,dto:UpdateVariantDto){
@@ -138,134 +133,30 @@ export class ProductsService{
                 product: {id:prod}
             },dto);
         }
-        return await this.variantRepository.findOneByOrFail({id:variant});
+        return await this.variantRepository.findOneOrFail({
+            where:{id:variant}
+        });
     }
 
     async deleteProductVariant(prod:string,variant:string){
-        const entity = await this.getProductVariant(prod,variant);
-        for(const price of await entity.prices){
-           await this.variantPriceRepository.remove(price);
-        }
-        for(const attribute of await entity.attributes){
-            await this.variantAttributeRepository.remove(attribute);
-        }
-        await this.variantRepository.delete({
-            id: variant,
-            product: {id:prod}
-        })
-    }
-
-
-    //// prices methods 
-
-    /**
-     * Get variant prices 
-     * @param prod 
-     * @param id 
-     * @returns 
-     */
-    async getProductVariantPrices(prod:string,id:string){
-        const variant = await this.getProductVariant(prod,id);
-        return await variant.prices;
-    }
-
-    async getVariantPrices(id:string){  
-        const variant = await this.variantRepository.findOneOrFail({
-            where:{ id: id,}, relations:{ prices: true,}
-        });
-        return await variant.prices;
-    }
-
-
-    /**
-     * This method adds a price for a particular variant 
-     * @param prod 
-     * @param id 
-     * @param priceDto 
-     * @returns 
-     */
-    async addVariantPrice(id:string,priceDto:VariantPriceDto){
-        const variant = await this.getVariant(id);
-        const price = this.variantPriceRepository.create({
-            ...priceDto,
-            variant:variant,
-        });
-        return await this.variantPriceRepository.save(price);
-    }
-
-    async updateVariantPrice(variant:string,price:string,dto:UpdateVariantPriceDto){
-        const filter = { id: price,variant:{id:variant}};
-        if(Object.keys(dto).length!==0){
-            await this.variantPriceRepository.update(filter,dto);
-        }
-        return await this.variantPriceRepository.findOneByOrFail(filter);
-    }
-
-    async deleteVariantPrice(variant:string,price:string){
-        const filter = { id: price,variant:{id:variant}};
-        const entity = await this.variantPriceRepository.findOneByOrFail(filter)
-        await this.variantPriceRepository.remove(entity);
-    }
-
-    //// attributes methods
-    async getVariantAttributes(id:string){
-        const attributes = await this.variantAttributeRepository.find({
-            where: {variant:{id:id}},relations: {attribute: true}
-        })
-        return attributes;
-    }
-
-    /// add variant attribute 
-    async addVariantAttribute(id:string,dto:CreateVariantAttribute){
-        /// in case an error is thrown is error 404
-        const variant = await this.getVariant(id);
-        const product = await variant.product;
-        const type = await product.type;
-
-        const queryRunner = this.em.connection.createQueryRunner("slave");
-        await queryRunner.connect();
+        const queryRunner = this.em.connection.createQueryRunner("master");
+        queryRunner.connect();
         try{
-            queryRunner.startTransaction("REPEATABLE READ");
-            const attribute = await this.productTypeService.getAttribute(type.id,dto.attribute as unknown as  string);
-            const createdAttribute = this.variantAttributeRepository.create({
-                unit: dto.unit,value: dto.value,
-            });
-            createdAttribute.attribute = attribute;
-            createdAttribute.variant = variant;
-            const result = await this.variantAttributeRepository.save(createdAttribute);
-            await queryRunner.commitTransaction();
-            return result;
+            await queryRunner.startTransaction();
+            const entity = await this.getProductVariant(prod,variant);
+            for(const price of await entity.prices){
+               await this.variantPriceRepository.remove(price);
+            }
+            for(const attribute of await entity.attributes){
+                await this.variantAttributeRepository.remove(attribute);
+            }
+            await this.variantRepository.remove(entity);
+            queryRunner.commitTransaction();
         }catch(e){
-            await queryRunner.rollbackTransaction();
+            queryRunner.rollbackTransaction();
             throw e;
         }finally{
-            await queryRunner.release();
+            queryRunner.release();
         }
     }
-
-
-    async updateVariantAttribute(variant:string,variantAttribute:string,dto:UpdateVariantAttributeDto){
-        Logger.log(dto.unit,dto.value,dto.id);
-        const filter = { id: variantAttribute,variant:{id:variant}};
-        if(Object.keys(dto).length!==0){
-            await this.variantAttributeRepository.update({
-                id: variantAttribute,
-                variant:{id: variant}
-                },dto
-            );
-        }
-        return await this.variantAttributeRepository.findOneOrFail(
-            {where: filter,relations:{attribute:true}}
-        );
-    }
-
-
-    async deleteVariantAttribute(variant:string,variantAttribute:string){
-        const entity = await this.variantAttributeRepository.findOneByOrFail({
-            variant:{id:variant},
-            id: variantAttribute
-        });
-        await this.variantAttributeRepository.remove(entity);
-    }
-
 }

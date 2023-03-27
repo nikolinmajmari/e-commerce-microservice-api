@@ -28,14 +28,14 @@ export class VariantAttribute{
         onDelete: "NO ACTION",
         lazy:true
     })
-    attribute: Attribute;
+    attribute?: Attribute|Promise<Attribute>|any;
 
 
     @ManyToOne(()=>Variant,{
         
     })
     @Field(()=>Variant)
-    variant: Variant;
+    variant?: Variant;
 
 
     @Field(()=>Date)

@@ -33,7 +33,7 @@ export class VariantPrice{
     active: boolean;
 
     @ManyToOne(()=>Variant,variant=>variant.prices,{lazy: true})
-    variant: Variant
+    variant?: Variant
 
     @CreateDateColumn()
     createdAt:Date

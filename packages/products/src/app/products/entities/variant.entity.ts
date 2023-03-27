@@ -46,7 +46,7 @@ export class Variant{
         cascade: true,
         onDelete: "CASCADE"
     })
-    attributes:VariantAttribute[]
+    attributes?:VariantAttribute[]|Promise<VariantAttribute[]>;
 
 
     @Field(()=>[VariantPrice])
@@ -55,12 +55,12 @@ export class Variant{
         onDelete: "CASCADE",
         lazy: true
     })
-    prices: VariantPrice[]
+    prices?: VariantPrice[]|Promise<VariantPrice[]>
 
     @ManyToOne(()=>Product,product=>product.variants,{
         lazy: true
     })
-    product: Product
+    product?: Product|Promise<Product>|any
 
     @CreateDateColumn()
     createdAt:Date

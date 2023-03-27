@@ -43,7 +43,7 @@ export class Product{
         nullable: false,
     })
     @Field(()=>ProductType)
-    type: ProductType;
+    type: ProductType|Promise<ProductType>|any;
     
 
     @Field(()=>[Variant])
@@ -51,13 +51,13 @@ export class Product{
         lazy: true,
         cascade:true
     })
-    variants: Variant[];
+    variants: Variant[]|Promise<Variant[]>;
 
     @ManyToMany(()=>Category,{
         lazy: true
     })
     @JoinTable()
-    categories:Category[];
+    categories:Category[]|Promise<Category[]>;
 
 
     @Field(()=>Date)

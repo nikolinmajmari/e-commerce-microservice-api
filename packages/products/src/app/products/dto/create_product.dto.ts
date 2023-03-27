@@ -93,7 +93,7 @@ export class VariantDto{
     @ValidateNested({ each: true })
     @Type(()=>CreateVariantAttribute)
     @Field(()=>[CreateVariantAttribute])
-    attributes?:CreateVariantAttribute[];
+    attributes?:CreateVariantAttribute[]|any;
 
     @ApiProperty({
         type: Boolean,

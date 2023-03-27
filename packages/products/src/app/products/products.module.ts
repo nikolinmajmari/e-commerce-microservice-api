@@ -7,7 +7,7 @@ import { ProductsController } from "./controllers/products.controller";
 import { ProductTypesController } from "./controllers/product_types.controller";
 import { VariantsController } from "./controllers/variant.controller";
 import { ProductsResolver } from "./resolvers/products.resolver";
-import { ProductsService } from "./services/products.service";
+import { ProductsService } from "./services/old.products.service";
 import { ProductTypeService } from "./services/product_type.service";
 
 

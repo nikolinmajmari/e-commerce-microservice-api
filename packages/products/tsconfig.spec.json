@@ -10,5 +10,5 @@
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-, "src/test-utils/test.datasource.ts"  ]
+, "src/test-utils/test.datasource.ts", "src/app/products/services/products.service.spec.ts", "src/app/products/services/product_type.service.spec.ts"  ]
 }

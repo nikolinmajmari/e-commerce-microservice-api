@@ -69,7 +69,9 @@ export class ProductTypeService{
     }
 
     async getAttributes(id: string){
-        const type = await this.findOne(id);
+        const type = await this.repository.findOneOrFail({
+            where:{id:id}
+        });
         return await type.attributes;
     }
 
