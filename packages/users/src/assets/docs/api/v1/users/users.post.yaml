@@ -1,6 +1,8 @@
 paths:
   /api/v1/users:
     post:
+      security:
+        - Bearer: [ ]
       tags:
         - Users
       summary: Create new user ( only for admin )

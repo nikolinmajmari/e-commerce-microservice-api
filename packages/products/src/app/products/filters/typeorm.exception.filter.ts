@@ -38,7 +38,15 @@ export class TypeOrmUniqueConstraintVoilationFilter implements ExceptionFilter {
                 message:  exception.detail.replace('Key', messageStart),
                 error: "Conflict"
             })
-        }else{
+        }
+        else if(typeof detail === 'string' && detail.includes("is not present in table")){
+            return response.status(HttpStatus.BAD_REQUEST).json({
+                statusCode: HttpStatus.BAD_REQUEST,
+                message:  exception.detail.replace('Key', ""),
+                error: "BAD REQUEST"
+            })
+        }
+        else{
             response.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .json({
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,

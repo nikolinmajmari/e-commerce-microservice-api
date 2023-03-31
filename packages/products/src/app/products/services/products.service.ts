@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import {InjectRepository} from '@nestjs/typeorm';
-import { EntityManager, Repository } from "typeorm";
+import { Brackets, EntityManager, Repository } from "typeorm";
 import { CreateProductDto, VariantDto, VariantPriceDto } from "../dto/create_product.dto";
 import { ListProductsInput } from "../dto/list_products.input";
 import { UpdateProductDto } from "../dto/update_product.dto";
@@ -46,10 +46,35 @@ export class ProductsService{
 
 
     async findAll(listProductsInput:ListProductsInput){
-        return this.productRepository.find({
-            skip: listProductsInput.offset,
-            take: listProductsInput.limit
-        })
+        const query = 
+        this.productRepository.createQueryBuilder("p")
+        .innerJoin("p.type","t")
+        .leftJoin("p.variants","v");
+
+        if(listProductsInput.search){
+            query.andWhere(
+                new Brackets((qb)=>{
+                    qb.orWhere("v.title like :search",{search: `%${listProductsInput.search}%`})
+                    qb.orWhere("t.name like :search",{search: `%${listProductsInput.search}%`})
+                    qb.orWhere("p.name like :search",{search: `%${listProductsInput.search}%`})
+                })
+            );
+        }
+
+        if(listProductsInput.tags){
+            query.andWhere(
+                new Brackets((qb)=>{
+                    for(const tag of listProductsInput.tags){
+                        qb.orWhere(':tag = ANY (p.tags)', { tag: tag });
+                    }
+                })
+            )
+        }
+        Logger.log(query.getQuery(),JSON.stringify(listProductsInput));
+        return await query
+        .take(listProductsInput.limit?listProductsInput.limit:10)
+        .skip(listProductsInput.offset?listProductsInput.offset:0)
+        .getMany()
     }
 
     async findOne(id:string){

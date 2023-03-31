@@ -34,7 +34,11 @@ function isGranted(required:string,challange:string):boolean{
 }
   
 function checkToken(token,permission){
-    return token && token[ROLES_KEY] && token[ROLES_KEY].find(role=>isGranted(permission,role));
+    return token && (
+        (token[ROLES_KEY] && token[ROLES_KEY].find(role=>isGranted(permission,role)))
+        ||
+        (token.role && isGranted(permission,token.role))
+    );
 }
 
 export function minimumPermissionRequired(permission:string){
@@ -88,8 +92,9 @@ async function loadOrSignUpUser(id:string){
     log("user id to check",id);
     const oauthUser = await authService.management.getUser({id});
     const roles = await authService.management.getUserRoles({id});
+    
     const permissionLevel = roles.reduce((acc:any,next:any)=>{
-        if(acc===null||(acc.length>1 && acc[1]!==ROLES.ADMIN)){
+        if(acc===null ||(acc&& acc.length>1 && acc[1]!==ROLES.ADMIN)){
             return [next,next.name];
         }
         return acc;

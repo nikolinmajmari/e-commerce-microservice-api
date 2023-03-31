@@ -39,7 +39,7 @@ export class EventEmitterService{
                 identifier: req.identifier,
                 method: req.method,
                 path: url.pathname,
-                sub: user._id,
+                sub: user.user_id,
                 context: "users",
                 group: group,
                 message: message,

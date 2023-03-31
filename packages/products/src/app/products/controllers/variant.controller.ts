@@ -1,5 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Logger, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AdminAuthGuard } from '../../common/authz/admin.auth.guard';
+import { RegisteredUserAuthGuard } from '../../common/authz/registered_user.auth.guard';
+import { JwtAuthGuard } from '../../common/authz/user.guard';
 import { VariantPriceDto } from '../dto/create_product.dto';
 import { CreateVariantAttribute } from '../dto/variant_attribute.create.dto';
 import { UpdateVariantAttributeDto } from '../dto/variant_attribute.update.dto';
@@ -25,8 +28,8 @@ export class VariantsController {
             return this.variantPriceService.getVariantPrices(id);
         }
     
-        
         @Post(":id/prices")
+        @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
         @UseFilters(new TypeOrmNotFOundErrorFilter())
         async addVariantPrice(@Param("id") id:string,@Body() dto:VariantPriceDto){
             const entity =  await this.variantPriceService.addVariantPrice(id,dto);
@@ -35,6 +38,8 @@ export class VariantsController {
     
         /// get specific variant
         @Patch(":id/prices/:price")
+
+        @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard) 
         @UseFilters(new TypeOrmNotFOundErrorFilter())
         async updateVariantPrice(
            @Param("id") id:string, 
@@ -47,6 +52,8 @@ export class VariantsController {
         /// get specific variant
         /// get specific variant
         @Delete(":id/prices/:price")
+
+        @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
         @UseFilters(new TypeOrmNotFOundErrorFilter())
         async deleteVariatPrice(
             @Param("id") id:string, 
@@ -63,6 +70,8 @@ export class VariantsController {
      }
  
      @Post(":id/attributes")
+
+     @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
      @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
      @UseFilters(new TypeOrmNotFOundErrorFilter())
      async createVariantAttribute(
@@ -74,6 +83,8 @@ export class VariantsController {
  
      /// get specific variant
      @Patch(":id/attributes/:attr")
+
+     @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
      @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
      @UseFilters(new TypeOrmNotFOundErrorFilter())
      async updateVariantAttribute(
@@ -88,6 +99,8 @@ export class VariantsController {
      /// get specific variant
      @Delete(":id/attributes/:attr")
      @HttpCode(204)
+
+     @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
      @UseFilters(new TypeOrmNotFOundErrorFilter())
      async deleteVariatAttribute(
         @Param("id") id:string, 

@@ -16,8 +16,7 @@ services:
       POSTGRES_PASSWORD: myPass!23
       POSTGRES_USER: user
       POSTGRES_DB: db
-
-
+      
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:

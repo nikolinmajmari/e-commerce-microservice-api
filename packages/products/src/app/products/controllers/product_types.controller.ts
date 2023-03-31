@@ -1,13 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Inject, Logger, Param, Patch, Post, Query, UseFilters, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { EntityNotFoundError, QueryFailedError } from 'typeorm';
-import { EntityManager } from 'typeorm/entity-manager/EntityManager';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
+import { AdminAuthGuard } from '../../common/authz/admin.auth.guard';
+import { RegisteredUserAuthGuard } from '../../common/authz/registered_user.auth.guard';
+import { JwtAuthGuard } from '../../common/authz/user.guard';
 import { CreateAttributeDto } from '../dto/attribute.create.dto';
 import { UpdateAttributeDto } from '../dto/attribute.update.dto';
-import { CreateProductDto } from '../dto/create_product.dto';
 import { CreateProductTypeDto } from '../dto/product_type.create.dto';
 import { UpdateProductTypeDto } from '../dto/product_type.update.dto';
-import { UpdateProductDto } from '../dto/update_product.dto';
 import { TypeOrmNotFOundErrorFilter, TypeOrmUniqueConstraintVoilationFilter } from '../filters/typeorm.exception.filter';
 import { ProductTypeService } from '../services/product_type.service';
 
@@ -23,6 +23,8 @@ export class ProductTypesController {
 
     @Post()
     @HttpCode(201)
+    
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     async create(@Body() dto: CreateProductTypeDto){
         const created = await this.service.create(dto);
@@ -55,19 +57,21 @@ export class ProductTypesController {
         return type;
     }
 
+
     @Patch(":id")
+    @HttpCode(200)
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     update(@Param("id") id: string,@Body() dto: UpdateProductTypeDto){
         return this.service.update(id,dto);
     }
 
     @Delete(":id")
-    @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     @HttpCode(204)
+
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
+    @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     async remove(@Param("id") id: string){
-        if(!await this.service.remove(id)){
-            throw new HttpException("Not Found",HttpStatus.NOT_FOUND);
-        }
-        return 204;
+        await this.service.remove(id);
     }
 
     @Get(":id/attributes")
@@ -76,12 +80,16 @@ export class ProductTypesController {
     }
 
     @Post(":id/attributes")
+
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     addAttribute(@Param("id") id: string,@Body() dto: CreateAttributeDto){
         return this.service.addAtribute(id,dto);
     }
 
     @Patch(":id/attributes/:attr")
+
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     @UseFilters(new TypeOrmNotFOundErrorFilter())
     updateAttribute(@Param("id") id:string,@Param("attr") attr:string,@Body() dto: UpdateAttributeDto){
@@ -89,9 +97,10 @@ export class ProductTypesController {
     }
 
     @Delete(":id/attributes/:attr")
+
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmNotFOundErrorFilter())
     @HttpCode(204)
-    @UseFilters(new TypeOrmNotFOundErrorFilter())
     async removeAttribute(@Param("id") id:string,@Param("attr") attr:string)
     {
         await this.service.removeAttribute(id,attr);

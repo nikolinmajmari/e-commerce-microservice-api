@@ -1,4 +1,4 @@
-import {AppMetadata, DatabaseAuthenticator, DatabaseClientOptions, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, OAuthAuthenticator, OAuthClientOptions, ObjectWithId, PasswordChangeTicketResponse, User, UserMetadata, VerificationEmailJob} from 'auth0';
+import {AppMetadata, DatabaseAuthenticator, DatabaseClientOptions, EmailVerificationTicketOptions, ManagementClient, ManagementClientOptions, OAuthAuthenticator, OAuthClientOptions, ObjectWithId, PasswordChangeTicketResponse, UpdateUserData, User, UserMetadata, VerificationEmailJob} from 'auth0';
 import debug from 'debug';
 import { IPermissionLevel, IUser } from '../../models/user.model';
 import Conflict from '../errors/http/conflict_error';
@@ -69,15 +69,28 @@ export class Auth0Service implements IAuth0Service{
             app_metadata:{ id,permissionLevel,phone,status,username},
             user_metadata: {avatar,birthDate,firstName,gender,lastName},
         },);
-        await this.management.updateUser({id: auth0UserId},
-            {   name: `${firstName} ${lastName}`,
-                app_metadata:{ id,permissionLevel,phone,status,username},
-                user_metadata: {avatar,birthDate,firstName,gender,lastName},
-            },
-        );
+        let data:UpdateUserData = {
+            app_metadata:{ id,permissionLevel,phone,status,username},
+            user_metadata: {avatar,birthDate,firstName,gender,lastName},
+        };
+        if(await this.hasUsernamePasswordConnectionType(auth0UserId)){
+            data = {
+                ...data,
+                name:`${firstName} ${lastName}`,
+            }
+        }
+        await this.management.updateUser({id: auth0UserId},data);
         if(role){
             this.assignRoleToUser(auth0UserId,role);
         }
+    }
+
+
+    private async hasUsernamePasswordConnectionType(auth0UserId:string) {
+        const oauthUser = await this.management.getUser({id:auth0UserId});
+        return oauthUser.identities.filter(
+            (identity)=>identity.connection=='Username-Password-Authentication'
+        ).length>0;
     }
 
 

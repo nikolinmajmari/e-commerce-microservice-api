@@ -1,10 +1,8 @@
 import { Application } from "express"
-import { requiresAuth } from "express-openid-connect";
 import { body } from "express-validator";
 import { checkJwt } from "../common/auth/auth.config";
-import { extractUserMiddleware, isAdmin, isUser } from "../common/auth/middleware/auth.middleware";
+import { extractUserMiddleware, isUser } from "../common/auth/middleware/auth.middleware";
 import userController from "../controllers/user.controller";
-import usersController from "../controllers/users.controller";
 import validate from "../middleware/validate.middleware";
 import newAddressValidationRules from "../middleware/validation_rules/new.address.rules";
 import patchAddressValidationRules from "../middleware/validation_rules/patch.address.rules";

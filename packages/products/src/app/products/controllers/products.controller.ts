@@ -1,8 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, UseFilters } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, HttpCode, Inject, Logger, Param, Patch, Post, Query, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
+import { ApiProperty, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { Topic } from '@repo/app-event-emitter';
+import { Request } from 'express';
+import { AdminAuthGuard } from '../../common/authz/admin.auth.guard';
+import { RegisteredUserAuthGuard } from '../../common/authz/registered_user.auth.guard';
+import { JwtAuthGuard } from '../../common/authz/user.guard';
 import { CreateProductDto, VariantDto } from '../dto/create_product.dto';
+import { ListProductsInput } from '../dto/list_products.input';
+import { ProductsFilter } from '../dto/products.filter.dto';
 import { UpdateProductDto } from '../dto/update_product.dto';
 import { UpdateVariantDto } from '../dto/variant.update.dto';
+import { createProductAction, createProductVariantAction, deleteProductAction, updateProductAction } from '../events/custom.events';
 import { TypeOrmNotFOundErrorFilter, TypeOrmUniqueConstraintVoilationFilter } from '../filters/typeorm.exception.filter';
 import { ProductsService } from '../services/products.service';
 
@@ -10,18 +19,60 @@ import { ProductsService } from '../services/products.service';
 @ApiTags('products')
 export class ProductsController {
 
-    constructor(private readonly productsService:ProductsService){}
+      async onModuleInit() {
+        await this.client.connect();
+      }
+    
+      async onModuleDestroy() {
+        await this.client.close();
+      }
+    
+
+    constructor(
+        private readonly productsService:ProductsService,
+         @Inject('product_kafka_client') 
+        private readonly client: ClientKafka
+         ){}
 
     @Post()
     @HttpCode(201)
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
-    create(@Body() dto: CreateProductDto){
-        return this.productsService.create(dto);
+    async create(@Body() dto: CreateProductDto,@Req() request:Request){
+        const created =  await this.productsService.create(dto);
+        Logger.log(request.user);
+        this.client.emit(Topic.APP_ACTION,createProductAction(request));
+        return {id:created.id};
     }
 
     @Get()
-    findAll(){
-        return this.productsService.findAll({limit: 10,offset: 0});
+    @ApiProperty({
+        name:"search",required: false
+    })
+    @ApiProperty({
+        name:"search",required: false
+    })
+    @ApiProperty({
+        name:"limit",required: false
+    })
+    @ApiProperty({
+        name:"offfset",required: false
+    })
+    @ApiProperty({
+        name:"tags",required: false
+    })
+    findAll(
+        @Query("search") search?:string,
+        @Query("limit") limit?:string,
+        @Query("offfset") offset?: string,
+        @Query("tags") tags?: string,
+    ){
+        return this.productsService.findAll({
+            search: search,
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+            tags: tags.split(",")
+        });
     }
 
     @Get(":id")
@@ -31,37 +82,47 @@ export class ProductsController {
     }
 
     @Patch(":id")
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmNotFOundErrorFilter())
     @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
-    update(@Param("id") id: string,@Body() dto: UpdateProductDto){
-        return this.productsService.update(id,dto);
+    async update(@Param("id") id: string,@Body() dto: UpdateProductDto,@Req() req:Request){
+        const updated =  await this.productsService.update(id,dto);
+        this.client.emit(Topic.APP_ACTION,updateProductAction(req));
+        return updated;
     }
 
     @Delete(":id")
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @HttpCode(204)
     @UseFilters(new TypeOrmNotFOundErrorFilter())
-    remove(@Param("id") id: string){
-        return this.productsService.remove(id);
+    async remove(@Param("id") id: string,@Req() req:Request){
+        await this.productsService.remove(id);
+        this.client.emit(Topic.APP_ACTION,deleteProductAction(req));
     }
 
     /// variant api 
 
 
+    
     @Get(":id/variants")
     @UseFilters(new TypeOrmNotFOundErrorFilter())
     async getVariants(@Param("id") id:string){
         return this.productsService.getProductVariants(id);
     }
 
+
     @Post(":id/variants")
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @HttpCode(201)
     @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     @UseFilters(new TypeOrmNotFOundErrorFilter())
     async createVariant(
         @Param("id") id:string,
-        @Body() dto:VariantDto
+        @Body() dto:VariantDto,
+        @Req() req:Request
     ){
         const variant = await this.productsService.addProductVariant(id,dto);
+        this.client.emit(Topic.APP_ACTION,createProductVariantAction(req))
         return {id:variant.id};
     }
 
@@ -74,13 +135,16 @@ export class ProductsController {
     }
 
     @Patch(":id/variants/:variant")
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmUniqueConstraintVoilationFilter())
     @UseFilters(new TypeOrmNotFOundErrorFilter())
     async patchVariant(@Param("id") id:string, @Param("variant") variant:string,@Body() dto:UpdateVariantDto){
         return this.productsService.updateProductVariant(id,variant,dto);
     }
 
+
     @Delete(":id/variants/:variant")
+    @UseGuards(JwtAuthGuard,AdminAuthGuard,RegisteredUserAuthGuard)
     @UseFilters(new TypeOrmNotFOundErrorFilter())
     async deleteVariant(@Param("id") id:string, @Param("variant") variant:string){
         return this.productsService.deleteProductVariant(id,variant);
