@@ -37,12 +37,14 @@ export class ProductsResolver{
     }
 
     @Mutation(()=>Product)
+    @UseGuards(JwtGQLAuthGuard,AdminGQLAuthGuard)
     @UseFilters(new GraphqlErrorHandler())
     updateProduct(@Args("updateProductInput") updateProductInput: UpdateProductDto){
         return this.productsService.update(updateProductInput.id,updateProductInput);
     }
 
     @Mutation(()=>Product)
+    @UseGuards(JwtGQLAuthGuard,AdminGQLAuthGuard)
     @UseFilters(new GraphqlErrorHandler())
     removeProduct(@Args("id",{type:()=>String}) id:string){
         return this.productsService.remove(id);
