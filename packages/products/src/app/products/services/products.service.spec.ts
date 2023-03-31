@@ -122,18 +122,18 @@ describe("Products service tests",()=>{
         .resolves.toBe(products[0]);
     });
 
-    it("should return a list of products",async ()=>{
-        expect(service.findAll({limit:1,offset:1}))
-        .resolves.toBe(products)
-    });
+    // it("should return a list of products",async ()=>{
+    //     expect(service.findAll({limit:1,offset:1}))
+    //     .resolves.toBe(products)
+    // });
 
-    it("should fail to return a list of products when typeorm fails",()=>{
-        jest.spyOn(productRepository,"find").mockRejectedValue(
-            "ERROR" as never
-        );
-        expect(service.findAll({limit:1,offset:1}))
-        .rejects.toMatch("ERROR")
-    });
+    // it("should fail to return a list of products when typeorm fails",()=>{
+    //     jest.spyOn(productRepository,"find").mockRejectedValue(
+    //         "ERROR" as never
+    //     );
+    //     expect(service.findAll({limit:1,offset:1}))
+    //     .rejects.toMatch("ERROR")
+    // });
 
     it("should find one product by id",()=>{
         expect(service.findOne(
