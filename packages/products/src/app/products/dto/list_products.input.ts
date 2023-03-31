@@ -24,7 +24,7 @@ export class ListProductsInput{
         type: String,
         required:false,
     })
-    @Field(()=>Number,{description:"search by name"})
+    @Field(()=>String,{description:"search by name",nullable:true})
     search?:string;
 
 
@@ -32,14 +32,14 @@ export class ListProductsInput{
         type: String,
         required:false,
     })
-    @Field(()=>Number,{description:"search by category"})
+    @Field(()=>String,{description:"search by category",nullable:true})
     category?:string;
 
     @ApiProperty({
         type: Array,
         required:false,
     })
-    @Field(()=>Number,{description:"search by tags"})
+    @Field(()=>String,{description:"search by tags",nullable:true})
     tags?:string[];
 
 }

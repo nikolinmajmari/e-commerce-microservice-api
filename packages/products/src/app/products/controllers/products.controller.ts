@@ -5,7 +5,7 @@ import { Topic } from '@repo/app-event-emitter';
 import { Request } from 'express';
 import { AdminAuthGuard } from '../../common/authz/admin.auth.guard';
 import { RegisteredUserAuthGuard } from '../../common/authz/registered_user.auth.guard';
-import { JwtAuthGuard } from '../../common/authz/user.guard';
+import { JwtAuthGuard } from '../../common/authz/jwt.auth.guard';
 import { CreateProductDto, VariantDto } from '../dto/create_product.dto';
 import { ListProductsInput } from '../dto/list_products.input';
 import { ProductsFilter } from '../dto/products.filter.dto';

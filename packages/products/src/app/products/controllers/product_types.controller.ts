@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminAuthGuard } from '../../common/authz/admin.auth.guard';
 import { RegisteredUserAuthGuard } from '../../common/authz/registered_user.auth.guard';
-import { JwtAuthGuard } from '../../common/authz/user.guard';
+import { JwtAuthGuard } from '../../common/authz/jwt.auth.guard';
 import { CreateAttributeDto } from '../dto/attribute.create.dto';
 import { UpdateAttributeDto } from '../dto/attribute.update.dto';
 import { CreateProductTypeDto } from '../dto/product_type.create.dto';

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, Logger, Param, Patch, Post, Us
 import { ApiTags } from '@nestjs/swagger';
 import { AdminAuthGuard } from '../../common/authz/admin.auth.guard';
 import { RegisteredUserAuthGuard } from '../../common/authz/registered_user.auth.guard';
-import { JwtAuthGuard } from '../../common/authz/user.guard';
+import { JwtAuthGuard } from '../../common/authz/jwt.auth.guard';
 import { VariantPriceDto } from '../dto/create_product.dto';
 import { CreateVariantAttribute } from '../dto/variant_attribute.create.dto';
 import { UpdateVariantAttributeDto } from '../dto/variant_attribute.update.dto';

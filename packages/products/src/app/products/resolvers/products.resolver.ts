@@ -1,5 +1,7 @@
-import { UseFilters } from "@nestjs/common";
+import { UseFilters, UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver,Query } from "@nestjs/graphql";
+import { AdminAuthGuard, AdminGQLAuthGuard } from "../../common/authz/admin.auth.guard";
+import { JwtGQLAuthGuard } from "../../common/authz/gql.auth.guard";
 import { CreateProductDto } from "../dto/create_product.dto";
 import { ListProductsInput } from "../dto/list_products.input";
 import { UpdateProductDto } from "../dto/update_product.dto";
@@ -16,6 +18,7 @@ export class ProductsResolver{
 
     }
 
+    @UseGuards(JwtGQLAuthGuard,AdminGQLAuthGuard)
     @Mutation(()=>Product) 
     @UseFilters(new GraphqlErrorHandler())
     createProduct(@Args("dto") dto: CreateProductDto){
